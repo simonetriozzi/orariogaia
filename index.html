@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prossima Metro M2</title>
+</head>
+
+<body>
+    <h1>Direzione Assago Forum</h1>
+    <h2 id="orario-metro">Calcolo in corso...</h2>
+
+    <script>
+        // Sostituisci con il tuo URL Raw se diverso
+        const URL_JSON = "https://raw.githubusercontent.com/simonetriozzi/orariogaia/main/orari_m2.json";
+
+        async function getProssimaMetro() {
+            try {
+                const response = await fetch(URL_JSON);
+                const dati = await response.json();
+
+                const oraAttuale = new Date();
+                let oraStr = oraAttuale.getHours().toString().padStart(2, '0');
+                let minutiAttuali = oraAttuale.getMinutes();
+
+                // NOTA: Qui impostiamo 'feriale' fisso per il test. 
+                // Dovrai aggiungere uno switch in base a Date().getDay()
+                const orariOra = dati.assago_forum.feriale[oraStr];
+
+                if (orariOra) {
+                    // Cerca il primo minuto maggiore del minuto attuale
+                    const prossimoPassaggio = orariOra.find(m => m >= minutiAttuali);
+
+                    if (prossimoPassaggio !== undefined) {
+                        const minStr = prossimoPassaggio.toString().padStart(2, '0');
+                        document.getElementById('orario-metro').innerText = `Prossimo treno alle ${oraStr}:${minStr}`;
+                    } else {
+                        // Se non ci sono più treni in quest'ora, bisogna cercare nell'ora successiva
+                        document.getElementById('orario-metro').innerText = "Guarda l'ora successiva (logica da implementare)";
+                    }
+                } else {
+                    document.getElementById('orario-metro').innerText = "Nessun treno in questa fascia oraria.";
+                }
+            } catch (error) {
+                document.getElementById('orario-metro').innerText = "Errore nel caricamento degli orari.";
+            }
+        }
+
+        getProssimaMetro();
+    </script>
+</body>
+
+</html>
