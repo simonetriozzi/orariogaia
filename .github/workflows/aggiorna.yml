@@ -2,7 +2,7 @@ name: Aggiorna Orari Metro
 
 on:
   schedule:
-    - cron: '0 2 * * 1' # Ogni lunedì alle 02:00
+    - cron: '0 2 * * *' # Ogni giorno alle 02:00 (4 italiane)
   workflow_dispatch:
 
 jobs:
