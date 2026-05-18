@@ -300,19 +300,6 @@
     </div>
   </div>
 
-  <div class="preset-item" id="item-unicatt">
-    <button class="preset-btn" onclick="scegli('unicatt')">
-      <div class="label-wrap">
-        <span>📚 UNICATT</span>
-        <span class="sub">S. Ambrogio → Cologno Nord</span>
-      </div>
-      <span class="arrow">›</span>
-    </button>
-    <div class="inline-result" id="res-unicatt">
-      <div class="inline-result-inner" id="res-unicatt-inner"></div>
-    </div>
-  </div>
-
   <div class="preset-item" id="item-poli">
     <button class="preset-btn" onclick="scegli('poli')">
       <div class="label-wrap">
@@ -323,6 +310,32 @@
     </button>
     <div class="inline-result" id="res-poli">
       <div class="inline-result-inner" id="res-poli-inner"></div>
+    </div>
+  </div>
+
+  <div class="preset-item" id="item-loreto">
+    <button class="preset-btn" onclick="scegli('loreto')">
+      <div class="label-wrap">
+        <span>🛍️ LORETO</span>
+        <span class="sub">Loreto → Cologno Nord</span>
+      </div>
+      <span class="arrow">›</span>
+    </button>
+    <div class="inline-result" id="res-loreto">
+      <div class="inline-result-inner" id="res-loreto-inner"></div>
+    </div>
+  </div>
+
+  <div class="preset-item" id="item-unicatt">
+    <button class="preset-btn" onclick="scegli('unicatt')">
+      <div class="label-wrap">
+        <span>📚 UNICATT</span>
+        <span class="sub">S. Ambrogio → Cologno Nord</span>
+      </div>
+      <span class="arrow">›</span>
+    </button>
+    <div class="inline-result" id="res-unicatt">
+      <div class="inline-result-inner" id="res-unicatt-inner"></div>
     </div>
   </div>
 
@@ -375,13 +388,14 @@ setTimeInputs(dataOra);
 // ============================================================
 const PRESETS = {
   casa:    { stazione:'M2_Cologno_Sud',  dir:'abbiategrasso_assago_forum', filtro:'assago_forum',   titolo:'Cologno Sud → Assago / Abbiategrasso' },
-  unicatt: { stazione:'M2_S_Ambrogio',   dir:'gessate_cologno_nord',       filtro:'cologno_nord',  titolo:'S. Ambrogio → Cologno Nord' },
   poli:    { stazione:'M2_Piola',        dir:'gessate_cologno_nord',       filtro:'cologno_nord',  titolo:'Piola → Cologno Nord' },
+  loreto:  { stazione:'M2_Loreto',       dir:'gessate_cologno_nord',       filtro:'cologno_nord',  titolo:'Loreto → Cologno Nord' },
+  unicatt: { stazione:'M2_S_Ambrogio',   dir:'gessate_cologno_nord',       filtro:'cologno_nord',  titolo:'S. Ambrogio → Cologno Nord' },
 };
 
 function scegli(id){
   // Close others, toggle current
-  const ids = ['casa','unicatt','poli'];
+  const ids = ['casa','poli','loreto','unicatt'];
   const item = document.getElementById('item-'+id);
   const res  = document.getElementById('res-'+id);
   const isOpen = item.classList.contains('open');
@@ -440,7 +454,7 @@ function toggleAltro(){
   const sec = document.getElementById('search-section');
   const shown = sec.style.display !== 'none';
   // Close all presets
-  ['casa','unicatt','poli'].forEach(k => {
+  ['casa','poli','loreto','unicatt'].forEach(k => {
     document.getElementById('item-'+k).classList.remove('open');
     document.getElementById('res-'+k).classList.remove('open');
   });
@@ -549,7 +563,7 @@ document.getElementById('apply-time').addEventListener('click', () => {
   if(inpDate.value && inpTime.value){
     dataOra = new Date(`${inpDate.value}T${inpTime.value}`);
     if(percorso){
-      const ids = ['casa','unicatt','poli'];
+      const ids = ['casa','poli','loreto','unicatt'];
       for(const k of ids){
         if(document.getElementById('item-'+k)?.classList.contains('open')){
           esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo, 'res-'+k+'-inner');
