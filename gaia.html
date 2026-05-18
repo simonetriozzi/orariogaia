@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrarioGaia — Ciao Gaia! 💜</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bordeaux:     #6b1a3a;
+      --bordeaux-l:   #9b2d5a;
+      --bordeaux-xl:  #c45a80;
+      --bordeaux-pale:#f7e8ef;
+      --rose:         #f2d0df;
+      --cream:        #fdf5f8;
+      --text:         #2d0e1c;
+      --text-soft:    #7a4057;
+      --border:       rgba(107,26,58,0.15);
+      --radius:       20px;
+      --radius-sm:    12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(155,45,90,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(107,26,58,0.06) 0%, transparent 50%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 60px;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === BACK LINK === */
+    .back-link {
+      align-self: flex-start; margin-bottom: 20px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.85rem; font-weight: 600; color: var(--bordeaux);
+      text-decoration: none; opacity: 0.7; transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    /* === HEADER === */
+    .header { text-align: center; margin-bottom: 36px; animation: fadeInDown 0.5s ease-out; }
+    .header .petals { font-size: 1.6rem; letter-spacing: 4px; margin-bottom: 8px; }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--bordeaux) 0%, var(--bordeaux-xl) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .header p { color: var(--text-soft); font-size: 0.95rem; margin-top: 6px; }
+
+    /* === CHOICE BUTTONS === */
+    .choices {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 32px;
+      animation: fadeInUp 0.5s ease-out;
+    }
+    .choice-btn {
+      padding: 18px 32px;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1.3rem; font-weight: 700; font-family: 'Inter', sans-serif;
+      color: var(--bordeaux);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(107,26,58,0.1);
+      transition: all 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .choice-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-l));
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .choice-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(107,26,58,0.22); }
+    .choice-btn:hover::before { opacity: 1; }
+    .choice-btn:hover span { color: #fff; position: relative; z-index: 1; }
+    .choice-btn.active { background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-l)); color: #fff; border-color: transparent; }
+    .choice-btn.active span { color: #fff; }
+    .choice-btn span { position: relative; z-index: 1; }
+
+    /* === PANEL === */
+    .panel {
+      width: 100%; max-width: 460px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 6px 30px rgba(107,26,58,0.08);
+      animation: fadeInUp 0.4s ease-out;
+    }
+    .panel + .panel { margin-top: 18px; }
+
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--bordeaux); margin-bottom: 16px;
+    }
+
+    /* === TRAIN CARDS === */
+    .train-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; margin-bottom: 10px;
+      background: var(--bordeaux-pale);
+      border: 1px solid rgba(107,26,58,0.1);
+      border-radius: var(--radius-sm);
+      animation: fadeInUp 0.35s ease-out both;
+    }
+    .train-card:nth-child(2) { animation-delay: 0.06s; }
+    .train-card:nth-child(3) { animation-delay: 0.12s; }
+    .train-time {
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--bordeaux); min-width: 68px;
+      font-variant-numeric: tabular-nums;
+    }
+    .train-info { flex: 1; }
+    .train-dest { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .train-wait { font-size: 0.78rem; color: var(--text-soft); }
+    .train-eta { font-size: 1.1rem; font-weight: 700; color: var(--bordeaux-l); min-width: 50px; text-align: right; }
+    .train-eta span { font-size: 0.68rem; font-weight: 500; color: var(--text-soft); }
+
+    /* Alta frequenza */
+    .freq-banner {
+      text-align: center; padding: 20px;
+      background: var(--bordeaux-pale);
+      border: 1px solid rgba(107,26,58,0.12);
+      border-radius: var(--radius-sm);
+    }
+    .freq-banner .icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .freq-banner .freq-text { font-size: 1.05rem; font-weight: 700; color: var(--bordeaux); }
+    .freq-banner .freq-sub { font-size: 0.8rem; color: var(--text-soft); margin-top: 4px; }
+
+    /* === TIME EDITOR === */
+    .time-editor {
+      margin-top: 18px; padding: 16px;
+      background: var(--rose);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(107,26,58,0.12);
+    }
+    .time-editor label {
+      display: block; font-size: 0.72rem; font-weight: 700;
+      color: var(--bordeaux); text-transform: uppercase;
+      letter-spacing: 0.7px; margin-bottom: 6px;
+    }
+    .time-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+    .time-row input[type="date"],
+    .time-row input[type="time"] {
+      flex: 1; min-width: 120px; padding: 9px 12px;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 8px; font-family: inherit; font-size: 0.9rem;
+      color: var(--text); outline: none;
+      transition: border-color 0.2s;
+    }
+    .time-row input:focus { border-color: var(--bordeaux-l); }
+    .apply-btn {
+      padding: 9px 18px;
+      background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-l));
+      color: #fff; border: none; border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+    }
+    .apply-btn:hover { opacity: 0.85; }
+
+    /* === MILANO SEARCH === */
+    .search-wrap { position: relative; }
+    .search-input {
+      width: 100%; padding: 12px 16px 12px 42px;
+      background: var(--bordeaux-pale); color: var(--text);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      font-family: inherit; font-size: 0.95rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--bordeaux-l); }
+    .search-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; pointer-events: none;
+    }
+    .suggestions {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 24px rgba(107,26,58,0.12);
+      z-index: 10; overflow: hidden;
+      max-height: 280px; overflow-y: auto;
+    }
+    .suggestion-item {
+      padding: 12px 16px; cursor: pointer;
+      font-size: 0.9rem; font-weight: 500; color: var(--text);
+      transition: background 0.15s;
+      border-bottom: 1px solid var(--border);
+    }
+    .suggestion-item:last-child { border-bottom: none; }
+    .suggestion-item:hover { background: var(--bordeaux-pale); color: var(--bordeaux); }
+    .suggestion-item mark {
+      background: none; color: var(--bordeaux); font-weight: 700;
+    }
+
+    /* === LOADING / EMPTY === */
+    .loading { text-align: center; padding: 24px; color: var(--text-soft); }
+    .loading .spinner {
+      display: inline-block; width: 22px; height: 22px;
+      border: 3px solid var(--border); border-top-color: var(--bordeaux-l);
+      border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 10px;
+    }
+    .empty { text-align: center; padding: 20px; color: var(--text-soft); font-size: 0.9rem; }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp   { from { opacity: 0; transform: translateY(10px);  } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin       { to { transform: rotate(360deg); } }
+
+    @media (max-width: 480px) {
+      .header h1 { font-size: 1.8rem; }
+      .choice-btn { padding: 14px 22px; font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Torna alla home</a>
+
+<div class="header">
+  <div class="petals">🌸 🌷 🌸</div>
+  <h1>Ciao Gaia, dove vai?</h1>
+  <p>Seleziona la tua destinazione 💜</p>
+</div>
+
+<!-- SCELTE -->
+<div class="choices">
+  <button class="choice-btn" id="btn-casa" onclick="scegliPercorso('casa')"><span>A casa! 🏡</span></button>
+  <button class="choice-btn" id="btn-milano" onclick="scegliPercorso('milano')"><span>Milano! 🏙️</span></button>
+</div>
+
+<!-- CONTENUTO DINAMICO -->
+<div id="main-content" style="width:100%;max-width:460px"></div>
+
+<script>
+// ============================================================
+// ORARIO ENGINE (inlined)
+// ============================================================
+const FESTIVITA_FISSE = [[1,1],[1,6],[4,25],[5,1],[6,2],[8,15],[11,1],[12,7],[12,8],[12,25],[12,26]];
+function calcolaPasqua(y){const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),gi=((h+l-7*m+114)%31)+1;return new Date(y,mo-1,gi);}
+function getTipoGiornata(date=new Date()){let d=new Date(date);if(d.getHours()<3)d.setDate(d.getDate()-1);const g=d.getDay(),m=d.getMonth()+1,gm=d.getDate(),y=d.getFullYear();for(const[mm,gg]of FESTIVITA_FISSE)if(m===mm&&gm===gg)return"festivo";const pq=new Date(calcolaPasqua(y));pq.setDate(pq.getDate()+1);if(d.getMonth()===pq.getMonth()&&d.getDate()===pq.getDate())return"festivo";if(g===0)return"festivo";if(g===6)return"sabato";return"feriale";}
+function getNextTrains(data,dir,filtro=null,target=new Date(),n=3){const dd=data?.[dir];if(!dd)return[];const tipo=getTipoGiornata(target),orari=dd[tipo];if(!orari||!Object.keys(orari).length)return[];const oC=target.getHours(),mC=target.getMinutes(),res=[];for(let off=0;off<25&&res.length<n;off++){const oT=(oC+off)%24,oK=oT.toString().padStart(2,"0"),nodo=orari[oK];if(nodo==null)continue;if(typeof nodo==="string"){if(off===0)return[{ora_partenza:null,destinazione:filtro||dir,minuti_attesa:null,tipo:"frequenza",messaggio:nodo}];res.push({ora_partenza:`${oK}:00`,destinazione:filtro||dir,minuti_attesa:Math.round(((oT*60)-(oC*60+mC)+1440)%1440),tipo:"frequenza",messaggio:nodo});continue;}if(typeof nodo==="object"){const treni=[];const dests=filtro?{[filtro]:nodo[filtro]}:nodo;for(const[dest,mins]of Object.entries(dests)){if(!Array.isArray(mins))continue;for(const m of mins){if(off===0&&m<mC)continue;let att=(oT*60+m)-(oC*60+mC);if(att<0)att+=1440;treni.push({ora_partenza:`${oK}:${m.toString().padStart(2,"0")}`,destinazione:dest,minuti_attesa:att,tipo:"esatto"});}}treni.sort((a,b)=>a.minuti_attesa-b.minuti_attesa);for(const t of treni){if(res.length>=n)break;res.push(t);}}}return res;}
+function formattaDest(n){if(!n)return"";return n.split("_").map(w=>["fs","pza"].includes(w.toLowerCase())?w.toUpperCase():/^\d+$/.test(w)?w:w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ");}
+
+// ============================================================
+// DATI
+// ============================================================
+const BASE_URL = "https://raw.githubusercontent.com/simonetriozzi/orariogaia/main/json_orari/";
+
+// Stazioni M1 da Pagano a Sesto I Maggio (escluso ramo Rho e fermate dopo De Angeli verso Bisceglie)
+const STAZIONI_MILANO = [
+  { id: "M1_Pagano",       label: "Pagano" },
+  { id: "M1_Conciliazione",label: "Conciliazione" },
+  { id: "M1_Cadorna",      label: "Cadorna" },
+  { id: "M1_Cairoli",      label: "Cairoli" },
+  { id: "M1_Cordusio",     label: "Cordusio" },
+  { id: "M1_Duomo",        label: "Duomo" },
+  { id: "M1_San_Babila",   label: "San Babila" },
+  { id: "M1_Palestro",     label: "Palestro" },
+  { id: "M1_Porta_Venezia",label: "Porta Venezia" },
+  { id: "M1_Lima",         label: "Lima" },
+  { id: "M1_Loreto",       label: "Loreto" },
+  { id: "M1_Pasteur",      label: "Pasteur" },
+  { id: "M1_Rovereto",     label: "Rovereto" },
+  { id: "M1_Turro",        label: "Turro" },
+  { id: "M1_Gorla",        label: "Gorla" },
+  { id: "M1_Precotto",     label: "Precotto" },
+  { id: "M1_Villa_S_Giovanni", label: "Villa S. Giovanni" },
+  { id: "M1_Sesto_Marelli",label: "Sesto Marelli" },
+  { id: "M1_Sesto_Rondo",  label: "Sesto Rondò" },
+  { id: "M1_Sesto_I_Maggio", label: "Sesto I Maggio FS" },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let percorsoAttivo = null;
+let dataOraCorrente = new Date();
+let cacheJSON = {};
+let stazioneSelezionata = null;
+
+async function caricaJSON(nome) {
+  if (cacheJSON[nome]) return cacheJSON[nome];
+  const r = await fetch(`${BASE_URL}${nome}.json`);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  cacheJSON[nome] = await r.json();
+  return cacheJSON[nome];
+}
+
+// ============================================================
+// ROUTING
+// ============================================================
+function scegliPercorso(tipo) {
+  percorsoAttivo = tipo;
+  stazioneSelezionata = null;
+
+  document.getElementById('btn-casa').classList.toggle('active', tipo === 'casa');
+  document.getElementById('btn-milano').classList.toggle('active', tipo === 'milano');
+
+  if (tipo === 'casa') renderCasa();
+  else renderMilano();
+}
+
+// ============================================================
+// PERCORSO CASA — De Angeli → Sesto
+// ============================================================
+async function renderCasa(targetDate) {
+  const now = targetDate || dataOraCorrente;
+  const content = document.getElementById('main-content');
+
+  content.innerHTML = `<div class="panel"><div class="loading"><div class="spinner"></div><p>Cerco i treni…</p></div></div>`;
+
+  try {
+    const data = await caricaJSON('M1_De_Angeli');
+    const treni = getNextTrains(data, 'sesto_1_maggio_fs', null, now, 3);
+    const tipo = getTipoGiornata(now);
+    const oraStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+
+    let html = `<div class="panel">
+      <div class="panel-title">🏡 De Angeli → Sesto I Maggio FS</div>
+      <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:14px;">
+        ${oraStr} · ${tipo}
+      </div>`;
+    html += renderTreni(treni);
+    html += renderTimeEditor(now);
+    html += `</div>`;
+    content.innerHTML = html;
+
+    // Re-attach apply button
+    document.getElementById('apply-time')?.addEventListener('click', () => {
+      const d = document.getElementById('inp-date').value;
+      const t = document.getElementById('inp-time').value;
+      if (d && t) {
+        const nuovaData = new Date(`${d}T${t}`);
+        dataOraCorrente = nuovaData;
+        renderCasa(nuovaData);
+      }
+    });
+  } catch(e) {
+    document.getElementById('main-content').innerHTML =
+      `<div class="panel"><div class="empty">⚠️ Errore nel caricamento. Riprova.</div></div>`;
+  }
+}
+
+// ============================================================
+// PERCORSO MILANO — Ricerca stazione → Bisceglie
+// ============================================================
+function renderMilano() {
+  const content = document.getElementById('main-content');
+  content.innerHTML = `
+    <div class="panel">
+      <div class="panel-title">🏙️ Da dove parti?</div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-stazione" placeholder="Digita una stazione…" autocomplete="off">
+        <div class="suggestions" id="suggestions" style="display:none"></div>
+      </div>
+    </div>
+    <div id="result-milano" style="margin-top:0"></div>`;
+
+  const input = document.getElementById('search-stazione');
+  const sugBox = document.getElementById('suggestions');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { sugBox.style.display = 'none'; return; }
+
+    const matches = STAZIONI_MILANO.filter(s => s.label.toLowerCase().includes(q));
+    if (!matches.length) { sugBox.style.display = 'none'; return; }
+
+    sugBox.innerHTML = matches.map(s => {
+      const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+      const label = s.label.replace(re, '<mark>$1</mark>');
+      return `<div class="suggestion-item" data-id="${s.id}" data-label="${s.label}">${label}</div>`;
+    }).join('');
+    sugBox.style.display = 'block';
+
+    sugBox.querySelectorAll('.suggestion-item').forEach(el => {
+      el.addEventListener('click', () => {
+        input.value = el.dataset.label;
+        sugBox.style.display = 'none';
+        selezionaStazione(el.dataset.id, el.dataset.label);
+      });
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrap')) sugBox.style.display = 'none';
+  }, { once: false });
+}
+
+async function selezionaStazione(id, label) {
+  stazioneSelezionata = id;
+  const result = document.getElementById('result-milano');
+  result.innerHTML = `<div class="panel" style="margin-top:18px"><div class="loading"><div class="spinner"></div><p>Cerco i treni…</p></div></div>`;
+
+  try {
+    const data = await caricaJSON(id);
+    const now = dataOraCorrente;
+    // Direzione Bisceglie: rho_fiera_bisceglie, filtro bisceglie
+    const treni = getNextTrains(data, 'rho_fiera_bisceglie', 'bisceglie', now, 3);
+    const tipo = getTipoGiornata(now);
+    const oraStr = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+
+    let html = `<div class="panel" style="margin-top:18px">
+      <div class="panel-title">🚇 ${label} → Bisceglie</div>
+      <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:14px;">${oraStr} · ${tipo}</div>`;
+    html += renderTreni(treni);
+    html += `</div>`;
+    result.innerHTML = html;
+  } catch(e) {
+    result.innerHTML = `<div class="panel" style="margin-top:18px"><div class="empty">⚠️ Errore nel caricamento.</div></div>`;
+  }
+}
+
+// ============================================================
+// RENDER HELPERS
+// ============================================================
+function renderTreni(treni) {
+  if (!treni.length) return `<div class="empty">Nessun treno disponibile in questa fascia oraria 🌙</div>`;
+
+  if (treni[0].tipo === 'frequenza') {
+    const msg = treni[0].messaggio.split(/every/i)[0].trim();
+    return `<div class="freq-banner">
+      <div class="icon">🚇</div>
+      <div class="freq-text">${msg}</div>
+      <div class="freq-sub">Alta frequenza — non serve controllare gli orari!</div>
+    </div>`;
+  }
+
+  return treni.map(t => `
+    <div class="train-card">
+      <div class="train-time">${t.ora_partenza}</div>
+      <div class="train-info">
+        <div class="train-dest">${formattaDest(t.destinazione)}</div>
+        <div class="train-wait">Treno programmato</div>
+      </div>
+      <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
+    </div>`).join('');
+}
+
+function renderTimeEditor(now) {
+  const d = now.toISOString().split('T')[0];
+  const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  return `
+    <div class="time-editor">
+      <label>✏️ Modifica data e orario</label>
+      <div class="time-row">
+        <input type="date" id="inp-date" value="${d}">
+        <input type="time" id="inp-time" value="${t}">
+        <button class="apply-btn" id="apply-time">Aggiorna 💜</button>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
