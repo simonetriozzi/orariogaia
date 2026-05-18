@@ -277,9 +277,9 @@ document.getElementById('apply-time').addEventListener('click', () => {
 // PRESET ROUTES
 // ============================================================
 const PRESETS = {
-  casa:    { stazione:'M2_Cologno_Sud',  dir:'assago_abbiategrasso', filtro:null,          titolo:'Cologno Sud → Assago / Abbiategrasso' },
-  unicatt: { stazione:'M2_S_Ambrogio',   dir:'cologno_gessate',      filtro:'cologno_nord', titolo:'S. Ambrogio → Cologno Nord' },
-  poli:    { stazione:'M2_Piola',        dir:'cologno_gessate',      filtro:'cologno_nord', titolo:'Piola → Cologno Nord' },
+  casa:    { stazione:'M2_Cologno_Sud',  dir:'abbiategrasso_assago_forum', filtro:'assago_forum',   titolo:'Cologno Sud → Assago / Abbiategrasso' },
+  unicatt: { stazione:'M2_S_Ambrogio',   dir:'gessate_cologno_nord',       filtro:'cologno_nord',  titolo:'S. Ambrogio → Cologno Nord' },
+  poli:    { stazione:'M2_Piola',        dir:'gessate_cologno_nord',       filtro:'cologno_nord',  titolo:'Piola → Cologno Nord' },
 };
 
 function scegli(id){
@@ -342,7 +342,7 @@ inpSt.addEventListener('input', () => {
     el.addEventListener('click',()=>{
       inpSt.value = el.dataset.label;
       sugB.style.display='none';
-      percorso = { stazione:el.dataset.id, dir:'cologno_gessate', filtro:'cologno_nord', titolo:`${el.dataset.label} → Cologno Nord` };
+    percorso = { stazione:el.dataset.id, dir:'gessate_cologno_nord', filtro:'cologno_nord', titolo:`${el.dataset.label} → Cologno Nord` };
       esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
     });
   });
@@ -365,14 +365,6 @@ async function esegui(stazione, dir, filtro, titolo){
     const data = cache[stazione];
     // Prova la direzione indicata; se non esiste prova varianti comuni
     let treni = nextTrains(data, dir, filtro, dataOra, 3);
-    if(!treni.length){
-      // fallback: prova tutte le direzioni disponibili e cerca la prima
-      const dirs = Object.keys(data);
-      for(const d of dirs){
-        treni = nextTrains(data, d, null, dataOra, 3);
-        if(treni.length){ break; }
-      }
-    }
     const tipo = tipoGiornata(dataOra);
     const oraStr = dataOra.getHours().toString().padStart(2,'0')+':'+dataOra.getMinutes().toString().padStart(2,'0');
     renderRisultati(treni, titolo, tipo, oraStr);
