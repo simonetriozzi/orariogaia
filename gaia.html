@@ -237,8 +237,8 @@
 
 <!-- SCELTE -->
 <div class="choices">
-  <button class="choice-btn" id="btn-casa" onclick="scegliPercorso('casa')"><span>A casa! 🏡</span></button>
-  <button class="choice-btn" id="btn-milano" onclick="scegliPercorso('milano')"><span>Milano! 🏙️</span></button>
+  <button class="choice-btn" id="btn-casa" onclick="scegliPercorso('casa')"><span>Milano! 🏙️</span></button>
+  <button class="choice-btn" id="btn-milano" onclick="scegliPercorso('milano')"><span>A casa! 🏡</span></button>
 </div>
 
 <!-- CONTENUTO DINAMICO -->
@@ -329,7 +329,7 @@ async function renderCasa(targetDate) {
     const oraStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
 
     let html = `<div class="panel">
-      <div class="panel-title">🏡 De Angeli → Sesto I Maggio FS</div>
+      <div class="panel-title">🏙️ De Angeli → Sesto I Maggio FS</div>
       <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:14px;">
         ${oraStr} · ${tipo}
       </div>`;
@@ -361,7 +361,7 @@ function renderMilano() {
   const content = document.getElementById('main-content');
   content.innerHTML = `
     <div class="panel">
-      <div class="panel-title">🏙️ Da dove parti?</div>
+      <div class="panel-title">🏡 Da dove parti?</div>
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
         <input type="text" class="search-input" id="search-stazione" placeholder="Digita una stazione…" autocomplete="off">
@@ -415,7 +415,7 @@ async function selezionaStazione(id, label) {
     const oraStr = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
 
     let html = `<div class="panel" style="margin-top:18px">
-      <div class="panel-title">🚇 ${label} → Bisceglie</div>
+      <div class="panel-title">🚇 ${label} → Casa</div>
       <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:14px;">${oraStr} · ${tipo}</div>`;
     html += renderTreni(treni);
     html += `</div>`;
