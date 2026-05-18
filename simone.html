@@ -179,7 +179,82 @@
     }
     .apply-btn:hover { opacity: 0.85; }
 
+    /* === INLINE RESULT PANEL === */
+    .preset-item { width: 100%; max-width: 400px; }
+    .inline-result {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+      opacity: 0;
+    }
+    .inline-result.open {
+      max-height: 600px;
+      opacity: 1;
+    }
+    .inline-result-inner {
+      background: rgba(10,132,255,0.07);
+      border: 1px solid rgba(10,132,255,0.2);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 0 16px;
+      transform: translateY(-4px);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .inline-result.open .inline-result-inner { transform: translateY(0); }
+
+    /* active button: square bottom corners when open */
+    .preset-item.open .preset-btn {
+      border-radius: var(--radius) var(--radius) 0 0;
+      border-color: rgba(10,132,255,0.4);
+      background: rgba(10,132,255,0.12);
+    }
+    .preset-item.open .preset-btn .arrow {
+      transform: rotate(90deg);
+      opacity: 0.9;
+    }
+    .preset-btn .arrow { transition: transform 0.3s ease, opacity 0.2s; }
+
+    /* train rows inside inline panel */
+    .inline-result .train-row {
+      padding: 13px 0;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .inline-result .train-row:last-of-type { border-bottom: none; }
+    .inline-result .train-row:first-child { padding-top: 16px; }
+    .inline-result .train-row:last-child  { padding-bottom: 16px; }
+    .inline-result .result-title {
+      font-size: 0.65rem; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      padding-top: 14px; margin-bottom: 0;
+    }
+
+    /* shimmer loading */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    .skeleton {
+      height: 18px; border-radius: 6px; margin: 10px 0;
+      background: linear-gradient(90deg, #3a3a3c 25%, #4a4a4c 50%, #3a3a3c 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    .skeleton-wrap { padding: 16px 0; }
+
+    /* alto freq */
+    .inline-result .freq-box { padding: 16px 0; }
+
     @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    /* altro section */
+    .altro-section { width: 100%; max-width: 400px; }
+    .altro-result {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px;
+      margin-top: 12px;
+      animation: fadeUp 0.35s ease-out;
+    }
 
     @media (max-width: 440px) { h1 { font-size: 2rem; } .preset-btn { font-size: 1rem; } }
   </style>
@@ -202,42 +277,60 @@
 
 <!-- PRESET BUTTONS -->
 <div class="presets">
-  <button class="preset-btn" id="btn-casa" onclick="scegli('casa')">
-    <div class="label-wrap">
-      <span>🏠 CASA</span>
-      <span class="sub">Cologno Sud → Assago / Abbiategrasso</span>
+
+  <div class="preset-item" id="item-casa">
+    <button class="preset-btn" onclick="scegli('casa')">
+      <div class="label-wrap">
+        <span>🏠 CASA</span>
+        <span class="sub">Cologno Sud → Assago / Abbiategrasso</span>
+      </div>
+      <span class="arrow">›</span>
+    </button>
+    <div class="inline-result" id="res-casa">
+      <div class="inline-result-inner" id="res-casa-inner"></div>
     </div>
-    <span class="arrow">›</span>
-  </button>
-  <button class="preset-btn" id="btn-unicatt" onclick="scegli('unicatt')">
-    <div class="label-wrap">
-      <span>📚 UNICATT</span>
-      <span class="sub">S. Ambrogio → Cologno Nord</span>
+  </div>
+
+  <div class="preset-item" id="item-unicatt">
+    <button class="preset-btn" onclick="scegli('unicatt')">
+      <div class="label-wrap">
+        <span>📚 UNICATT</span>
+        <span class="sub">S. Ambrogio → Cologno Nord</span>
+      </div>
+      <span class="arrow">›</span>
+    </button>
+    <div class="inline-result" id="res-unicatt">
+      <div class="inline-result-inner" id="res-unicatt-inner"></div>
     </div>
-    <span class="arrow">›</span>
-  </button>
-  <button class="preset-btn" id="btn-poli" onclick="scegli('poli')">
-    <div class="label-wrap">
-      <span>🏛️ POLI</span>
-      <span class="sub">Piola → Cologno Nord</span>
+  </div>
+
+  <div class="preset-item" id="item-poli">
+    <button class="preset-btn" onclick="scegli('poli')">
+      <div class="label-wrap">
+        <span>🏛️ POLI</span>
+        <span class="sub">Piola → Cologno Nord</span>
+      </div>
+      <span class="arrow">›</span>
+    </button>
+    <div class="inline-result" id="res-poli">
+      <div class="inline-result-inner" id="res-poli-inner"></div>
     </div>
-    <span class="arrow">›</span>
-  </button>
+  </div>
+
 </div>
 
 <!-- ALTRO / CERCA -->
-<button class="altro-btn" id="btn-altro" onclick="toggleAltro()">🔍 Altro — Cerca stazione</button>
-
-<div class="search-section" id="search-section" style="display:none">
-  <div class="search-wrap">
-    <span class="search-icon">🚇</span>
-    <input type="text" id="inp-stazione" class="search-input" placeholder="Cerca stazione M2…" autocomplete="off">
-    <div class="suggestions" id="sug-box" style="display:none"></div>
+<div class="altro-section">
+  <button class="altro-btn" id="btn-altro" onclick="toggleAltro()">🔍 Altro — Cerca stazione</button>
+  <div id="search-section" style="display:none">
+    <div class="search-wrap">
+      <span class="search-icon">🚇</span>
+      <input type="text" id="inp-stazione" class="search-input" placeholder="Cerca stazione M2…" autocomplete="off">
+      <div class="suggestions" id="sug-box" style="display:none"></div>
+    </div>
+    <div id="res-altro"></div>
   </div>
 </div>
-
-<!-- RISULTATI -->
-<div id="results"></div>
 
 <script>
 // ============================================================
@@ -266,12 +359,6 @@ function setTimeInputs(d){
 }
 setTimeInputs(dataOra);
 
-document.getElementById('apply-time').addEventListener('click', () => {
-  if(inpDate.value && inpTime.value){
-    dataOra = new Date(`${inpDate.value}T${inpTime.value}`);
-    if(percorso) esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
-  }
-});
 
 // ============================================================
 // PRESET ROUTES
@@ -283,12 +370,35 @@ const PRESETS = {
 };
 
 function scegli(id){
-  percorso = PRESETS[id];
-  ['casa','unicatt','poli'].forEach(k => document.getElementById('btn-'+k).classList.remove('active'));
-  document.getElementById('btn-'+id).classList.add('active');
+  // Close others, toggle current
+  const ids = ['casa','unicatt','poli'];
+  const item = document.getElementById('item-'+id);
+  const res  = document.getElementById('res-'+id);
+  const isOpen = item.classList.contains('open');
+
+  // Close all
+  ids.forEach(k => {
+    document.getElementById('item-'+k).classList.remove('open');
+    document.getElementById('res-'+k).classList.remove('open');
+  });
   document.getElementById('search-section').style.display = 'none';
-  document.getElementById('btn-altro').style.color = '';
-  esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
+
+  if(!isOpen){
+    percorso = PRESETS[id];
+    item.classList.add('open');
+    res.classList.add('open');
+    // Show skeleton immediately
+    document.getElementById('res-'+id+'-inner').innerHTML = `
+      <div class="result-title">${percorso.titolo}</div>
+      <div class="skeleton-wrap">
+        <div class="skeleton" style="width:60%"></div>
+        <div class="skeleton" style="width:80%"></div>
+        <div class="skeleton" style="width:50%"></div>
+      </div>`;
+    esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo, 'res-'+id+'-inner');
+  } else {
+    percorso = null;
+  }
 }
 
 // ============================================================
@@ -318,9 +428,14 @@ const STAZIONI_M2 = [
 function toggleAltro(){
   const sec = document.getElementById('search-section');
   const shown = sec.style.display !== 'none';
+  // Close all presets
+  ['casa','unicatt','poli'].forEach(k => {
+    document.getElementById('item-'+k).classList.remove('open');
+    document.getElementById('res-'+k).classList.remove('open');
+  });
   sec.style.display = shown ? 'none' : 'block';
   if(!shown) document.getElementById('inp-stazione').focus();
-  ['casa','unicatt','poli'].forEach(k=>document.getElementById('btn-'+k).classList.remove('active'));
+  percorso = null;
 }
 
 const inpSt = document.getElementById('inp-stazione');
@@ -342,8 +457,10 @@ inpSt.addEventListener('input', () => {
     el.addEventListener('click',()=>{
       inpSt.value = el.dataset.label;
       sugB.style.display='none';
-    percorso = { stazione:el.dataset.id, dir:'gessate_cologno_nord', filtro:'cologno_nord', titolo:`${el.dataset.label} → Cologno Nord` };
-      esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
+      percorso = { stazione:el.dataset.id, dir:'gessate_cologno_nord', filtro:'cologno_nord', titolo:`${el.dataset.label} → Cologno Nord` };
+      const resAltro = document.getElementById('res-altro');
+      resAltro.innerHTML = `<div class="altro-result"><div class="skeleton-wrap"><div class="skeleton" style="width:70%"></div><div class="skeleton"></div><div class="skeleton" style="width:55%"></div></div></div>`;
+      esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo, 'res-altro', true);
     });
   });
 });
@@ -353,9 +470,9 @@ document.addEventListener('click', e=>{ if(!e.target.closest('.search-wrap')) su
 // ============================================================
 // FETCH + RENDER
 // ============================================================
-async function esegui(stazione, dir, filtro, titolo){
-  const box = document.getElementById('results');
-  box.innerHTML = `<div class="result-box"><div class="empty-box">⏳ Caricamento…</div></div>`;
+async function esegui(stazione, dir, filtro, titolo, targetId='res-altro', wrap=false){
+  const box = document.getElementById(targetId);
+  if(!box) return;
   try {
     if(!cache[stazione]){
       const r = await fetch(`${BASE}${stazione}.json`);
@@ -363,32 +480,31 @@ async function esegui(stazione, dir, filtro, titolo){
       cache[stazione] = await r.json();
     }
     const data = cache[stazione];
-    // Prova la direzione indicata; se non esiste prova varianti comuni
     let treni = nextTrains(data, dir, filtro, dataOra, 3);
     const tipo = tipoGiornata(dataOra);
     const oraStr = dataOra.getHours().toString().padStart(2,'0')+':'+dataOra.getMinutes().toString().padStart(2,'0');
-    renderRisultati(treni, titolo, tipo, oraStr);
+    renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap);
   } catch(e){
-    document.getElementById('results').innerHTML = `<div class="result-box"><div class="empty-box">⚠️ Errore caricamento</div></div>`;
+    const box = document.getElementById(targetId);
+    if(box) box.innerHTML = `<div class="empty-box" style="padding:16px">⚠️ Errore caricamento</div>`;
   }
 }
 
-function renderRisultati(treni, titolo, tipo, oraStr){
-  let html = `<div class="result-box">
-    <div class="result-title">${titolo} · ${oraStr} · ${tipo}</div>`;
+function renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap=false){
+  let inner = `<div class="result-title">${titolo} · ${oraStr} · ${tipo}</div>`;
 
   if(!treni.length){
-    html += `<div class="empty-box">🌙 Nessun treno in questa fascia oraria</div>`;
+    inner += `<div class="empty-box" style="padding:12px 0 16px">🌙 Nessun treno in questa fascia oraria</div>`;
   } else if(treni[0].freq && treni[0].t===null){
     const msg = treni[0].msg.split(/every/i)[0].trim();
-    html += `<div class="freq-box">
+    inner += `<div class="freq-box">
       <div class="f-icon">🚇</div>
       <div class="f-text">${msg}</div>
-      <div class="f-sub">Alta frequenza — controlla gli orari sullo schermo</div>
+      <div class="f-sub">Alta frequenza — controlla lo schermo</div>
     </div>`;
   } else {
-    html += treni.map(t=>`
-      <div class="train-row">
+    inner += treni.map((t,i) => `
+      <div class="train-row" style="animation:fadeUp 0.3s ease-out ${i*0.07}s both">
         <div class="train-time">${t.t}</div>
         <div class="train-info">
           <div class="train-dest">${fmt(t.dest)}</div>
@@ -397,9 +513,33 @@ function renderRisultati(treni, titolo, tipo, oraStr){
         <div class="train-eta">${t.att}<small> min</small></div>
       </div>`).join('');
   }
-  html += `</div>`;
-  document.getElementById('results').innerHTML = html;
+
+  const box = document.getElementById(targetId);
+  if(!box) return;
+  if(wrap){
+    box.innerHTML = `<div class="altro-result">${inner}</div>`;
+  } else {
+    box.innerHTML = inner;
+  }
 }
+
+// Also update apply-time to re-render in the correct target
+document.getElementById('apply-time').addEventListener('click', () => {
+  if(inpDate.value && inpTime.value){
+    dataOra = new Date(`${inpDate.value}T${inpTime.value}`);
+    if(percorso){
+      const ids = ['casa','unicatt','poli'];
+      for(const k of ids){
+        if(document.getElementById('item-'+k)?.classList.contains('open')){
+          esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo, 'res-'+k+'-inner');
+          return;
+        }
+      }
+      // altro
+      esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo, 'res-altro', true);
+    }
+  }
+});
 </script>
 </body>
 </html>
