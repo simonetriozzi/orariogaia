@@ -1,54 +1,483 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prossima Metro M2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrarioGaia — Prossime Metro Milano</title>
+  <meta name="description" content="Orari in tempo reale delle metropolitane M1 e M2 di Milano. Scopri il prossimo treno in arrivo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface-2: #1a1a26;
+      --border: rgba(255,255,255,0.06);
+      --text: #e8e8ed;
+      --text-muted: #8888a0;
+      --m1-color: #e4002b;
+      --m1-glow: rgba(228,0,43,0.3);
+      --m2-color: #00a650;
+      --m2-glow: rgba(0,166,80,0.3);
+      --accent: #6c63ff;
+      --accent-glow: rgba(108,99,255,0.25);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === HEADER === */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+      animation: fadeInDown 0.6s ease-out;
+    }
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #a0a0c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .header p { color: var(--text-muted); margin-top: 6px; font-size: 0.9rem; }
+    .header .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px; padding: 4px 12px;
+      background: var(--surface-2); border-radius: 20px;
+      font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border);
+    }
+    .header .badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #00e676; animation: pulse 2s infinite;
+    }
+
+    /* === CARD PRINCIPALE === */
+    .card {
+      width: 100%; max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      animation: fadeInUp 0.5s ease-out;
+    }
+    .card + .card { margin-top: 20px; }
+
+    /* === SELETTORI === */
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      display: block; font-size: 0.75rem; font-weight: 600;
+      color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 0.8px; margin-bottom: 6px;
+    }
+    .field select {
+      width: 100%; padding: 12px 16px;
+      background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      font-family: inherit; font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238888a0' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .field select:disabled { opacity: 0.4; cursor: not-allowed; }
+    .field select option { background: var(--surface-2); color: var(--text); }
+
+    /* === LINE INDICATOR === */
+    .line-tag {
+      display: inline-block; padding: 2px 10px;
+      border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.5px; margin-right: 6px;
+    }
+    .line-tag.m1 { background: var(--m1-color); color: #fff; }
+    .line-tag.m2 { background: var(--m2-color); color: #fff; }
+
+    /* === RISULTATI === */
+    #results-container { width: 100%; max-width: 480px; }
+
+    .result-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .result-header h2 {
+      font-size: 1rem; font-weight: 700; color: var(--text);
+    }
+    .result-header .clock {
+      font-size: 0.85rem; color: var(--text-muted); font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Train card */
+    .train-card {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px; margin-bottom: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      animation: fadeInUp 0.4s ease-out both;
+    }
+    .train-card:nth-child(2) { animation-delay: 0.06s; }
+    .train-card:nth-child(3) { animation-delay: 0.12s; }
+    .train-card:nth-child(4) { animation-delay: 0.18s; }
+    .train-card:nth-child(5) { animation-delay: 0.24s; }
+
+    .train-time {
+      font-size: 1.5rem; font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      min-width: 72px;
+    }
+    .train-info { flex: 1; }
+    .train-dest {
+      font-size: 0.9rem; font-weight: 600; margin-bottom: 2px;
+    }
+    .train-wait {
+      font-size: 0.8rem; color: var(--text-muted);
+    }
+    .train-eta {
+      text-align: right; font-size: 1.1rem; font-weight: 700;
+      color: var(--accent); min-width: 56px;
+    }
+    .train-eta span { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); }
+
+    /* Frequency banner */
+    .freq-banner {
+      padding: 20px; text-align: center;
+      background: linear-gradient(135deg, var(--surface-2), rgba(108,99,255,0.08));
+      border: 1px solid rgba(108,99,255,0.15);
+      border-radius: var(--radius-sm);
+      animation: fadeInUp 0.4s ease-out;
+    }
+    .freq-banner .icon { font-size: 2rem; margin-bottom: 8px; }
+    .freq-banner .freq-text {
+      font-size: 1.1rem; font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .freq-banner .freq-sub {
+      font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 32px 16px; color: var(--text-muted);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* === COLOR DOTS for destinations === */
+    .dest-dot {
+      display: inline-block; width: 8px; height: 8px;
+      border-radius: 50%; margin-right: 6px; vertical-align: middle;
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 520px) {
+      body { padding: 16px 12px 40px; }
+      .header h1 { font-size: 1.5rem; }
+      .card { padding: 18px; }
+      .train-time { font-size: 1.3rem; min-width: 62px; }
+    }
+  </style>
 </head>
-
 <body>
-    <h1>Direzione Assago Forum</h1>
-    <h2 id="orario-metro">Calcolo in corso...</h2>
 
-    <script>
-        // Sostituisci con il tuo URL Raw se diverso
-        const URL_JSON = "https://raw.githubusercontent.com/simonetriozzi/orariogaia/main/orari_m2.json";
+  <div class="header">
+    <h1>OrarioGaia</h1>
+    <p>Prossime metro M1 & M2 — Milano</p>
+    <div class="badge"><span class="dot"></span> Aggiornamento live</div>
+  </div>
 
-        async function getProssimaMetro() {
-            try {
-                const response = await fetch(URL_JSON);
-                const dati = await response.json();
+  <!-- SELETTORI -->
+  <div class="card" id="selector-card">
+    <div class="field">
+      <label>Stazione</label>
+      <select id="sel-stazione">
+        <option value="">— Seleziona stazione —</option>
+        <optgroup label="🔴 Linea M1">
+          <option value="M1_De_Angeli">De Angeli</option>
+          <option value="M1_San_Leonardo">San Leonardo</option>
+          <option value="M1_Palestro">Palestro</option>
+        </optgroup>
+        <optgroup label="🟢 Linea M2">
+          <option value="M2_Cologno_Sud">Cologno Sud</option>
+          <option value="M2_Piola">Piola</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="field">
+      <label>Direzione</label>
+      <select id="sel-direzione" disabled>
+        <option value="">— Seleziona prima la stazione —</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Filtro destinazione <span style="font-weight:400;text-transform:none">(opzionale)</span></label>
+      <select id="sel-destinazione" disabled>
+        <option value="">Tutte le destinazioni</option>
+      </select>
+    </div>
+  </div>
 
-                const oraAttuale = new Date();
-                let oraStr = oraAttuale.getHours().toString().padStart(2, '0');
-                let minutiAttuali = oraAttuale.getMinutes();
+  <!-- RISULTATI -->
+  <div id="results-container"></div>
 
-                // NOTA: Qui impostiamo 'feriale' fisso per il test. 
-                // Dovrai aggiungere uno switch in base a Date().getDay()
-                const orariOra = dati.assago_forum.feriale[oraStr];
+<script>
+// ============================================================
+// ORARIO ENGINE (inlined per compatibilità browser senza bundler)
+// ============================================================
+const FESTIVITA_FISSE = [
+  [1,1],[1,6],[4,25],[5,1],[6,2],[8,15],[11,1],[12,7],[12,8],[12,25],[12,26]
+];
 
-                if (orariOra) {
-                    // Cerca il primo minuto maggiore del minuto attuale
-                    const prossimoPassaggio = orariOra.find(m => m >= minutiAttuali);
+function calcolaPasqua(anno) {
+  const a=anno%19, b=Math.floor(anno/100), c=anno%100;
+  const d=Math.floor(b/4), e=b%4, f=Math.floor((b+8)/25);
+  const g=Math.floor((b-f+1)/3), h=(19*a+b-d-g+15)%30;
+  const i=Math.floor(c/4), k=c%4;
+  const l=(32+2*e+2*i-h-k)%7, m=Math.floor((a+11*h+22*l)/451);
+  const mese=Math.floor((h+l-7*m+114)/31);
+  const giorno=((h+l-7*m+114)%31)+1;
+  return new Date(anno, mese-1, giorno);
+}
 
-                    if (prossimoPassaggio !== undefined) {
-                        const minStr = prossimoPassaggio.toString().padStart(2, '0');
-                        document.getElementById('orario-metro').innerText = `Prossimo treno alle ${oraStr}:${minStr}`;
-                    } else {
-                        // Se non ci sono più treni in quest'ora, bisogna cercare nell'ora successiva
-                        document.getElementById('orario-metro').innerText = "Guarda l'ora successiva (logica da implementare)";
-                    }
-                } else {
-                    document.getElementById('orario-metro').innerText = "Nessun treno in questa fascia oraria.";
-                }
-            } catch (error) {
-                document.getElementById('orario-metro').innerText = "Errore nel caricamento degli orari.";
-            }
+function getTipoGiornata(date = new Date()) {
+  let d = new Date(date);
+  if (d.getHours() < 3) d.setDate(d.getDate() - 1);
+  const giorno=d.getDay(), mese=d.getMonth()+1, gm=d.getDate(), anno=d.getFullYear();
+  for (const [m,g] of FESTIVITA_FISSE) { if(mese===m && gm===g) return "festivo"; }
+  const pasquetta = new Date(calcolaPasqua(anno));
+  pasquetta.setDate(pasquetta.getDate()+1);
+  if(d.getMonth()===pasquetta.getMonth() && d.getDate()===pasquetta.getDate()) return "festivo";
+  if(giorno===0) return "festivo";
+  if(giorno===6) return "sabato";
+  return "feriale";
+}
+
+function getNextTrains(stazioneData, macroDirezione, filtro=null, targetDate=new Date(), limiteN=5) {
+  const dirDati = stazioneData?.[macroDirezione];
+  if(!dirDati) return [];
+  const tipo = getTipoGiornata(targetDate);
+  const orari = dirDati[tipo];
+  if(!orari || Object.keys(orari).length===0) return [];
+  const oraC=targetDate.getHours(), minC=targetDate.getMinutes();
+  const risultati=[];
+  for(let off=0; off<25 && risultati.length<limiteN; off++){
+    const oraT=(oraC+off)%24;
+    const oraKey=oraT.toString().padStart(2,"0");
+    const nodo=orari[oraKey];
+    if(nodo===undefined||nodo===null) continue;
+    if(typeof nodo==="string"){
+      if(off===0) return [{ora_partenza:null,destinazione:filtro||macroDirezione,minuti_attesa:null,tipo:"frequenza",messaggio:nodo}];
+      risultati.push({ora_partenza:`${oraKey}:00`,destinazione:filtro||macroDirezione,minuti_attesa:(oraT-oraC+24)%24*60-minC,tipo:"frequenza",messaggio:nodo});
+      continue;
+    }
+    if(typeof nodo==="object"){
+      const treni=[];
+      const dests=filtro?{[filtro]:nodo[filtro]}:nodo;
+      for(const [dest,mins] of Object.entries(dests)){
+        if(!Array.isArray(mins)) continue;
+        for(const m of mins){
+          if(off===0 && m<minC) continue;
+          let att=((oraT*60+m)-(oraC*60+minC));
+          if(att<0) att+=1440;
+          treni.push({ora_partenza:`${oraKey}:${m.toString().padStart(2,"0")}`,destinazione:dest,minuti_attesa:att,tipo:"esatto"});
         }
+      }
+      treni.sort((a,b)=>a.minuti_attesa-b.minuti_attesa);
+      for(const t of treni){ if(risultati.length>=limiteN) break; risultati.push(t); }
+    }
+  }
+  return risultati;
+}
 
-        getProssimaMetro();
-    </script>
+function getDirezioni(data){ return Object.keys(data||{}); }
+
+function getDestinazioniDisponibili(data, dir, date=new Date()){
+  const tipo=getTipoGiornata(date);
+  const orari=data?.[dir]?.[tipo];
+  if(!orari) return [];
+  const s=new Set();
+  for(const v of Object.values(orari)){ if(typeof v==="object"&&v) for(const d of Object.keys(v)) s.add(d); }
+  return [...s];
+}
+
+function formattaNome(n){
+  if(!n) return "";
+  return n.split("_").map(w=>{
+    if(["fs","pza"].includes(w.toLowerCase())) return w.toUpperCase();
+    if(/^\d+$/.test(w)) return w;
+    return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();
+  }).join(" ");
+}
+
+// ============================================================
+// UI CONTROLLER
+// ============================================================
+const BASE_URL = "https://raw.githubusercontent.com/simonetriozzi/orariogaia/main/json_orari/";
+let stazioneData = null;
+let refreshTimer = null;
+
+const selStazione = document.getElementById("sel-stazione");
+const selDirezione = document.getElementById("sel-direzione");
+const selDestinazione = document.getElementById("sel-destinazione");
+const resultsContainer = document.getElementById("results-container");
+
+// Destination colors for visual coding
+const DEST_COLORS = {
+  rho_fiera: "#fe6500", bisceglie: "#4488ff", molino_dorino: "#888",
+  sesto_1_maggio_fs: "#e4002b",
+  abbiategrasso: "#4488ff", assago_forum: "#fe6500", famagosta: "#888",
+  gessate: "#fe6500", cologno_nord: "#4488ff", cascina_gobba: "#333",
+};
+
+function getLineClass(stazione) {
+  return stazione.startsWith("M1") ? "m1" : "m2";
+}
+
+// --- Caricamento stazione ---
+selStazione.addEventListener("change", async () => {
+  const val = selStazione.value;
+  selDirezione.innerHTML = '<option value="">Caricamento...</option>';
+  selDirezione.disabled = true;
+  selDestinazione.innerHTML = '<option value="">Tutte le destinazioni</option>';
+  selDestinazione.disabled = true;
+  resultsContainer.innerHTML = "";
+  stazioneData = null;
+  clearInterval(refreshTimer);
+
+  if (!val) { selDirezione.innerHTML = '<option value="">— Seleziona prima la stazione —</option>'; return; }
+
+  try {
+    const r = await fetch(`${BASE_URL}${val}.json`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    stazioneData = await r.json();
+
+    const dirs = getDirezioni(stazioneData);
+    selDirezione.innerHTML = '<option value="">— Seleziona direzione —</option>';
+    for (const d of dirs) {
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = formattaNome(d);
+      selDirezione.appendChild(opt);
+    }
+    selDirezione.disabled = false;
+
+    // Auto-select se c'è una sola direzione (capolinea)
+    if (dirs.length === 1) {
+      selDirezione.value = dirs[0];
+      selDirezione.dispatchEvent(new Event("change"));
+    }
+  } catch (e) {
+    selDirezione.innerHTML = '<option value="">Errore caricamento</option>';
+    console.error(e);
+  }
+});
+
+// --- Selezione direzione ---
+selDirezione.addEventListener("change", () => {
+  const dir = selDirezione.value;
+  selDestinazione.innerHTML = '<option value="">Tutte le destinazioni</option>';
+  selDestinazione.disabled = true;
+  clearInterval(refreshTimer);
+
+  if (!dir || !stazioneData) { resultsContainer.innerHTML = ""; return; }
+
+  const dests = getDestinazioniDisponibili(stazioneData, dir);
+  if (dests.length > 1) {
+    for (const d of dests) {
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = formattaNome(d);
+      selDestinazione.appendChild(opt);
+    }
+    selDestinazione.disabled = false;
+  }
+  aggiornaRisultati();
+  refreshTimer = setInterval(aggiornaRisultati, 30000); // refresh ogni 30s
+});
+
+// --- Selezione destinazione ---
+selDestinazione.addEventListener("change", aggiornaRisultati);
+
+// --- Rendering risultati ---
+function aggiornaRisultati() {
+  const dir = selDirezione.value;
+  const dest = selDestinazione.value || null;
+  if (!dir || !stazioneData) { resultsContainer.innerHTML = ""; return; }
+
+  const now = new Date();
+  const treni = getNextTrains(stazioneData, dir, dest, now, 5);
+  const tipo = getTipoGiornata(now);
+  const lineClass = getLineClass(selStazione.value);
+
+  let html = '<div class="card">';
+  html += '<div class="result-header">';
+  html += `<h2><span class="line-tag ${lineClass}">${lineClass.toUpperCase()}</span> ${formattaNome(dir)}</h2>`;
+  html += `<span class="clock">${now.getHours().toString().padStart(2,"0")}:${now.getMinutes().toString().padStart(2,"0")} · ${tipo}</span>`;
+  html += '</div>';
+
+  if (treni.length === 0) {
+    html += '<div class="empty-state"><div class="icon">🌙</div><p>Nessun treno disponibile in questa fascia oraria</p></div>';
+  } else if (treni[0].tipo === "frequenza") {
+    const msg = treni[0].messaggio;
+    // Estrai solo la parte italiana (prima di "every")
+    const msgIt = msg.split(/every/i)[0].trim();
+    html += `<div class="freq-banner">
+      <div class="icon">🚇</div>
+      <div class="freq-text">${msgIt}</div>
+      <div class="freq-sub">Alta frequenza — non è necessario controllare gli orari</div>
+    </div>`;
+  } else {
+    for (const t of treni) {
+      const col = DEST_COLORS[t.destinazione] || "#666";
+      html += `<div class="train-card">
+        <div class="train-time">${t.ora_partenza}</div>
+        <div class="train-info">
+          <div class="train-dest"><span class="dest-dot" style="background:${col}"></span>${formattaNome(t.destinazione)}</div>
+          <div class="train-wait">Treno ${t.tipo === "esatto" ? "programmato" : "stimato"}</div>
+        </div>
+        <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
+      </div>`;
+    }
+  }
+
+  html += '</div>';
+  resultsContainer.innerHTML = html;
+}
+</script>
 </body>
-
 </html>
