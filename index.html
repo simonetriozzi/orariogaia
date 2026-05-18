@@ -422,6 +422,15 @@
     .sug-item .line-pill.m1 { background: var(--m1-color); color: #fff; }
     .sug-item .line-pill.m2 { background: var(--m2-color); color: #fff; }
 
+    .more-btn {
+      display: block; width: 100%; padding: 14px;
+      margin-top: 16px; background: rgba(0,0,0,0.03);
+      border: 1px dashed rgba(0,0,0,0.15); border-radius: var(--radius-sm);
+      color: var(--text-soft); font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .more-btn:hover { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.3); color: var(--text); }
+
     @media (max-width: 520px) {
       body {
         padding: 16px 12px 40px;
@@ -576,6 +585,7 @@
     let stazioneData = null;
     let stazioneSelezionataId = null;
     let refreshTimer = null;
+    let limiteN = 5;
 
     const selDirezione = document.getElementById("sel-direzione");
     const selDestinazione = document.getElementById("sel-destinazione");
@@ -698,6 +708,7 @@
 
     // --- Caricamento stazione ---
     async function caricaStazione(id) {
+      limiteN = 5;
       stazioneSelezionataId = id;
       selDirezione.innerHTML = '<option value="">Caricamento...</option>';
       selDirezione.disabled = true;
@@ -734,6 +745,7 @@
 
     // --- Selezione direzione ---
     selDirezione.addEventListener("change", () => {
+      limiteN = 5;
       const dir = selDirezione.value;
       selDestinazione.innerHTML = '<option value="">Tutte le destinazioni</option>';
       selDestinazione.disabled = true;
@@ -756,7 +768,10 @@
     });
 
     // --- Selezione destinazione ---
-    selDestinazione.addEventListener("change", aggiornaRisultati);
+    selDestinazione.addEventListener("change", () => {
+      limiteN = 5;
+      aggiornaRisultati();
+    });
 
     // --- Rendering risultati ---
     function aggiornaRisultati() {
@@ -765,7 +780,7 @@
       if (!dir || !stazioneData) { resultsContainer.innerHTML = ""; return; }
 
       const now = new Date();
-      const treni = getNextTrains(stazioneData, dir, dest, now, 5);
+      const treni = getNextTrains(stazioneData, dir, dest, now, limiteN);
       const tipo = getTipoGiornata(now);
       const lineClass = getLineClass(stazioneSelezionataId || "M1");
 
@@ -798,6 +813,7 @@
         <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
       </div>`;
         }
+        html += `<button class="more-btn" onclick="limiteN++; aggiornaRisultati()">+ Mostra successivo</button>`;
       }
 
       html += '</div>';

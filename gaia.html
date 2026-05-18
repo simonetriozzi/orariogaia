@@ -237,177 +237,24 @@
       text-align: right;
     }
 
-    .train-eta span {
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--text-soft);
-    }
+    .train-eta small { font-size: 0.65rem; font-weight: 500; color: var(--text-soft); }
 
-    /* Alta frequenza */
-    .freq-banner {
+    .more-btn {
+      display: block; width: 100%; padding: 14px;
+      margin-top: 10px; background: rgba(107,26,58,0.05);
+      border: 1px dashed rgba(107,26,58,0.25); border-radius: var(--radius-sm);
+      color: var(--bordeaux); font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .more-btn:hover { background: rgba(107,26,58,0.1); border-color: rgba(107,26,58,0.4); }
+
+    /* Empty states & messages */
+    .empty, .loading {
       text-align: center;
       padding: 20px;
       background: var(--bordeaux-pale);
       border: 1px solid rgba(107, 26, 58, 0.12);
       border-radius: var(--radius-sm);
-    }
-
-    .freq-banner .icon {
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-    }
-
-    .freq-banner .freq-text {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--bordeaux);
-    }
-
-    .freq-banner .freq-sub {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      margin-top: 4px;
-    }
-
-    /* === TIME EDITOR === */
-    .time-editor {
-      margin-top: 18px;
-      padding: 16px;
-      background: var(--rose);
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(107, 26, 58, 0.12);
-    }
-
-    .time-editor label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--bordeaux);
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-      margin-bottom: 6px;
-    }
-
-    .time-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      flex-wrap: wrap;
-    }
-
-    .time-row input[type="date"],
-    .time-row input[type="time"] {
-      flex: 1;
-      min-width: 120px;
-      padding: 9px 12px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .time-row input:focus {
-      border-color: var(--bordeaux-l);
-    }
-
-    .apply-btn {
-      padding: 9px 18px;
-      background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-l));
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .apply-btn:hover {
-      opacity: 0.85;
-    }
-
-    /* === MILANO SEARCH === */
-    .search-wrap {
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 12px 16px 12px 42px;
-      background: var(--bordeaux-pale);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: inherit;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .search-input:focus {
-      border-color: var(--bordeaux-l);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1rem;
-      pointer-events: none;
-    }
-
-    .suggestions {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      right: 0;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      box-shadow: 0 8px 24px rgba(107, 26, 58, 0.12);
-      z-index: 10;
-      overflow: hidden;
-      max-height: 280px;
-      overflow-y: auto;
-    }
-
-    .suggestion-item {
-      padding: 12px 16px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text);
-      transition: background 0.15s;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .suggestion-item:last-child {
-      border-bottom: none;
-    }
-
-    .suggestion-item:hover {
-      background: var(--bordeaux-pale);
-      color: var(--bordeaux);
-    }
-
-    .suggestion-item mark {
-      background: none;
-      color: var(--bordeaux);
-      font-weight: 700;
-    }
-
-    /* === LOADING / EMPTY === */
-    .loading {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-soft);
     }
 
     .loading .spinner {
@@ -537,6 +384,7 @@
     let dataOraCorrente = new Date();
     let cacheJSON = {};
     let stazioneSelezionata = null;
+    let limiteN = 3;
 
     async function caricaJSON(nome) {
       if (cacheJSON[nome]) return cacheJSON[nome];
@@ -550,6 +398,9 @@
     // ROUTING
     // ============================================================
     function scegliPercorso(tipo) {
+      if (percorsoAttivo !== tipo) {
+        limiteN = 3;
+      }
       percorsoAttivo = tipo;
       stazioneSelezionata = null;
 
@@ -571,7 +422,7 @@
 
       try {
         const data = await caricaJSON('M1_De_Angeli');
-        const treni = getNextTrains(data, 'sesto_1_maggio_fs', null, now, 3);
+        const treni = getNextTrains(data, 'sesto_1_maggio_fs', null, now, limiteN);
         const tipo = getTipoGiornata(now);
         const oraStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
@@ -638,6 +489,7 @@
           el.addEventListener('click', () => {
             input.value = el.dataset.label;
             sugBox.style.display = 'none';
+            limiteN = 3;
             selezionaStazione(el.dataset.id, el.dataset.label);
           });
         });
@@ -657,7 +509,7 @@
         const data = await caricaJSON(id);
         const now = dataOraCorrente;
         // Direzione Bisceglie: rho_fiera_bisceglie, filtro bisceglie
-        const treni = getNextTrains(data, 'rho_fiera_bisceglie', 'bisceglie', now, 3);
+        const treni = getNextTrains(data, 'rho_fiera_bisceglie', 'bisceglie', now, limiteN);
         const tipo = getTipoGiornata(now);
         const oraStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
@@ -687,7 +539,7 @@
     </div>`;
       }
 
-      return treni.map(t => `
+      let html = treni.map(t => `
     <div class="train-card">
       <div class="train-time">${t.ora_partenza}</div>
       <div class="train-info">
@@ -696,6 +548,18 @@
       </div>
       <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
     </div>`).join('');
+      
+      html += `<button class="more-btn" onclick="mostraSuccessivoGaia()">+ Mostra successivo</button>`;
+      return html;
+    }
+
+    function mostraSuccessivoGaia() {
+      limiteN++;
+      if (percorsoAttivo === 'casa') {
+        renderCasa();
+      } else {
+        selezionaStazione(stazioneSelezionata, document.getElementById('search-stazione').value);
+      }
     }
 
     function renderTimeEditor(now) {

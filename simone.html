@@ -245,6 +245,15 @@
     /* alto freq */
     .inline-result .freq-box { padding: 16px 0; }
 
+    .more-btn {
+      display: block; width: 100%; padding: 14px;
+      margin-top: 10px; background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,255,255,0.15); border-radius: var(--radius);
+      color: var(--text); font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .more-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+
     @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
     /* altro section */
@@ -349,6 +358,7 @@ const BASE = "https://raw.githubusercontent.com/simonetriozzi/orariogaia/main/js
 let dataOra = new Date();
 let cache = {};
 let percorso = null;
+let limiteN = 3;
 
 // Init time inputs
 const inpDate = document.getElementById('inp-date');
@@ -384,6 +394,7 @@ function scegli(id){
   document.getElementById('search-section').style.display = 'none';
 
   if(!isOpen){
+    limiteN = 3;
     percorso = PRESETS[id];
     item.classList.add('open');
     res.classList.add('open');
@@ -436,6 +447,7 @@ function toggleAltro(){
   sec.style.display = shown ? 'none' : 'block';
   if(!shown) document.getElementById('inp-stazione').focus();
   percorso = null;
+  limiteN = 3;
 }
 
 const inpSt = document.getElementById('inp-stazione');
@@ -457,6 +469,7 @@ inpSt.addEventListener('input', () => {
     el.addEventListener('click',()=>{
       inpSt.value = el.dataset.label;
       sugB.style.display='none';
+      limiteN = 3;
       percorso = { stazione:el.dataset.id, dir:'gessate_cologno_nord', filtro:'cologno_nord', titolo:`${el.dataset.label} → Cologno Nord` };
       const resAltro = document.getElementById('res-altro');
       resAltro.innerHTML = `<div class="altro-result"><div class="skeleton-wrap"><div class="skeleton" style="width:70%"></div><div class="skeleton"></div><div class="skeleton" style="width:55%"></div></div></div>`;
@@ -480,7 +493,7 @@ async function esegui(stazione, dir, filtro, titolo, targetId='res-altro', wrap=
       cache[stazione] = await r.json();
     }
     const data = cache[stazione];
-    let treni = nextTrains(data, dir, filtro, dataOra, 3);
+    let treni = nextTrains(data, dir, filtro, dataOra, limiteN);
     const tipo = tipoGiornata(dataOra);
     const oraStr = dataOra.getHours().toString().padStart(2,'0')+':'+dataOra.getMinutes().toString().padStart(2,'0');
     renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap);
@@ -512,6 +525,9 @@ function renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap=false){
         </div>
         <div class="train-eta">${t.att}<small> min</small></div>
       </div>`).join('');
+    
+    // Add "Load more" button
+    inner += `<button class="more-btn" onclick="mostraSuccessivo('${targetId}', ${wrap})">+ Mostra successivo</button>`;
   }
 
   const box = document.getElementById(targetId);
@@ -521,6 +537,11 @@ function renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap=false){
   } else {
     box.innerHTML = inner;
   }
+}
+
+function mostraSuccessivo(targetId, wrap) {
+  limiteN++;
+  esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo, targetId, wrap);
 }
 
 // Also update apply-time to re-render in the correct target
