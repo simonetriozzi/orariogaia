@@ -1,0 +1,922 @@
+{
+  "abbiategrasso_assago_forum": {
+    "feriale": {
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "05": {
+        "abbiategrasso": [
+          57
+        ]
+      },
+      "20": {
+        "assago_forum": [
+          1,
+          8,
+          14,
+          22,
+          30,
+          38,
+          47,
+          58
+        ],
+        "abbiategrasso": [
+          4,
+          11,
+          18,
+          26,
+          34,
+          42,
+          52
+        ]
+      },
+      "21": {
+        "abbiategrasso": [
+          5,
+          16,
+          22,
+          36,
+          43,
+          51
+        ],
+        "assago_forum": [
+          10,
+          29,
+          59
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          43,
+          51
+        ],
+        "assago_forum": [
+          28,
+          58
+        ]
+      },
+      "23": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          50
+        ],
+        "assago_forum": [
+          28,
+          43,
+          58
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          43,
+          53
+        ],
+        "assago_forum": [
+          28
+        ]
+      }
+    },
+    "sabato": {
+      "07": "ogni 4' - 5' every 4 - 5 minutes",
+      "08": "ogni 4' - 5' every 4 - 5 minutes",
+      "09": "ogni 4' - 5' every 4 - 5 minutes",
+      "05": {
+        "abbiategrasso": [
+          57
+        ]
+      },
+      "12": {
+        "abbiategrasso": [
+          3,
+          8,
+          18,
+          23,
+          28,
+          38,
+          43,
+          48,
+          58
+        ],
+        "assago_forum": [
+          13,
+          33,
+          53
+        ]
+      },
+      "13": {
+        "abbiategrasso": [
+          3,
+          8,
+          18,
+          24,
+          28,
+          38,
+          43,
+          48,
+          58
+        ],
+        "assago_forum": [
+          13,
+          33,
+          53
+        ]
+      },
+      "14": {
+        "abbiategrasso": [
+          3,
+          8,
+          18,
+          23,
+          28,
+          38,
+          43,
+          48,
+          58
+        ],
+        "assago_forum": [
+          13,
+          33,
+          53
+        ]
+      },
+      "15": {
+        "abbiategrasso": [
+          3,
+          8,
+          18,
+          23,
+          28,
+          38,
+          44,
+          58
+        ],
+        "assago_forum": [
+          13,
+          33,
+          48,
+          53
+        ]
+      },
+      "20": {
+        "abbiategrasso": [
+          3,
+          12,
+          22,
+          32,
+          42,
+          52
+        ],
+        "assago_forum": [
+          7,
+          17,
+          27,
+          37,
+          47,
+          58
+        ]
+      },
+      "21": {
+        "abbiategrasso": [
+          5,
+          17,
+          22,
+          36,
+          43,
+          51
+        ],
+        "assago_forum": [
+          10,
+          29,
+          59
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          43,
+          51
+        ],
+        "assago_forum": [
+          28,
+          58
+        ]
+      },
+      "23": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          50
+        ],
+        "assago_forum": [
+          28,
+          43,
+          58
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          43,
+          53
+        ],
+        "assago_forum": [
+          28
+        ]
+      }
+    },
+    "festivo": {
+      "10": {
+        "assago_forum": [
+          6,
+          36
+        ],
+        "abbiategrasso": [
+          13,
+          21,
+          28,
+          43,
+          50,
+          58
+        ]
+      },
+      "11": {
+        "assago_forum": [
+          6,
+          36
+        ],
+        "abbiategrasso": [
+          13,
+          21,
+          28,
+          43,
+          51,
+          58
+        ]
+      },
+      "12": {
+        "assago_forum": [
+          6,
+          28,
+          49
+        ],
+        "abbiategrasso": [
+          13,
+          20,
+          34,
+          42,
+          55
+        ]
+      },
+      "13": {
+        "abbiategrasso": [
+          2,
+          15,
+          28,
+          35,
+          48,
+          55
+        ],
+        "assago_forum": [
+          9,
+          22,
+          42
+        ]
+      },
+      "14": {
+        "assago_forum": [
+          2,
+          22,
+          42
+        ],
+        "abbiategrasso": [
+          8,
+          15,
+          28,
+          35,
+          48,
+          55
+        ]
+      },
+      "15": {
+        "assago_forum": [
+          2,
+          22,
+          43
+        ],
+        "abbiategrasso": [
+          8,
+          15,
+          28,
+          35,
+          48,
+          55
+        ]
+      },
+      "16": {
+        "assago_forum": [
+          3,
+          23,
+          43
+        ],
+        "abbiategrasso": [
+          9,
+          15,
+          29,
+          35,
+          49,
+          55
+        ]
+      },
+      "17": {
+        "assago_forum": [
+          3,
+          23,
+          43
+        ],
+        "abbiategrasso": [
+          9,
+          15,
+          29,
+          35,
+          48,
+          55
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          6,
+          13,
+          20,
+          36,
+          43,
+          51
+        ],
+        "assago_forum": [
+          28,
+          58
+        ]
+      },
+      "23": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          50
+        ],
+        "assago_forum": [
+          28,
+          43,
+          58
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          6,
+          13,
+          21,
+          36,
+          43,
+          53
+        ],
+        "assago_forum": [
+          28
+        ]
+      }
+    }
+  },
+  "gessate_cologno_nord": {
+    "feriale": {
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "20": {
+        "cologno_nord": [
+          2,
+          11,
+          20,
+          28,
+          36,
+          48,
+          59
+        ],
+        "gessate": [
+          7,
+          16,
+          24,
+          32,
+          40,
+          54
+        ],
+        "cascina_gobba": [
+          44
+        ]
+      },
+      "21": {
+        "cascina_gobba": [
+          4,
+          21,
+          37,
+          50
+        ],
+        "gessate": [
+          10,
+          27,
+          57
+        ],
+        "cologno_nord": [
+          15,
+          32,
+          43
+        ]
+      },
+      "22": {
+        "cascina_gobba": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "cologno_nord": [
+          12,
+          42
+        ],
+        "gessate": [
+          27,
+          57
+        ]
+      },
+      "23": {
+        "cascina_gobba": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "cologno_nord": [
+          12,
+          42
+        ],
+        "gessate": [
+          27,
+          57
+        ]
+      },
+      "00": {
+        "cascina_gobba": [
+          5,
+          20
+        ],
+        "cologno_nord": [
+          12,
+          37,
+          45
+        ],
+        "gessate": [
+          27
+        ]
+      },
+      "01": {
+        "gessate": [
+          0
+        ]
+      }
+    },
+    "sabato": {
+      "07": "ogni 5' every 5 minutes",
+      "08": "ogni 5' every 5 minutes",
+      "10": {
+        "cologno_nord": [
+          0,
+          10,
+          32,
+          49
+        ],
+        "cascina_gobba": [
+          5,
+          21,
+          43,
+          54
+        ],
+        "gessate": [
+          15,
+          27,
+          38,
+          59
+        ]
+      },
+      "11": {
+        "cascina_gobba": [
+          4,
+          14,
+          24,
+          34,
+          44,
+          54
+        ],
+        "cologno_nord": [
+          9,
+          29,
+          49
+        ],
+        "gessate": [
+          19,
+          39,
+          59
+        ]
+      },
+      "12": {
+        "cascina_gobba": [
+          4,
+          14,
+          24,
+          34,
+          44,
+          54
+        ],
+        "cologno_nord": [
+          9,
+          29,
+          49
+        ],
+        "gessate": [
+          19,
+          39,
+          59
+        ]
+      },
+      "13": {
+        "cascina_gobba": [
+          4,
+          14,
+          24,
+          34,
+          44,
+          54
+        ],
+        "cologno_nord": [
+          9,
+          29,
+          49
+        ],
+        "gessate": [
+          19,
+          39,
+          59
+        ]
+      },
+      "14": {
+        "cascina_gobba": [
+          4,
+          14,
+          24,
+          34,
+          44,
+          54
+        ],
+        "cologno_nord": [
+          9,
+          29,
+          49
+        ],
+        "gessate": [
+          19,
+          39,
+          59
+        ]
+      },
+      "15": {
+        "cascina_gobba": [
+          4,
+          14,
+          24,
+          34,
+          44,
+          54
+        ],
+        "cologno_nord": [
+          9,
+          29,
+          49
+        ],
+        "gessate": [
+          19,
+          39,
+          59
+        ]
+      },
+      "20": {
+        "cologno_nord": [
+          0,
+          10,
+          20,
+          30,
+          41,
+          59
+        ],
+        "gessate": [
+          5,
+          15,
+          25,
+          36,
+          53
+        ],
+        "cascina_gobba": [
+          47
+        ]
+      },
+      "21": {
+        "cascina_gobba": [
+          4,
+          21,
+          35,
+          50
+        ],
+        "gessate": [
+          9,
+          27,
+          57
+        ],
+        "cologno_nord": [
+          15,
+          43
+        ]
+      },
+      "22": {
+        "cascina_gobba": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "cologno_nord": [
+          12,
+          42
+        ],
+        "gessate": [
+          27,
+          57
+        ]
+      },
+      "23": {
+        "cascina_gobba": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "cologno_nord": [
+          12,
+          42
+        ],
+        "gessate": [
+          27,
+          57
+        ]
+      },
+      "00": {
+        "cascina_gobba": [
+          5,
+          20
+        ],
+        "cologno_nord": [
+          12,
+          37,
+          45
+        ],
+        "gessate": [
+          27
+        ]
+      },
+      "01": {
+        "gessate": [
+          0
+        ]
+      }
+    },
+    "festivo": {
+      "10": {
+        "cascina_gobba": [
+          4,
+          18,
+          34,
+          49
+        ],
+        "cologno_nord": [
+          11,
+          41
+        ],
+        "gessate": [
+          26,
+          56
+        ]
+      },
+      "11": {
+        "cascina_gobba": [
+          4,
+          19,
+          34,
+          47
+        ],
+        "cologno_nord": [
+          11,
+          41
+        ],
+        "gessate": [
+          26,
+          55
+        ]
+      },
+      "12": {
+        "cascina_gobba": [
+          4,
+          18,
+          33,
+          45
+        ],
+        "cologno_nord": [
+          11,
+          38,
+          58
+        ],
+        "gessate": [
+          26,
+          52
+        ]
+      },
+      "13": {
+        "cascina_gobba": [
+          5,
+          25,
+          45
+        ],
+        "gessate": [
+          12,
+          32,
+          52
+        ],
+        "cologno_nord": [
+          18,
+          38,
+          58
+        ]
+      },
+      "14": {
+        "cascina_gobba": [
+          6,
+          25,
+          45
+        ],
+        "gessate": [
+          12,
+          32,
+          52
+        ],
+        "cologno_nord": [
+          18,
+          38,
+          59
+        ]
+      },
+      "15": {
+        "cascina_gobba": [
+          5,
+          25,
+          45
+        ],
+        "gessate": [
+          12,
+          32,
+          52
+        ],
+        "cologno_nord": [
+          19,
+          39,
+          59
+        ]
+      },
+      "16": {
+        "cascina_gobba": [
+          5,
+          25,
+          45
+        ],
+        "gessate": [
+          12,
+          31,
+          52
+        ],
+        "cologno_nord": [
+          19,
+          39,
+          59
+        ]
+      },
+      "17": {
+        "cascina_gobba": [
+          5,
+          25,
+          45
+        ],
+        "gessate": [
+          12,
+          32,
+          52
+        ],
+        "cologno_nord": [
+          19,
+          39,
+          59
+        ]
+      },
+      "22": {
+        "cascina_gobba": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "cologno_nord": [
+          12,
+          42
+        ],
+        "gessate": [
+          27,
+          57
+        ]
+      },
+      "23": {
+        "cascina_gobba": [
+          5,
+          19,
+          35,
+          50
+        ],
+        "cologno_nord": [
+          12,
+          42
+        ],
+        "gessate": [
+          27,
+          57
+        ]
+      },
+      "00": {
+        "cascina_gobba": [
+          5,
+          20
+        ],
+        "cologno_nord": [
+          12,
+          37,
+          45
+        ],
+        "gessate": [
+          27
+        ]
+      },
+      "01": {
+        "gessate": [
+          0
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "abbiategrasso_assago_forum": {
+    "feriale": {
+      "05": {
+        "abbiategrasso": [
+          57
+        ]
+      },
+      "10": {
+        "abbiategrasso": [
+          1,
+          13,
+          26,
+          38,
+          50
+        ]
+      },
+      "11": {
+        "abbiategrasso": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ]
+      },
+      "12": {
+        "abbiategrasso": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ]
+      },
+      "13": {
+        "abbiategrasso": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ]
+      },
+      "14": {
+        "abbiategrasso": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ]
+      },
+      "15": {
+        "abbiategrasso": [
+          2,
+          14,
+          26,
+          38,
+          54
+        ]
+      },
+      "16": {
+        "abbiategrasso": [
+          5,
+          30,
+          40,
+          46,
+          52,
+          58
+        ],
+        "assago_forum": [
+          19
+        ]
+      },
+      "17": {
+        "abbiategrasso": [
+          4,
+          10,
+          16,
+          22,
+          28,
+          35,
+          41,
+          47,
+          53,
+          59
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          8,
+          38
+        ]
+      },
+      "23": {
+        "assago_forum": [
+          8
+        ],
+        "abbiategrasso": [
+          38
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          8
+        ]
+      }
+    },
+    "sabato": {
+      "05": {
+        "abbiategrasso": [
+          57
+        ]
+      },
+      "10": {
+        "abbiategrasso": [
+          12,
+          21,
+          31,
+          46
+        ]
+      },
+      "11": {
+        "abbiategrasso": [
+          7,
+          27,
+          47
+        ]
+      },
+      "12": {
+        "abbiategrasso": [
+          7,
+          27,
+          48
+        ]
+      },
+      "13": {
+        "abbiategrasso": [
+          7,
+          27,
+          47
+        ]
+      },
+      "14": {
+        "abbiategrasso": [
+          7,
+          27,
+          47
+        ]
+      },
+      "15": {
+        "abbiategrasso": [
+          8,
+          27,
+          47
+        ]
+      },
+      "16": {
+        "abbiategrasso": [
+          8,
+          24,
+          36,
+          46,
+          56
+        ]
+      },
+      "17": {
+        "abbiategrasso": [
+          6,
+          17,
+          26,
+          36,
+          46,
+          56
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          8,
+          38
+        ]
+      },
+      "23": {
+        "assago_forum": [
+          8
+        ],
+        "abbiategrasso": [
+          38
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          8
+        ]
+      }
+    },
+    "festivo": {
+      "10": {
+        "abbiategrasso": [
+          8,
+          38
+        ]
+      },
+      "11": {
+        "abbiategrasso": [
+          8,
+          38
+        ]
+      },
+      "12": {
+        "abbiategrasso": [
+          7,
+          52
+        ],
+        "assago_forum": [
+          33
+        ]
+      },
+      "13": {
+        "abbiategrasso": [
+          12,
+          32,
+          52
+        ]
+      },
+      "14": {
+        "abbiategrasso": [
+          12,
+          32,
+          52
+        ]
+      },
+      "15": {
+        "abbiategrasso": [
+          12,
+          33,
+          53
+        ]
+      },
+      "16": {
+        "abbiategrasso": [
+          13,
+          33,
+          53
+        ]
+      },
+      "17": {
+        "abbiategrasso": [
+          12,
+          33,
+          53
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          8,
+          38
+        ]
+      },
+      "23": {
+        "assago_forum": [
+          8
+        ],
+        "abbiategrasso": [
+          38
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          8
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,331 @@
+{
+  "rho_fiera_bisceglie": {
+    "feriale": {
+      "06": "ogni 2' - 4' every 2 - 4 minutes",
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes",
+      "05": {
+        "bisceglie": [
+          40,
+          52
+        ],
+        "rho_fiera": [
+          46,
+          58
+        ]
+      },
+      "21": {
+        "rho_fiera": [
+          3,
+          13,
+          25,
+          37,
+          50
+        ],
+        "bisceglie": [
+          8,
+          19,
+          31,
+          43,
+          58
+        ]
+      },
+      "22": {
+        "rho_fiera": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "bisceglie": [
+          13,
+          28,
+          43,
+          58
+        ]
+      },
+      "23": {
+        "rho_fiera": [
+          5,
+          20,
+          36,
+          54
+        ],
+        "bisceglie": [
+          13,
+          28,
+          45
+        ]
+      },
+      "00": {
+        "bisceglie": [
+          3,
+          20
+        ],
+        "molino_dorino": [
+          13
+        ]
+      }
+    },
+    "sabato": {
+      "06": "ogni 3' - 5' every 3 - 5 minutes",
+      "07": "ogni 3' - 5' every 3 - 5 minutes",
+      "08": "ogni 3' - 5' every 3 - 5 minutes",
+      "09": "ogni 3' - 5' every 3 - 5 minutes",
+      "10": "ogni 3' - 5' every 3 - 5 minutes",
+      "11": "ogni 3' - 5' every 3 - 5 minutes",
+      "12": "ogni 3' - 5' every 3 - 5 minutes",
+      "13": "ogni 3' - 5' every 3 - 5 minutes",
+      "14": "ogni 3' - 5' every 3 - 5 minutes",
+      "15": "ogni 3' - 5' every 3 - 5 minutes",
+      "16": "ogni 3' - 5' every 3 - 5 minutes",
+      "17": "ogni 3' - 5' every 3 - 5 minutes",
+      "18": "ogni 3' - 5' every 3 - 5 minutes",
+      "19": "ogni 3' - 5' every 3 - 5 minutes",
+      "05": {
+        "bisceglie": [
+          40,
+          53
+        ],
+        "rho_fiera": [
+          46,
+          59
+        ]
+      },
+      "21": {
+        "bisceglie": [
+          3,
+          14,
+          28,
+          43,
+          58
+        ],
+        "rho_fiera": [
+          8,
+          20,
+          35,
+          50
+        ]
+      },
+      "22": {
+        "rho_fiera": [
+          5,
+          20,
+          35,
+          50
+        ],
+        "bisceglie": [
+          13,
+          28,
+          43,
+          58
+        ]
+      },
+      "23": {
+        "rho_fiera": [
+          5,
+          20,
+          36,
+          54
+        ],
+        "bisceglie": [
+          13,
+          28,
+          45
+        ]
+      },
+      "00": {
+        "bisceglie": [
+          3,
+          20
+        ],
+        "molino_dorino": [
+          13
+        ]
+      }
+    },
+    "festivo": {
+      "10": {
+        "bisceglie": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ],
+        "rho_fiera": [
+          8,
+          20,
+          32,
+          44,
+          56
+        ]
+      },
+      "11": {
+        "bisceglie": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ],
+        "rho_fiera": [
+          8,
+          20,
+          32,
+          44,
+          56
+        ]
+      },
+      "12": {
+        "bisceglie": [
+          2,
+          14,
+          25,
+          36,
+          47,
+          58
+        ],
+        "rho_fiera": [
+          8,
+          20,
+          31,
+          41,
+          52
+        ]
+      },
+      "13": {
+        "rho_fiera": [
+          3,
+          14,
+          25,
+          36,
+          47,
+          58
+        ],
+        "bisceglie": [
+          9,
+          20,
+          31,
+          42,
+          53
+        ]
+      },
+      "14": {
+        "bisceglie": [
+          4,
+          15,
+          26,
+          37,
+          48,
+          59
+        ],
+        "rho_fiera": [
+          9,
+          20,
+          31,
+          42,
+          53
+        ]
+      },
+      "15": {
+        "rho_fiera": [
+          4,
+          15,
+          26,
+          37,
+          48,
+          59
+        ],
+        "bisceglie": [
+          10,
+          21,
+          32,
+          43,
+          54
+        ]
+      },
+      "16": {
+        "bisceglie": [
+          5,
+          16,
+          27,
+          38,
+          49
+        ],
+        "rho_fiera": [
+          10,
+          21,
+          32,
+          43,
+          54
+        ]
+      },
+      "17": {
+        "bisceglie": [
+          0,
+          11,
+          22,
+          33,
+          44,
+          55
+        ],
+        "rho_fiera": [
+          5,
+          16,
+          27,
+          38,
+          49
+        ]
+      },
+      "22": {
+        "bisceglie": [
+          1,
+          13,
+          27,
+          43,
+          58
+        ],
+        "rho_fiera": [
+          7,
+          20,
+          35,
+          50
+        ]
+      },
+      "23": {
+        "rho_fiera": [
+          5,
+          20,
+          36,
+          54
+        ],
+        "bisceglie": [
+          13,
+          28,
+          45
+        ]
+      },
+      "00": {
+        "bisceglie": [
+          3,
+          20
+        ],
+        "molino_dorino": [
+          13
+        ]
+      }
+    }
+  }
+}

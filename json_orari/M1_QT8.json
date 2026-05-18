@@ -1,0 +1,254 @@
+{
+  "treni_per_s_e_s_t_o_1_maggio_fs": {
+    "feriale": {
+      "07": "ogni 4' - 7' every 4 - 7 minutes",
+      "08": "ogni 4' - 7' every 4 - 7 minutes",
+      "09": "ogni 4' - 7' every 4 - 7 minutes",
+      "10": "ogni 4' - 7' every 4 - 7 minutes",
+      "11": "ogni 4' - 7' every 4 - 7 minutes",
+      "12": "ogni 4' - 7' every 4 - 7 minutes",
+      "13": "ogni 4' - 7' every 4 - 7 minutes",
+      "14": "ogni 4' - 7' every 4 - 7 minutes",
+      "15": "ogni 4' - 7' every 4 - 7 minutes",
+      "16": "ogni 4' - 7' every 4 - 7 minutes",
+      "17": "ogni 4' - 7' every 4 - 7 minutes",
+      "18": "ogni 4' - 7' every 4 - 7 minutes",
+      "05": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          46
+        ]
+      },
+      "20": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          4,
+          12,
+          20,
+          30,
+          40,
+          49,
+          58
+        ]
+      },
+      "21": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          9,
+          19,
+          29,
+          40,
+          52
+        ]
+      },
+      "22": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22,
+          37,
+          52
+        ]
+      },
+      "23": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22,
+          37,
+          52
+        ]
+      },
+      "00": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22
+        ]
+      }
+    },
+    "sabato": {
+      "07": "ogni 7' every 7 minutes",
+      "08": "ogni 7' every 7 minutes",
+      "09": "ogni 7' every 7 minutes",
+      "10": "ogni 7' every 7 minutes",
+      "11": "ogni 7' every 7 minutes",
+      "12": "ogni 7' every 7 minutes",
+      "13": "ogni 7' every 7 minutes",
+      "14": "ogni 7' every 7 minutes",
+      "15": "ogni 7' every 7 minutes",
+      "16": "ogni 7' every 7 minutes",
+      "17": "ogni 7' every 7 minutes",
+      "18": "ogni 7' every 7 minutes",
+      "05": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          46
+        ]
+      },
+      "20": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          16,
+          25,
+          34,
+          43,
+          52
+        ]
+      },
+      "21": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          2,
+          12,
+          23,
+          37,
+          52
+        ]
+      },
+      "22": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22,
+          37,
+          52
+        ]
+      },
+      "23": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22,
+          37,
+          52
+        ]
+      },
+      "00": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22
+        ]
+      }
+    },
+    "festivo": {
+      "10": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          5,
+          17,
+          29,
+          41,
+          53
+        ]
+      },
+      "11": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          5,
+          17,
+          29,
+          41,
+          53
+        ]
+      },
+      "12": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          5,
+          17,
+          29,
+          41,
+          53
+        ]
+      },
+      "13": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          5,
+          17,
+          28,
+          39,
+          50
+        ]
+      },
+      "14": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          1,
+          12,
+          23,
+          34,
+          45,
+          56
+        ]
+      },
+      "15": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          18,
+          29,
+          40,
+          51
+        ]
+      },
+      "16": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          2,
+          13,
+          24,
+          35,
+          46,
+          57
+        ]
+      },
+      "17": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          8,
+          19,
+          30,
+          41,
+          52
+        ]
+      },
+      "22": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22,
+          37,
+          52
+        ]
+      },
+      "23": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22,
+          37,
+          52
+        ]
+      },
+      "00": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          7,
+          22
+        ]
+      }
+    }
+  },
+  "treni_per_r_h_o_f_i_e_r_a": {
+    "feriale": {
+      "08": "ogni 4' - 7' every 4 - 7 minutes",
+      "09": "ogni 4' - 7' every 4 - 7 minutes",
+      "10": "ogni 4' - 7' every 4 - 7 minutes",
+      "11": "ogni 4' - 7' every 4 - 7 minutes",
+      "12": "ogni 4' - 7' every 4 - 7 minutes",
+      "13": "ogni 4' - 7' every 4 - 7 minutes",
+      "14": "ogni 4' - 7' every 4 - 7 minutes",
+      "15": "ogni 4' - 7' every 4 - 7 minutes",
+      "16": "ogni 4' - 7' every 4 - 7 minutes",
+      "17": "ogni 4' - 7' every 4 - 7 minutes",
+      "18": "ogni 4' - 7' every 4 - 7 minutes",
+      "19": "ogni 4' - 7' every 4 - 7 minutes"
+    },
+    "sabato": {
+      "08": "ogni 7' every 7 minutes",
+      "09": "ogni 7' every 7 minutes",
+      "10": "ogni 7' every 7 minutes",
+      "11": "ogni 7' every 7 minutes",
+      "12": "ogni 7' every 7 minutes",
+      "13": "ogni 7' every 7 minutes",
+      "14": "ogni 7' every 7 minutes",
+      "15": "ogni 7' every 7 minutes",
+      "16": "ogni 7' every 7 minutes",
+      "17": "ogni 7' every 7 minutes",
+      "18": "ogni 7' every 7 minutes",
+      "19": "ogni 7' every 7 minutes"
+    },
+    "festivo": {}
+  }
+}
