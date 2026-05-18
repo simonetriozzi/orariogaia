@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrarioSimone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #1c1c1e;
+      --surface:  #2c2c2e;
+      --border:   rgba(255,255,255,0.08);
+      --text:     #f2f2f7;
+      --muted:    #8e8e93;
+      --accent:   #0a84ff;
+      --green:    #30d158;
+      --radius:   14px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 36px 20px 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .back-link {
+      align-self: flex-start; margin-bottom: 28px;
+      font-size: 0.85rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 36px;
+      text-align: center;
+    }
+
+    /* === PRESET BUTTONS === */
+    .presets { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+
+    .preset-btn {
+      width: 100%; padding: 20px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit; font-size: 1.1rem; font-weight: 700;
+      text-align: left; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .preset-btn:hover { background: #3a3a3c; border-color: rgba(255,255,255,0.15); }
+    .preset-btn.active { border-color: var(--accent); background: rgba(10,132,255,0.12); }
+    .preset-btn .sub { font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-top: 3px; }
+    .preset-btn .label-wrap { display: flex; flex-direction: column; }
+    .preset-btn .arrow { font-size: 1.2rem; opacity: 0.4; }
+
+    /* Altro btn */
+    .altro-btn {
+      width: 100%; max-width: 400px; padding: 16px 24px;
+      background: transparent; border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--muted);
+      font-family: inherit; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+      margin-bottom: 28px;
+    }
+    .altro-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+    /* === SEARCH === */
+    .search-section { width: 100%; max-width: 400px; margin-bottom: 20px; }
+    .search-wrap { position: relative; }
+    .search-input {
+      width: 100%; padding: 14px 16px 14px 42px;
+      background: var(--surface); color: var(--text);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      font-family: inherit; font-size: 0.95rem; font-weight: 500;
+      outline: none; transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.5; pointer-events: none; }
+    .suggestions {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 20;
+      background: #3a3a3c; border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+      max-height: 240px; overflow-y: auto;
+    }
+    .sug-item {
+      padding: 12px 16px; cursor: pointer;
+      font-size: 0.9rem; font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+      transition: background 0.12s;
+    }
+    .sug-item:last-child { border-bottom: none; }
+    .sug-item:hover { background: rgba(255,255,255,0.06); }
+    .sug-item mark { background: none; color: var(--accent); font-weight: 700; }
+    .line-pill {
+      font-size: 0.62rem; font-weight: 800; padding: 2px 6px;
+      border-radius: 4px; flex-shrink: 0;
+    }
+    .line-pill.m2 { background: #30d158; color: #000; }
+    .line-pill.m1 { background: #ff3b30; color: #fff; }
+
+    /* === RESULTS === */
+    .result-box {
+      width: 100%; max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      animation: fadeUp 0.3s ease-out;
+    }
+    .result-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 14px;
+    }
+    .train-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
+    .train-row:last-of-type { border-bottom: none; }
+    .train-time { font-size: 1.4rem; font-weight: 700; min-width: 58px; font-variant-numeric: tabular-nums; }
+    .train-info { flex: 1; }
+    .train-dest { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .train-sub  { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+    .train-eta  { font-size: 1rem; font-weight: 700; color: var(--accent); text-align: right; }
+    .train-eta small { font-size: 0.65rem; font-weight: 500; color: var(--muted); }
+
+    .freq-box { text-align: center; padding: 18px 0; }
+    .freq-box .f-icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .freq-box .f-text { font-size: 1rem; font-weight: 700; color: var(--green); }
+    .freq-box .f-sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+    .empty-box { text-align: center; padding: 20px; color: var(--muted); font-size: 0.9rem; }
+
+    /* === TIME EDITOR === */
+    .time-editor {
+      width: 100%; max-width: 400px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px;
+      margin-bottom: 28px;
+    }
+    .time-editor label {
+      display: block; font-size: 0.68rem; font-weight: 700;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: 0.7px; margin-bottom: 10px;
+    }
+    .time-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .time-row input[type="date"],
+    .time-row input[type="time"] {
+      flex: 1; min-width: 110px; padding: 9px 12px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; font-family: inherit; font-size: 0.9rem;
+      color: var(--text); outline: none; transition: border-color 0.2s;
+    }
+    .time-row input:focus { border-color: var(--accent); }
+    .apply-btn {
+      padding: 9px 16px;
+      background: var(--accent); color: #fff; border: none;
+      border-radius: 8px; font-family: inherit;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      transition: opacity 0.2s; white-space: nowrap;
+    }
+    .apply-btn:hover { opacity: 0.85; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 440px) { h1 { font-size: 2rem; } .preset-btn { font-size: 1rem; } }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Home</a>
+
+<h1>Dove ti trovi?</h1>
+
+<!-- EDITOR ORARIO -->
+<div class="time-editor">
+  <label>⏰ Data e orario di partenza</label>
+  <div class="time-row">
+    <input type="date" id="inp-date">
+    <input type="time" id="inp-time">
+    <button class="apply-btn" id="apply-time">Aggiorna</button>
+  </div>
+</div>
+
+<!-- PRESET BUTTONS -->
+<div class="presets">
+  <button class="preset-btn" id="btn-casa" onclick="scegli('casa')">
+    <div class="label-wrap">
+      <span>🏠 CASA</span>
+      <span class="sub">Cologno Sud → Assago / Abbiategrasso</span>
+    </div>
+    <span class="arrow">›</span>
+  </button>
+  <button class="preset-btn" id="btn-unicatt" onclick="scegli('unicatt')">
+    <div class="label-wrap">
+      <span>📚 UNICATT</span>
+      <span class="sub">S. Ambrogio → Cologno Nord</span>
+    </div>
+    <span class="arrow">›</span>
+  </button>
+  <button class="preset-btn" id="btn-poli" onclick="scegli('poli')">
+    <div class="label-wrap">
+      <span>🏛️ POLI</span>
+      <span class="sub">Piola → Cologno Nord</span>
+    </div>
+    <span class="arrow">›</span>
+  </button>
+</div>
+
+<!-- ALTRO / CERCA -->
+<button class="altro-btn" id="btn-altro" onclick="toggleAltro()">🔍 Altro — Cerca stazione</button>
+
+<div class="search-section" id="search-section" style="display:none">
+  <div class="search-wrap">
+    <span class="search-icon">🚇</span>
+    <input type="text" id="inp-stazione" class="search-input" placeholder="Cerca stazione M2…" autocomplete="off">
+    <div class="suggestions" id="sug-box" style="display:none"></div>
+  </div>
+</div>
+
+<!-- RISULTATI -->
+<div id="results"></div>
+
+<script>
+// ============================================================
+// ENGINE
+// ============================================================
+const FEST = [[1,1],[1,6],[4,25],[5,1],[6,2],[8,15],[11,1],[12,7],[12,8],[12,25],[12,26]];
+function pasqua(y){const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),gi=((h+l-7*m+114)%31)+1;return new Date(y,mo-1,gi);}
+function tipoGiornata(d=new Date()){let x=new Date(d);if(x.getHours()<3)x.setDate(x.getDate()-1);const g=x.getDay(),m=x.getMonth()+1,gm=x.getDate(),y=x.getFullYear();for(const[mm,gg]of FEST)if(m===mm&&gm===gg)return"festivo";const pq=new Date(pasqua(y));pq.setDate(pq.getDate()+1);if(x.getMonth()===pq.getMonth()&&x.getDate()===pq.getDate())return"festivo";if(g===0)return"festivo";if(g===6)return"sabato";return"feriale";}
+function nextTrains(data,dir,filtro=null,target=new Date(),n=3){const dd=data?.[dir];if(!dd)return[];const tipo=tipoGiornata(target),orari=dd[tipo];if(!orari||!Object.keys(orari).length)return[];const oC=target.getHours(),mC=target.getMinutes(),res=[];for(let off=0;off<25&&res.length<n;off++){const oT=(oC+off)%24,oK=oT.toString().padStart(2,"0"),nodo=orari[oK];if(nodo==null)continue;if(typeof nodo==="string"){if(off===0)return[{t:null,dest:filtro||dir,att:null,freq:true,msg:nodo}];res.push({t:`${oK}:00`,dest:filtro||dir,att:Math.round(((oT*60)-(oC*60+mC)+1440)%1440),freq:true,msg:nodo});continue;}if(typeof nodo==="object"){const arr=[];const dests=filtro?{[filtro]:nodo[filtro]}:nodo;for(const[dest,mins]of Object.entries(dests)){if(!Array.isArray(mins))continue;for(const m of mins){if(off===0&&m<mC)continue;let att=(oT*60+m)-(oC*60+mC);if(att<0)att+=1440;arr.push({t:`${oK}:${m.toString().padStart(2,"0")}`,dest,att,freq:false});}}arr.sort((a,b)=>a.att-b.att);for(const t of arr){if(res.length>=n)break;res.push(t);}}}return res;}
+function fmt(n){if(!n)return"";return n.split("_").map(w=>["fs","pza"].includes(w.toLowerCase())?w.toUpperCase():/^\d+$/.test(w)?w:w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ");}
+
+// ============================================================
+// STATE
+// ============================================================
+const BASE = "https://raw.githubusercontent.com/simonetriozzi/orariogaia/main/json_orari/";
+let dataOra = new Date();
+let cache = {};
+let percorso = null;
+
+// Init time inputs
+const inpDate = document.getElementById('inp-date');
+const inpTime = document.getElementById('inp-time');
+function setTimeInputs(d){
+  inpDate.value = d.toISOString().split('T')[0];
+  inpTime.value = d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+}
+setTimeInputs(dataOra);
+
+document.getElementById('apply-time').addEventListener('click', () => {
+  if(inpDate.value && inpTime.value){
+    dataOra = new Date(`${inpDate.value}T${inpTime.value}`);
+    if(percorso) esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
+  }
+});
+
+// ============================================================
+// PRESET ROUTES
+// ============================================================
+const PRESETS = {
+  casa:    { stazione:'M2_Cologno_Sud',  dir:'assago_abbiategrasso', filtro:null,          titolo:'Cologno Sud → Assago / Abbiategrasso' },
+  unicatt: { stazione:'M2_S_Ambrogio',   dir:'cologno_gessate',      filtro:'cologno_nord', titolo:'S. Ambrogio → Cologno Nord' },
+  poli:    { stazione:'M2_Piola',        dir:'cologno_gessate',      filtro:'cologno_nord', titolo:'Piola → Cologno Nord' },
+};
+
+function scegli(id){
+  percorso = PRESETS[id];
+  ['casa','unicatt','poli'].forEach(k => document.getElementById('btn-'+k).classList.remove('active'));
+  document.getElementById('btn-'+id).classList.add('active');
+  document.getElementById('search-section').style.display = 'none';
+  document.getElementById('btn-altro').style.color = '';
+  esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
+}
+
+// ============================================================
+// ALTRO — SEARCH
+// ============================================================
+const STAZIONI_M2 = [
+  {id:"M2_Gessate",label:"Gessate"},{id:"M2_Cascina_Antonietta",label:"Cascina Antonietta"},
+  {id:"M2_Gorgonzola",label:"Gorgonzola"},{id:"M2_Villa_Pompea",label:"Villa Pompea"},
+  {id:"M2_Bussero",label:"Bussero"},{id:"M2_Cassina_de_Pecchi",label:"Cassina de' Pecchi"},
+  {id:"M2_Villa_Fiorita",label:"Villa Fiorita"},{id:"M2_Cernusco",label:"Cernusco S.N."},
+  {id:"M2_Cascina_Burrona",label:"Cascina Burrona"},{id:"M2_Vimodrone",label:"Vimodrone"},
+  {id:"M2_Cologno_Nord",label:"Cologno Nord"},{id:"M2_Cologno_Centro",label:"Cologno Centro"},
+  {id:"M2_Cologno_Sud",label:"Cologno Sud"},{id:"M2_Cascina_Gobba",label:"Cascina Gobba"},
+  {id:"M2_Crescenzago",label:"Crescenzago"},{id:"M2_Cimiano",label:"Cimiano"},
+  {id:"M2_Udine",label:"Udine"},{id:"M2_Lambrate",label:"Lambrate"},
+  {id:"M2_Piola",label:"Piola"},{id:"M2_Loreto",label:"Loreto"},
+  {id:"M2_Caiazzo",label:"Caiazzo"},{id:"M2_Centrale",label:"Centrale"},
+  {id:"M2_Gioia",label:"Gioia"},{id:"M2_Garibaldi",label:"Garibaldi"},
+  {id:"M2_Moscova",label:"Moscova"},{id:"M2_Lanza",label:"Lanza"},
+  {id:"M2_Cadorna",label:"Cadorna"},{id:"M2_S_Ambrogio",label:"S. Ambrogio"},
+  {id:"M2_S_Agostino",label:"S. Agostino"},{id:"M2_Porta_Genova",label:"Porta Genova"},
+  {id:"M2_Romolo",label:"Romolo"},{id:"M2_Famagosta",label:"Famagosta"},
+  {id:"M2_Abbiategrasso",label:"Abbiategrasso"},{id:"M2_Assago_M_Nord",label:"Assago Milanofiori Nord"},
+  {id:"M2_Assago_M_Forum",label:"Assago Milanofiori Forum"},
+];
+
+function toggleAltro(){
+  const sec = document.getElementById('search-section');
+  const shown = sec.style.display !== 'none';
+  sec.style.display = shown ? 'none' : 'block';
+  if(!shown) document.getElementById('inp-stazione').focus();
+  ['casa','unicatt','poli'].forEach(k=>document.getElementById('btn-'+k).classList.remove('active'));
+}
+
+const inpSt = document.getElementById('inp-stazione');
+const sugB  = document.getElementById('sug-box');
+
+inpSt.addEventListener('input', () => {
+  const q = inpSt.value.trim().toLowerCase();
+  if(!q){ sugB.style.display='none'; return; }
+  const matches = STAZIONI_M2.filter(s=>s.label.toLowerCase().includes(q));
+  if(!matches.length){ sugB.style.display='none'; return; }
+  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'gi');
+  sugB.innerHTML = matches.map(s=>`
+    <div class="sug-item" data-id="${s.id}" data-label="${s.label}">
+      <span class="line-pill m2">M2</span>
+      <span>${s.label.replace(re,'<mark>$1</mark>')}</span>
+    </div>`).join('');
+  sugB.style.display='block';
+  sugB.querySelectorAll('.sug-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      inpSt.value = el.dataset.label;
+      sugB.style.display='none';
+      percorso = { stazione:el.dataset.id, dir:'cologno_gessate', filtro:'cologno_nord', titolo:`${el.dataset.label} → Cologno Nord` };
+      esegui(percorso.stazione, percorso.dir, percorso.filtro, percorso.titolo);
+    });
+  });
+});
+
+document.addEventListener('click', e=>{ if(!e.target.closest('.search-wrap')) sugB.style.display='none'; });
+
+// ============================================================
+// FETCH + RENDER
+// ============================================================
+async function esegui(stazione, dir, filtro, titolo){
+  const box = document.getElementById('results');
+  box.innerHTML = `<div class="result-box"><div class="empty-box">⏳ Caricamento…</div></div>`;
+  try {
+    if(!cache[stazione]){
+      const r = await fetch(`${BASE}${stazione}.json`);
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      cache[stazione] = await r.json();
+    }
+    const data = cache[stazione];
+    // Prova la direzione indicata; se non esiste prova varianti comuni
+    let treni = nextTrains(data, dir, filtro, dataOra, 3);
+    if(!treni.length){
+      // fallback: prova tutte le direzioni disponibili e cerca la prima
+      const dirs = Object.keys(data);
+      for(const d of dirs){
+        treni = nextTrains(data, d, null, dataOra, 3);
+        if(treni.length){ break; }
+      }
+    }
+    const tipo = tipoGiornata(dataOra);
+    const oraStr = dataOra.getHours().toString().padStart(2,'0')+':'+dataOra.getMinutes().toString().padStart(2,'0');
+    renderRisultati(treni, titolo, tipo, oraStr);
+  } catch(e){
+    document.getElementById('results').innerHTML = `<div class="result-box"><div class="empty-box">⚠️ Errore caricamento</div></div>`;
+  }
+}
+
+function renderRisultati(treni, titolo, tipo, oraStr){
+  let html = `<div class="result-box">
+    <div class="result-title">${titolo} · ${oraStr} · ${tipo}</div>`;
+
+  if(!treni.length){
+    html += `<div class="empty-box">🌙 Nessun treno in questa fascia oraria</div>`;
+  } else if(treni[0].freq && treni[0].t===null){
+    const msg = treni[0].msg.split(/every/i)[0].trim();
+    html += `<div class="freq-box">
+      <div class="f-icon">🚇</div>
+      <div class="f-text">${msg}</div>
+      <div class="f-sub">Alta frequenza — controlla gli orari sullo schermo</div>
+    </div>`;
+  } else {
+    html += treni.map(t=>`
+      <div class="train-row">
+        <div class="train-time">${t.t}</div>
+        <div class="train-info">
+          <div class="train-dest">${fmt(t.dest)}</div>
+          <div class="train-sub">tra ${t.att} min</div>
+        </div>
+        <div class="train-eta">${t.att}<small> min</small></div>
+      </div>`).join('');
+  }
+  html += `</div>`;
+  document.getElementById('results').innerHTML = html;
+}
+</script>
+</body>
+</html>
