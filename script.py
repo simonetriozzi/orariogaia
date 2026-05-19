@@ -211,183 +211,139 @@ def pulisci_nome_direzione(testo_pagina):
 
 def estrai_orari_da_colonna(page, bbox, direzione_nome):
     """
-    Estrae gli orari da una colonna (feriale/sabato/festivo) del PDF,
-    catturando il colore di ogni minuto per determinare la destinazione.
-    
-    Args:
-        page: pagina pdfplumber
-        bbox: tuple (x0, y0, x1, y1) della colonna
-        direzione_nome: nome della direzione corrente (es. "rho_fiera_bisceglie")
-                        usato per il mapping colore -> destinazione
-    
-    Returns:
-        (giornata, timetable) dove timetable ha la struttura:
-        {"06": {"rho_fiera": [12, 34], "bisceglie": [18, 40]}, "07": "frequenza_alta", ...}
+    Estrae gli orari da una colonna (feriale/sabato/festivo) del PDF.
+
+    ARCHITETTURA a 2 passi:
+    1. extract_text()  -> struttura ora:minuti (gestisce correttamente il caso
+       in cui pdfplumber mette il label '6:00' e i suoi minuti su y leggermente
+       diversi, risolvendolo internamente prima di restituire il testo).
+    2. extract_words() -> lookup colore per destinazione, abbinato per
+       prossimita di y al label dell'ora.
+
+    Fix range alta frequenza: INCLUSIVO (ora_fine compreso).
     """
     cropped = page.crop(bbox)
-    
-    # --- STEP 1: Estrai il testo semplice per identificare giornata e alta frequenza ---
+
+    # STEP 1: testo semplice per giornata e struttura
     text = cropped.extract_text()
     if not text:
         return None, {}
-    
+
     text_upper = text.upper()
     giornata = None
-    
     if "LUNED" in text_upper or "VENERD" in text_upper:
         giornata = "feriale"
     elif "SABAT" in text_upper:
         giornata = "sabato"
     elif "FESTIV" in text_upper:
         giornata = "festivo"
-    
-    # --- STEP 2: Estrai le parole con i colori ---
+
+    if not giornata:
+        return None, {}
+
+    # STEP 2: parole con colori -> indice per lookup
     words = cropped.extract_words(extra_attrs=['non_stroking_color'])
-    
-    # Ricostruisci le righe dalle parole, raggruppando per coordinata Y
-    # Parole con top simile (±3pt) appartengono alla stessa riga
-    righe_words = {}
+
+    # digit_color_index: valore_minuto -> [(y_top, colore), ...]
+    digit_color_index = {}
+    # hour_y_index: ora_key -> y_top del label 'H:00'
+    hour_y_index = {}
+
     for w in words:
-        top_key = round(w['top'] / 3.0)  # raggruppa ogni ~3pt
-        if top_key not in righe_words:
-            righe_words[top_key] = []
-        righe_words[top_key].append(w)
-    
-    # Ordina le righe per posizione verticale, e le parole per posizione orizzontale
-    righe_ordinate = []
-    for top_key in sorted(righe_words.keys()):
-        riga = sorted(righe_words[top_key], key=lambda w: w['x0'])
-        righe_ordinate.append(riga)
-    
-    # Ottieni il mapping colore -> destinazione per questa direzione
+        txt = w['text'].replace('*', '').strip()
+        if ':' in w['text']:
+            mh = re.match(r'^(\d{1,2}):0+$', txt)
+            if mh:
+                hk = f"{int(mh.group(1)):02d}"
+                hour_y_index[hk] = w['top']
+        elif txt.isdigit():
+            val = int(txt)
+            if 0 <= val < 60:
+                colore = classifica_colore(w.get('non_stroking_color'))
+                digit_color_index.setdefault(val, []).append((w['top'], colore))
+
     mappa_colori = COLORE_DESTINAZIONE.get(direzione_nome, {})
-    
     timetable = {}
     lines_text = text.split('\n')
-    
-    # --- STEP 3: Estrai minuti con colori dalle righe di parole (PRIMA degli orari esatti) ---
-    current_hour = None
-    
-    for riga in righe_ordinate:
-        # Ricostruisci il testo della riga
-        riga_testo = " ".join(w['text'] for w in riga)
-        
-        # Cerca se la riga inizia con un'ora (es. "6:00" o "23:00")
-        match_ora = re.match(r'^(\d{1,2}):00', riga_testo)
-        if match_ora:
-            current_hour = f"{int(match_ora.group(1)):02d}"
-        
-        # Salta se non abbiamo un'ora corrente
-        if current_hour is None:
-            continue
-        
-        # Controlla se la riga ha contenuto utile (minuti) da processare.
-        # Può essere la stessa riga dell'ora oppure una riga successiva con soli minuti
-        # (caso che avviene quando pdfplumber separa timestamp e minuti su righe diverse)
-        parole_da_processare = []
-        for w in riga:
-            testo_parola = w['text'].replace('*', '').strip()
-            if ':' in w['text']:
-                continue  # Salta la parola HH:00
-            if not testo_parola.isdigit():
-                # Se la riga contiene parole non-numeriche significative (es. "alle", "per", "from"),
-                # non è una riga di minuti — aggiorna solo l'ora se trovata, poi salta
-                if any(kw in testo_parola.lower() for kw in ['alle', 'from', 'per', 'to', 'ogni', 'every', 'dalle']):
-                    parole_da_processare = []
-                    break
-                continue
-            minuto = int(testo_parola)
-            if 0 <= minuto < 60:
-                parole_da_processare.append((minuto, w))
-        
-        for minuto, w in parole_da_processare:
-            # Classifica il colore
-            colore = classifica_colore(w.get('non_stroking_color'))
-            
-            if not colore:
-                continue
-            
-            # Mappa il colore alla destinazione
-            destinazione = mappa_colori.get(colore)
-            
+
+    # STEP 3: struttura ora->minuti da extract_text()
+    # extract_text() raggruppa correttamente "6:00 7 16 23..." su un unica riga
+    # anche quando extract_words() li separa per y leggermente diversi.
+    text_hours = {}  # {ora_key: [minuto, ...]}
+    for line in lines_text:
+        line = line.strip()
+        mora = re.match(r'^(\d{1,2}):00\s*(.*)', line)
+        if mora:
+            hk = f"{int(mora.group(1)):02d}"
+            mins = [int(t) for t in re.findall(r'\b(\d{1,2})\b', mora.group(2))
+                    if 0 <= int(t) < 60]
+            if mins:
+                text_hours.setdefault(hk, []).extend(mins)
+
+    # STEP 4: associa colore a ciascun minuto tramite prossimita-y
+    for hk, mins in text_hours.items():
+        hour_y = hour_y_index.get(hk)
+        for minute_val in mins:
+            candidates = digit_color_index.get(minute_val, [])
+            if candidates:
+                if hour_y is not None:
+                    _, best_colore = min(candidates, key=lambda c: abs(c[0] - hour_y))
+                else:
+                    _, best_colore = candidates[0]
+            else:
+                best_colore = "nero"
+
+            destinazione = mappa_colori.get(best_colore)
             if not destinazione:
-                # Se il colore non ha mapping (es. nero per Dir 1 senza mapping esplicito),
-                # usa il nome della direzione come destinazione default
-                if colore == "nero" and "nero" not in mappa_colori:
+                if best_colore == "nero" and "nero" not in mappa_colori:
                     destinazione = direzione_nome
                 else:
                     continue
-            
-            # Inizializza la struttura se necessario
-            if current_hour not in timetable:
-                timetable[current_hour] = {}
-            if isinstance(timetable[current_hour], str):
-                # Già marcata come alta frequenza, ma abbiamo trovato orari esatti:
-                # gli orari esatti hanno priorità, rimpiazza la stringa con un dict
-                timetable[current_hour] = {}
-            if destinazione not in timetable[current_hour]:
-                timetable[current_hour][destinazione] = []
-            
-            if minuto not in timetable[current_hour][destinazione]:
-                timetable[current_hour][destinazione].append(minuto)
-        
-        # Resetta current_hour se questa riga ha un'ora nuova seguita da righe di alta frequenza
-        # (es. riga "dalle from" dopo "6:00"): non vogliamo attribuire i minuti successivi all'ora 06
-        if match_ora and any('alle' in w2['text'].lower() or 'dalle' in w2['text'].lower() for w2 in riga if ':' not in w2['text']):
-            current_hour = None
-    
-    # --- STEP 4: Gestisci alta frequenza dal testo semplice ---
-    # Applica alta frequenza SOLO per ore che non hanno già orari esatti estratti.
-    # I PDF ATM strutturano la fascia di alta frequenza su righe separate:
-    #   "dalle from"
-    #   "N alle to M"
-    #   "ogni X' - Y'"
+
+            if hk not in timetable:
+                timetable[hk] = {}
+            if isinstance(timetable[hk], str):
+                timetable[hk] = {}
+            if destinazione not in timetable[hk]:
+                timetable[hk][destinazione] = []
+            if minute_val not in timetable[hk][destinazione]:
+                timetable[hk][destinazione].append(minute_val)
+
+    # STEP 5: alta frequenza (solo ore ancora vuote; range INCLUSIVO)
     i = 0
     while i < len(lines_text):
         line = lines_text[i].strip()
-        line_upper = line.upper()
-        
-        ora_inizio = None
-        ora_fine = None
-        frequenza_str = "frequenza_alta"
-        
-        if "DALLE" in line_upper:
-            # Trovata riga trigger "dalle from"
-            # Cerca il range orario "N alle to M" nella stessa riga o nelle successive
+        if "DALLE" in line.upper():
+            ora_inizio = ora_fine = None
             for look in range(0, 5):
                 if i + look < len(lines_text):
-                    candidate_line = lines_text[i + look].strip()
-                    # Cerca il pattern: numero + "alle" + "to" + numero
-                    match_range = re.search(r'(\d{1,2})\s+alle\s+to\s+(\d{1,2})', candidate_line, re.IGNORECASE)
-                    if match_range:
-                        ora_inizio = int(match_range.group(1))
-                        ora_fine = int(match_range.group(2))
+                    cl = lines_text[i + look].strip()
+                    mr = re.search(r'(\d{1,2})\s+alle\s+to\s+(\d{1,2})', cl, re.IGNORECASE)
+                    if mr:
+                        ora_inizio = int(mr.group(1))
+                        ora_fine   = int(mr.group(2))
                         break
-        
-        if ora_inizio is not None and ora_fine is not None:
-            # Cerca la stringa di frequenza nelle righe circostanti
-            for j in range(-2, 5):
-                idx = i + j
-                if 0 <= idx < len(lines_text):
-                    candidate = lines_text[idx].strip()
-                    if "OGNI" in candidate.upper() or "EVERY" in candidate.upper():
-                        frequenza_str = candidate
-                        break
-            
-            for h in range(ora_inizio, ora_fine):
-                hour_key = f"{h:02d}"
-                # Applica alta frequenza SOLO se non abbiamo già orari esatti per quell'ora
-                if hour_key not in timetable:
-                    timetable[hour_key] = frequenza_str
-        
+            if ora_inizio is not None and ora_fine is not None:
+                freq_str = "frequenza_alta"
+                for j in range(-2, 5):
+                    idx = i + j
+                    if 0 <= idx < len(lines_text):
+                        cand = lines_text[idx].strip()
+                        if "OGNI" in cand.upper() or "EVERY" in cand.upper():
+                            freq_str = cand
+                            break
+                for h in range(ora_inizio, ora_fine + 1):  # +1 = inclusivo
+                    hkey = f"{h:02d}"
+                    if hkey not in timetable:
+                        timetable[hkey] = freq_str
         i += 1
-    
-    # Ordina i minuti per ogni destinazione per ogni ora
-    for hour_key, value in timetable.items():
+
+    # ordina minuti
+    for hkey, value in timetable.items():
         if isinstance(value, dict):
             for dest in value:
                 value[dest] = sorted(value[dest])
-    
+
     return giornata, timetable
 
 
