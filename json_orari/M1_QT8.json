@@ -1,21 +1,18 @@
 {
   "treni_per_s_e_s_t_o_1_maggio_fs": {
     "feriale": {
-      "07": "ogni 4' - 7' every 4 - 7 minutes",
-      "08": "ogni 4' - 7' every 4 - 7 minutes",
-      "09": "ogni 4' - 7' every 4 - 7 minutes",
-      "10": "ogni 4' - 7' every 4 - 7 minutes",
-      "11": "ogni 4' - 7' every 4 - 7 minutes",
-      "12": "ogni 4' - 7' every 4 - 7 minutes",
-      "13": "ogni 4' - 7' every 4 - 7 minutes",
-      "14": "ogni 4' - 7' every 4 - 7 minutes",
-      "15": "ogni 4' - 7' every 4 - 7 minutes",
-      "16": "ogni 4' - 7' every 4 - 7 minutes",
-      "17": "ogni 4' - 7' every 4 - 7 minutes",
-      "18": "ogni 4' - 7' every 4 - 7 minutes",
       "05": {
         "treni_per_s_e_s_t_o_1_maggio_fs": [
-          46
+          0,
+          8,
+          16,
+          24,
+          28,
+          35,
+          43,
+          46,
+          52,
+          55
         ]
       },
       "20": {
@@ -59,24 +56,31 @@
           7,
           22
         ]
-      }
+      },
+      "07": "ogni 4' - 7' every 4 - 7 minutes",
+      "08": "ogni 4' - 7' every 4 - 7 minutes",
+      "09": "ogni 4' - 7' every 4 - 7 minutes",
+      "10": "ogni 4' - 7' every 4 - 7 minutes",
+      "11": "ogni 4' - 7' every 4 - 7 minutes",
+      "12": "ogni 4' - 7' every 4 - 7 minutes",
+      "13": "ogni 4' - 7' every 4 - 7 minutes",
+      "14": "ogni 4' - 7' every 4 - 7 minutes",
+      "15": "ogni 4' - 7' every 4 - 7 minutes",
+      "16": "ogni 4' - 7' every 4 - 7 minutes",
+      "17": "ogni 4' - 7' every 4 - 7 minutes",
+      "18": "ogni 4' - 7' every 4 - 7 minutes"
     },
     "sabato": {
-      "07": "ogni 7' every 7 minutes",
-      "08": "ogni 7' every 7 minutes",
-      "09": "ogni 7' every 7 minutes",
-      "10": "ogni 7' every 7 minutes",
-      "11": "ogni 7' every 7 minutes",
-      "12": "ogni 7' every 7 minutes",
-      "13": "ogni 7' every 7 minutes",
-      "14": "ogni 7' every 7 minutes",
-      "15": "ogni 7' every 7 minutes",
-      "16": "ogni 7' every 7 minutes",
-      "17": "ogni 7' every 7 minutes",
-      "18": "ogni 7' every 7 minutes",
       "05": {
         "treni_per_s_e_s_t_o_1_maggio_fs": [
-          46
+          0,
+          10,
+          21,
+          31,
+          40,
+          46,
+          49,
+          58
         ]
       },
       "20": {
@@ -119,9 +123,47 @@
           7,
           22
         ]
-      }
+      },
+      "07": "ogni 7' every 7 minutes",
+      "08": "ogni 7' every 7 minutes",
+      "09": "ogni 7' every 7 minutes",
+      "10": "ogni 7' every 7 minutes",
+      "11": "ogni 7' every 7 minutes",
+      "12": "ogni 7' every 7 minutes",
+      "13": "ogni 7' every 7 minutes",
+      "14": "ogni 7' every 7 minutes",
+      "15": "ogni 7' every 7 minutes",
+      "16": "ogni 7' every 7 minutes",
+      "17": "ogni 7' every 7 minutes",
+      "18": "ogni 7' every 7 minutes"
     },
     "festivo": {
+      "06": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          2,
+          18,
+          34,
+          50
+        ]
+      },
+      "07": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          5,
+          17,
+          29,
+          41,
+          53
+        ]
+      },
+      "08": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          5,
+          17,
+          29,
+          41,
+          53
+        ]
+      },
       "10": {
         "treni_per_s_e_s_t_o_1_maggio_fs": [
           5,
@@ -189,10 +231,43 @@
       },
       "17": {
         "treni_per_s_e_s_t_o_1_maggio_fs": [
+          3,
           8,
+          14,
           19,
+          25,
           30,
+          36,
           41,
+          47,
+          52,
+          58
+        ]
+      },
+      "18": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          9,
+          20,
+          31,
+          42,
+          53
+        ]
+      },
+      "19": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          4,
+          15,
+          26,
+          37,
+          49
+        ]
+      },
+      "20": {
+        "treni_per_s_e_s_t_o_1_maggio_fs": [
+          1,
+          13,
+          25,
+          37,
           52
         ]
       },

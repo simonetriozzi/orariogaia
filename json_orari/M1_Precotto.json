@@ -1,19 +1,6 @@
 {
   "sesto_1_maggio_fs": {
     "feriale": {
-      "07": "ogni 2' - 3' every 2 - 3 minutes",
-      "08": "ogni 2' - 3' every 2 - 3 minutes",
-      "09": "ogni 2' - 3' every 2 - 3 minutes",
-      "10": "ogni 2' - 3' every 2 - 3 minutes",
-      "11": "ogni 2' - 3' every 2 - 3 minutes",
-      "12": "ogni 2' - 3' every 2 - 3 minutes",
-      "13": "ogni 2' - 3' every 2 - 3 minutes",
-      "14": "ogni 2' - 3' every 2 - 3 minutes",
-      "15": "ogni 2' - 3' every 2 - 3 minutes",
-      "16": "ogni 2' - 3' every 2 - 3 minutes",
-      "17": "ogni 2' - 3' every 2 - 3 minutes",
-      "18": "ogni 2' - 3' every 2 - 3 minutes",
-      "19": "ogni 2' - 3' every 2 - 3 minutes",
       "21": {
         "sesto_1_maggio_fs": [
           1,
@@ -65,22 +52,22 @@
           40,
           48
         ]
-      }
+      },
+      "07": "ogni 2' - 3' every 2 - 3 minutes",
+      "08": "ogni 2' - 3' every 2 - 3 minutes",
+      "09": "ogni 2' - 3' every 2 - 3 minutes",
+      "10": "ogni 2' - 3' every 2 - 3 minutes",
+      "11": "ogni 2' - 3' every 2 - 3 minutes",
+      "12": "ogni 2' - 3' every 2 - 3 minutes",
+      "13": "ogni 2' - 3' every 2 - 3 minutes",
+      "14": "ogni 2' - 3' every 2 - 3 minutes",
+      "15": "ogni 2' - 3' every 2 - 3 minutes",
+      "16": "ogni 2' - 3' every 2 - 3 minutes",
+      "17": "ogni 2' - 3' every 2 - 3 minutes",
+      "18": "ogni 2' - 3' every 2 - 3 minutes",
+      "19": "ogni 2' - 3' every 2 - 3 minutes"
     },
     "sabato": {
-      "07": "ogni 3' - 4' every 3 - 4 minutes",
-      "08": "ogni 3' - 4' every 3 - 4 minutes",
-      "09": "ogni 3' - 4' every 3 - 4 minutes",
-      "10": "ogni 3' - 4' every 3 - 4 minutes",
-      "11": "ogni 3' - 4' every 3 - 4 minutes",
-      "12": "ogni 3' - 4' every 3 - 4 minutes",
-      "13": "ogni 3' - 4' every 3 - 4 minutes",
-      "14": "ogni 3' - 4' every 3 - 4 minutes",
-      "15": "ogni 3' - 4' every 3 - 4 minutes",
-      "16": "ogni 3' - 4' every 3 - 4 minutes",
-      "17": "ogni 3' - 4' every 3 - 4 minutes",
-      "18": "ogni 3' - 4' every 3 - 4 minutes",
-      "19": "ogni 3' - 4' every 3 - 4 minutes",
       "21": {
         "sesto_1_maggio_fs": [
           1,
@@ -131,7 +118,20 @@
           40,
           48
         ]
-      }
+      },
+      "07": "ogni 3' - 4' every 3 - 4 minutes",
+      "08": "ogni 3' - 4' every 3 - 4 minutes",
+      "09": "ogni 3' - 4' every 3 - 4 minutes",
+      "10": "ogni 3' - 4' every 3 - 4 minutes",
+      "11": "ogni 3' - 4' every 3 - 4 minutes",
+      "12": "ogni 3' - 4' every 3 - 4 minutes",
+      "13": "ogni 3' - 4' every 3 - 4 minutes",
+      "14": "ogni 3' - 4' every 3 - 4 minutes",
+      "15": "ogni 3' - 4' every 3 - 4 minutes",
+      "16": "ogni 3' - 4' every 3 - 4 minutes",
+      "17": "ogni 3' - 4' every 3 - 4 minutes",
+      "18": "ogni 3' - 4' every 3 - 4 minutes",
+      "19": "ogni 3' - 4' every 3 - 4 minutes"
     },
     "festivo": {
       "21": {
@@ -188,26 +188,27 @@
   },
   "rho_fiera_bisceglie": {
     "feriale": {
-      "07": "ogni 2' - 3' every 2 - 3 minutes",
-      "08": "ogni 2' - 3' every 2 - 3 minutes",
-      "09": "ogni 2' - 3' every 2 - 3 minutes",
-      "10": "ogni 2' - 3' every 2 - 3 minutes",
-      "11": "ogni 2' - 3' every 2 - 3 minutes",
-      "12": "ogni 2' - 3' every 2 - 3 minutes",
-      "13": "ogni 2' - 3' every 2 - 3 minutes",
-      "14": "ogni 2' - 3' every 2 - 3 minutes",
-      "15": "ogni 2' - 3' every 2 - 3 minutes",
-      "16": "ogni 2' - 3' every 2 - 3 minutes",
-      "17": "ogni 2' - 3' every 2 - 3 minutes",
-      "18": "ogni 2' - 3' every 2 - 3 minutes",
-      "19": "ogni 2' - 3' every 2 - 3 minutes",
       "05": {
         "bisceglie": [
+          10,
+          20,
+          30,
+          34,
+          41,
+          45,
           46,
+          52,
+          56,
           59
         ],
         "rho_fiera": [
-          53
+          5,
+          16,
+          25,
+          38,
+          49,
+          53,
+          59
         ]
       },
       "21": {
@@ -265,29 +266,41 @@
         "molino_dorino": [
           19
         ]
-      }
+      },
+      "07": "ogni 2' - 3' every 2 - 3 minutes",
+      "08": "ogni 2' - 3' every 2 - 3 minutes",
+      "09": "ogni 2' - 3' every 2 - 3 minutes",
+      "10": "ogni 2' - 3' every 2 - 3 minutes",
+      "11": "ogni 2' - 3' every 2 - 3 minutes",
+      "12": "ogni 2' - 3' every 2 - 3 minutes",
+      "13": "ogni 2' - 3' every 2 - 3 minutes",
+      "14": "ogni 2' - 3' every 2 - 3 minutes",
+      "15": "ogni 2' - 3' every 2 - 3 minutes",
+      "16": "ogni 2' - 3' every 2 - 3 minutes",
+      "17": "ogni 2' - 3' every 2 - 3 minutes",
+      "18": "ogni 2' - 3' every 2 - 3 minutes",
+      "19": "ogni 2' - 3' every 2 - 3 minutes"
     },
     "sabato": {
-      "07": "ogni 3' - 4' every 3 - 4 minutes",
-      "08": "ogni 3' - 4' every 3 - 4 minutes",
-      "09": "ogni 3' - 4' every 3 - 4 minutes",
-      "10": "ogni 3' - 4' every 3 - 4 minutes",
-      "11": "ogni 3' - 4' every 3 - 4 minutes",
-      "12": "ogni 3' - 4' every 3 - 4 minutes",
-      "13": "ogni 3' - 4' every 3 - 4 minutes",
-      "14": "ogni 3' - 4' every 3 - 4 minutes",
-      "15": "ogni 3' - 4' every 3 - 4 minutes",
-      "16": "ogni 3' - 4' every 3 - 4 minutes",
-      "17": "ogni 3' - 4' every 3 - 4 minutes",
-      "18": "ogni 3' - 4' every 3 - 4 minutes",
-      "19": "ogni 3' - 4' every 3 - 4 minutes",
       "05": {
         "bisceglie": [
+          12,
+          23,
+          32,
+          43,
           46,
+          53,
           59
         ],
         "rho_fiera": [
-          53
+          6,
+          18,
+          28,
+          36,
+          40,
+          49,
+          53,
+          58
         ]
       },
       "21": {
@@ -343,9 +356,67 @@
         "molino_dorino": [
           19
         ]
-      }
+      },
+      "07": "ogni 3' - 4' every 3 - 4 minutes",
+      "08": "ogni 3' - 4' every 3 - 4 minutes",
+      "09": "ogni 3' - 4' every 3 - 4 minutes",
+      "10": "ogni 3' - 4' every 3 - 4 minutes",
+      "11": "ogni 3' - 4' every 3 - 4 minutes",
+      "12": "ogni 3' - 4' every 3 - 4 minutes",
+      "13": "ogni 3' - 4' every 3 - 4 minutes",
+      "14": "ogni 3' - 4' every 3 - 4 minutes",
+      "15": "ogni 3' - 4' every 3 - 4 minutes",
+      "16": "ogni 3' - 4' every 3 - 4 minutes",
+      "17": "ogni 3' - 4' every 3 - 4 minutes",
+      "18": "ogni 3' - 4' every 3 - 4 minutes",
+      "19": "ogni 3' - 4' every 3 - 4 minutes"
     },
     "festivo": {
+      "06": {
+        "rho_fiera": [
+          1,
+          17,
+          33,
+          48
+        ],
+        "bisceglie": [
+          9,
+          25,
+          41,
+          56
+        ]
+      },
+      "07": {
+        "rho_fiera": [
+          4,
+          20,
+          32,
+          38,
+          50
+        ],
+        "bisceglie": [
+          12,
+          27,
+          43,
+          56
+        ]
+      },
+      "08": {
+        "rho_fiera": [
+          2,
+          14,
+          26,
+          38,
+          50
+        ],
+        "bisceglie": [
+          8,
+          20,
+          32,
+          44,
+          56
+        ]
+      },
       "10": {
         "rho_fiera": [
           2,
@@ -465,18 +536,79 @@
       "17": {
         "rho_fiera": [
           1,
+          7,
           12,
+          18,
           23,
+          29,
           34,
+          40,
           45,
+          51,
           56
         ],
         "bisceglie": [
+          1,
           6,
+          12,
           17,
+          23,
           28,
+          34,
           39,
-          50
+          45,
+          50,
+          56
+        ]
+      },
+      "18": {
+        "rho_fiera": [
+          2,
+          13,
+          24,
+          35,
+          46,
+          57
+        ],
+        "bisceglie": [
+          7,
+          18,
+          29,
+          40,
+          51
+        ]
+      },
+      "19": {
+        "bisceglie": [
+          2,
+          13,
+          24,
+          35,
+          46,
+          57
+        ],
+        "rho_fiera": [
+          8,
+          19,
+          30,
+          41,
+          52
+        ]
+      },
+      "20": {
+        "rho_fiera": [
+          3,
+          13,
+          25,
+          37,
+          48
+        ],
+        "bisceglie": [
+          8,
+          19,
+          31,
+          43,
+          54
         ]
       },
       "22": {

@@ -535,20 +535,46 @@
         const nodo = orari[oraKey];
         if (nodo === undefined || nodo === null) continue;
         if (typeof nodo === "string") {
-          if (off === 0) return [{ ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo }];
-          risultati.push({ ora_partenza: `${oraKey}:00`, destinazione: filtro || macroDirezione, minuti_attesa: (oraT - oraC + 24) % 24 * 60 - minC, tipo: "frequenza", messaggio: nodo });
+          let waitMins = 5;
+          const match = nodo.match(/(\d+)/g);
+          if (match && match.length >= 2) {
+            waitMins = Math.floor((parseInt(match[0]) + parseInt(match[1])) / 2);
+          } else if (match && match.length === 1) {
+            waitMins = parseInt(match[0]);
+          }
+          if (waitMins < 2) waitMins = 2;
+          
+          if (off === 0) {
+            return [{ ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo }];
+          } else {
+            for(let m = 0; m < 60; m += waitMins) {
+              if (risultati.length >= limiteN) break;
+              let att = ((oraT * 60 + m) - (oraC * 60 + minC));
+              if (att < 0) att += 1440;
+              risultati.push({ ora_partenza: `${oraKey}:${m.toString().padStart(2, "0")}`, destinazione: filtro || macroDirezione, minuti_attesa: att, tipo: "stimato" });
+            }
+          }
           continue;
         }
         if (typeof nodo === "object") {
           const treni = [];
-          const dests = filtro ? { [filtro]: nodo[filtro] } : nodo;
-          for (const [dest, mins] of Object.entries(dests)) {
-            if (!Array.isArray(mins)) continue;
-            for (const m of mins) {
+          if (Array.isArray(nodo)) {
+            for (const m of nodo) {
               if (off === 0 && m < minC) continue;
               let att = ((oraT * 60 + m) - (oraC * 60 + minC));
               if (att < 0) att += 1440;
-              treni.push({ ora_partenza: `${oraKey}:${m.toString().padStart(2, "0")}`, destinazione: dest, minuti_attesa: att, tipo: "esatto" });
+              treni.push({ ora_partenza: `${oraKey}:${m.toString().padStart(2, "0")}`, destinazione: filtro || macroDirezione, minuti_attesa: att, tipo: "esatto" });
+            }
+          } else {
+            const dests = filtro ? { [filtro]: nodo[filtro] } : nodo;
+            for (const [dest, mins] of Object.entries(dests)) {
+              if (!Array.isArray(mins)) continue;
+              for (const m of mins) {
+                if (off === 0 && m < minC) continue;
+                let att = ((oraT * 60 + m) - (oraC * 60 + minC));
+                if (att < 0) att += 1440;
+                treni.push({ ora_partenza: `${oraKey}:${m.toString().padStart(2, "0")}`, destinazione: dest, minuti_attesa: att, tipo: "esatto" });
+              }
             }
           }
           treni.sort((a, b) => a.minuti_attesa - b.minuti_attesa);

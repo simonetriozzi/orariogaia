@@ -1,22 +1,18 @@
 {
   "sesto_1_maggio_fs": {
     "feriale": {
-      "07": "ogni 4' - 9' every 4 - 9 minutes",
-      "08": "ogni 4' - 9' every 4 - 9 minutes",
-      "09": "ogni 4' - 9' every 4 - 9 minutes",
-      "10": "ogni 4' - 9' every 4 - 9 minutes",
-      "11": "ogni 4' - 9' every 4 - 9 minutes",
-      "12": "ogni 4' - 9' every 4 - 9 minutes",
-      "13": "ogni 4' - 9' every 4 - 9 minutes",
-      "14": "ogni 4' - 9' every 4 - 9 minutes",
-      "15": "ogni 4' - 9' every 4 - 9 minutes",
-      "16": "ogni 4' - 9' every 4 - 9 minutes",
-      "17": "ogni 4' - 9' every 4 - 9 minutes",
-      "18": "ogni 4' - 9' every 4 - 9 minutes",
-      "19": "ogni 4' - 9' every 4 - 9 minutes",
       "05": {
         "sesto_1_maggio_fs": [
-          51
+          0,
+          8,
+          15,
+          26,
+          34,
+          38,
+          43,
+          46,
+          51,
+          57
         ]
       },
       "21": {
@@ -49,25 +45,32 @@
         "sesto_1_maggio_fs": [
           13
         ]
-      }
+      },
+      "07": "ogni 4' - 9' every 4 - 9 minutes",
+      "08": "ogni 4' - 9' every 4 - 9 minutes",
+      "09": "ogni 4' - 9' every 4 - 9 minutes",
+      "10": "ogni 4' - 9' every 4 - 9 minutes",
+      "11": "ogni 4' - 9' every 4 - 9 minutes",
+      "12": "ogni 4' - 9' every 4 - 9 minutes",
+      "13": "ogni 4' - 9' every 4 - 9 minutes",
+      "14": "ogni 4' - 9' every 4 - 9 minutes",
+      "15": "ogni 4' - 9' every 4 - 9 minutes",
+      "16": "ogni 4' - 9' every 4 - 9 minutes",
+      "17": "ogni 4' - 9' every 4 - 9 minutes",
+      "18": "ogni 4' - 9' every 4 - 9 minutes",
+      "19": "ogni 4' - 9' every 4 - 9 minutes"
     },
     "sabato": {
-      "07": "ogni 7' - 9' every 7 - 9 minutes",
-      "08": "ogni 7' - 9' every 7 - 9 minutes",
-      "09": "ogni 7' - 9' every 7 - 9 minutes",
-      "10": "ogni 7' - 9' every 7 - 9 minutes",
-      "11": "ogni 7' - 9' every 7 - 9 minutes",
-      "12": "ogni 7' - 9' every 7 - 9 minutes",
-      "13": "ogni 7' - 9' every 7 - 9 minutes",
-      "14": "ogni 7' - 9' every 7 - 9 minutes",
-      "15": "ogni 7' - 9' every 7 - 9 minutes",
-      "16": "ogni 7' - 9' every 7 - 9 minutes",
-      "17": "ogni 7' - 9' every 7 - 9 minutes",
-      "18": "ogni 7' - 9' every 7 - 9 minutes",
-      "19": "ogni 7' - 9' every 7 - 9 minutes",
       "05": {
         "sesto_1_maggio_fs": [
-          51
+          1,
+          12,
+          22,
+          31,
+          41,
+          50,
+          51,
+          59
         ]
       },
       "21": {
@@ -99,9 +102,48 @@
         "sesto_1_maggio_fs": [
           13
         ]
-      }
+      },
+      "07": "ogni 7' - 9' every 7 - 9 minutes",
+      "08": "ogni 7' - 9' every 7 - 9 minutes",
+      "09": "ogni 7' - 9' every 7 - 9 minutes",
+      "10": "ogni 7' - 9' every 7 - 9 minutes",
+      "11": "ogni 7' - 9' every 7 - 9 minutes",
+      "12": "ogni 7' - 9' every 7 - 9 minutes",
+      "13": "ogni 7' - 9' every 7 - 9 minutes",
+      "14": "ogni 7' - 9' every 7 - 9 minutes",
+      "15": "ogni 7' - 9' every 7 - 9 minutes",
+      "16": "ogni 7' - 9' every 7 - 9 minutes",
+      "17": "ogni 7' - 9' every 7 - 9 minutes",
+      "18": "ogni 7' - 9' every 7 - 9 minutes",
+      "19": "ogni 7' - 9' every 7 - 9 minutes"
     },
     "festivo": {
+      "06": {
+        "sesto_1_maggio_fs": [
+          10,
+          26,
+          42,
+          57
+        ]
+      },
+      "07": {
+        "sesto_1_maggio_fs": [
+          9,
+          21,
+          33,
+          45,
+          57
+        ]
+      },
+      "08": {
+        "sesto_1_maggio_fs": [
+          9,
+          21,
+          33,
+          45,
+          57
+        ]
+      },
       "10": {
         "sesto_1_maggio_fs": [
           9,
@@ -169,11 +211,44 @@
       "17": {
         "sesto_1_maggio_fs": [
           0,
+          6,
           11,
+          17,
           22,
+          28,
           33,
+          39,
           44,
+          50,
           55
+        ]
+      },
+      "18": {
+        "sesto_1_maggio_fs": [
+          1,
+          12,
+          23,
+          34,
+          45,
+          56
+        ]
+      },
+      "19": {
+        "sesto_1_maggio_fs": [
+          7,
+          18,
+          29,
+          40,
+          52
+        ]
+      },
+      "20": {
+        "sesto_1_maggio_fs": [
+          4,
+          16,
+          28,
+          43,
+          58
         ]
       },
       "22": {
@@ -201,18 +276,18 @@
   },
   "rho_fiera_bisceglie": {
     "feriale": {
-      "08": "ogni 4' - 7' every 4 - 7 minutes",
-      "09": "ogni 4' - 7' every 4 - 7 minutes",
-      "10": "ogni 4' - 7' every 4 - 7 minutes",
-      "11": "ogni 4' - 7' every 4 - 7 minutes",
-      "12": "ogni 4' - 7' every 4 - 7 minutes",
-      "13": "ogni 4' - 7' every 4 - 7 minutes",
-      "14": "ogni 4' - 7' every 4 - 7 minutes",
-      "15": "ogni 4' - 7' every 4 - 7 minutes",
-      "16": "ogni 4' - 7' every 4 - 7 minutes",
-      "17": "ogni 4' - 7' every 4 - 7 minutes",
-      "18": "ogni 4' - 7' every 4 - 7 minutes",
-      "19": "ogni 4' - 7' every 4 - 7 minutes",
+      "06": {
+        "rho_fiera": [
+          1,
+          13,
+          24,
+          35,
+          42,
+          48,
+          53,
+          58
+        ]
+      },
       "21": {
         "rho_fiera": [
           3,
@@ -247,21 +322,32 @@
           16,
           34
         ]
-      }
+      },
+      "08": "ogni 4' - 7' every 4 - 7 minutes",
+      "09": "ogni 4' - 7' every 4 - 7 minutes",
+      "10": "ogni 4' - 7' every 4 - 7 minutes",
+      "11": "ogni 4' - 7' every 4 - 7 minutes",
+      "12": "ogni 4' - 7' every 4 - 7 minutes",
+      "13": "ogni 4' - 7' every 4 - 7 minutes",
+      "14": "ogni 4' - 7' every 4 - 7 minutes",
+      "15": "ogni 4' - 7' every 4 - 7 minutes",
+      "16": "ogni 4' - 7' every 4 - 7 minutes",
+      "17": "ogni 4' - 7' every 4 - 7 minutes",
+      "18": "ogni 4' - 7' every 4 - 7 minutes",
+      "19": "ogni 4' - 7' every 4 - 7 minutes"
     },
     "sabato": {
-      "08": "ogni 7' every 7 minutes",
-      "09": "ogni 7' every 7 minutes",
-      "10": "ogni 7' every 7 minutes",
-      "11": "ogni 7' every 7 minutes",
-      "12": "ogni 7' every 7 minutes",
-      "13": "ogni 7' every 7 minutes",
-      "14": "ogni 7' every 7 minutes",
-      "15": "ogni 7' every 7 minutes",
-      "16": "ogni 7' every 7 minutes",
-      "17": "ogni 7' every 7 minutes",
-      "18": "ogni 7' every 7 minutes",
-      "19": "ogni 7' every 7 minutes",
+      "06": {
+        "rho_fiera": [
+          3,
+          12,
+          15,
+          24,
+          33,
+          44,
+          52
+        ]
+      },
       "21": {
         "rho_fiera": [
           3,
@@ -294,9 +380,45 @@
           16,
           34
         ]
-      }
+      },
+      "08": "ogni 7' every 7 minutes",
+      "09": "ogni 7' every 7 minutes",
+      "10": "ogni 7' every 7 minutes",
+      "11": "ogni 7' every 7 minutes",
+      "12": "ogni 7' every 7 minutes",
+      "13": "ogni 7' every 7 minutes",
+      "14": "ogni 7' every 7 minutes",
+      "15": "ogni 7' every 7 minutes",
+      "16": "ogni 7' every 7 minutes",
+      "17": "ogni 7' every 7 minutes",
+      "18": "ogni 7' every 7 minutes",
+      "19": "ogni 7' every 7 minutes"
     },
     "festivo": {
+      "06": {
+        "rho_fiera": [
+          17,
+          35,
+          52
+        ]
+      },
+      "07": {
+        "rho_fiera": [
+          7,
+          22,
+          38,
+          54
+        ]
+      },
+      "08": {
+        "rho_fiera": [
+          6,
+          12,
+          24,
+          36,
+          48
+        ]
+      },
       "10": {
         "rho_fiera": [
           0,
@@ -365,11 +487,45 @@
       "17": {
         "rho_fiera": [
           3,
+          9,
           14,
+          20,
           25,
+          31,
           36,
+          42,
           47,
+          53,
           58
+        ]
+      },
+      "18": {
+        "rho_fiera": [
+          4,
+          15,
+          26,
+          37,
+          48,
+          59
+        ]
+      },
+      "19": {
+        "rho_fiera": [
+          10,
+          21,
+          32,
+          43,
+          54
+        ]
+      },
+      "20": {
+        "rho_fiera": [
+          5,
+          16,
+          27,
+          38,
+          48,
+          59
         ]
       },
       "22": {
