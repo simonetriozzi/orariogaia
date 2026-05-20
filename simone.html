@@ -37,6 +37,12 @@
       padding-top: calc(36px + env(safe-area-inset-top));
       padding-bottom: calc(60px + env(safe-area-inset-bottom));
       -webkit-font-smoothing: antialiased;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
     }
 
     .back-link {

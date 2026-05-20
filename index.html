@@ -52,6 +52,12 @@
       padding-top: calc(24px + env(safe-area-inset-top));
       padding-bottom: calc(48px + env(safe-area-inset-bottom));
       -webkit-font-smoothing: antialiased;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
     }
 
     /* === HEADER === */
