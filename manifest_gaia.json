@@ -1,0 +1,16 @@
+{
+  "name": "OrarioGaia - Ciao Gaia",
+  "short_name": "Gaia",
+  "start_url": "./gaia.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdf5f8",
+  "theme_color": "#6b1a3a",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

@@ -3,5 +3,7 @@
   "short_name": "OrarioGaia",
   "display": "standalone",
   "background_color": "#0a0a0f",
-  "theme_color": "#12121a"
+  "theme_color": "#12121a",
+  "start_url": "./index.html",
+  "scope": "./"
 }

@@ -1,0 +1,16 @@
+{
+  "name": "OrarioSimone",
+  "short_name": "Simone",
+  "start_url": "./simone.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1c1c1e",
+  "theme_color": "#2c2c2e",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
