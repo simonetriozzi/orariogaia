@@ -180,9 +180,6 @@ export function getNextTrains(
   const oraCorrente = targetDate.getHours();
   const minutoCorrente = targetDate.getMinutes();
 
-  // Timestamp di riferimento (per calcolo minuti_attesa)
-  const timestampRef = targetDate.getTime();
-
   const risultati = [];
 
   // Scansiona fino a 25 ore avanti (copre anche il passaggio mezzanotte)
@@ -197,9 +194,20 @@ export function getNextTrains(
 
     // --- CASO 1: Alta frequenza (stringa) ---
     if (typeof nodoOra === "string") {
-      // Se siamo nell'ora corrente (offset === 0) O nell'ora successiva,
-      // l'alta frequenza è rilevante: restituisci subito il messaggio.
+      // Se siamo GIÀ dentro la fascia di alta frequenza (offset === 0),
+      // restituisci il banner immediatamente.
       if (offset === 0) {
+        // Determina l'intera estensione del blocco di alta frequenza
+        let oraFine = oraTarget;
+        for (let look = 1; look < 25; look++) {
+          const nextH = (oraTarget + look) % 24;
+          const nextK = nextH.toString().padStart(2, "0");
+          if (typeof orariGiornata[nextK] === "string") {
+            oraFine = nextH;
+          } else {
+            break;
+          }
+        }
         return [
           {
             ora_partenza: null,
@@ -207,18 +215,40 @@ export function getNextTrains(
             minuti_attesa: null,
             tipo: "frequenza",
             messaggio: nodoOra,
+            fascia_inizio: oraTarget,
+            fascia_fine: oraFine,
           },
         ];
       }
-      // Se siamo in un'ora futura con alta frequenza,
-      // segnala il primo treno approssimato all'inizio di quell'ora
+
+      // Se arriviamo a un blocco di alta frequenza FUTURO (dopo treni esatti),
+      // emettiamo un unico banner per l'intero blocco, poi saltiamo al primo
+      // treno esatto dopo il blocco.
+      let oraFine = oraTarget;
+      let skipOffset = offset;
+      for (let look = 1; look < 25; look++) {
+        const nextH = (oraCorrente + offset + look) % 24;
+        const nextK = nextH.toString().padStart(2, "0");
+        if (typeof orariGiornata[nextK] === "string") {
+          oraFine = nextH;
+          skipOffset = offset + look;
+        } else {
+          break;
+        }
+      }
+
       risultati.push({
-        ora_partenza: `${oraKey}:00`,
+        ora_partenza: null,
         destinazione: filtroDestinazione || macroDirezione,
-        minuti_attesa: calcolaMinutiAttesa(oraCorrente, minutoCorrente, oraTarget, 0),
-        tipo: "frequenza",
+        minuti_attesa: null,
+        tipo: "frequenza_blocco",
         messaggio: nodoOra,
+        fascia_inizio: oraTarget,
+        fascia_fine: oraFine,
       });
+
+      // Avanza offset per saltare il blocco intero
+      offset = skipOffset;
       continue;
     }
 

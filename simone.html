@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OrarioSimone">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
   <title>OrarioSimone</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -361,7 +366,7 @@
 const FEST = [[1,1],[1,6],[4,25],[5,1],[6,2],[8,15],[11,1],[12,7],[12,8],[12,25],[12,26]];
 function pasqua(y){const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),gi=((h+l-7*m+114)%31)+1;return new Date(y,mo-1,gi);}
 function tipoGiornata(d=new Date()){let x=new Date(d);if(x.getHours()<3)x.setDate(x.getDate()-1);const g=x.getDay(),m=x.getMonth()+1,gm=x.getDate(),y=x.getFullYear();for(const[mm,gg]of FEST)if(m===mm&&gm===gg)return"festivo";const pq=new Date(pasqua(y));pq.setDate(pq.getDate()+1);if(x.getMonth()===pq.getMonth()&&x.getDate()===pq.getDate())return"festivo";if(g===0)return"festivo";if(g===6)return"sabato";return"feriale";}
-function nextTrains(data,dir,filtro=null,target=new Date(),n=3){const dd=data?.[dir];if(!dd)return[];const tipo=tipoGiornata(target),orari=dd[tipo];if(!orari||!Object.keys(orari).length)return[];const oC=target.getHours(),mC=target.getMinutes(),res=[];for(let off=0;off<25&&res.length<n;off++){const oT=(oC+off)%24,oK=oT.toString().padStart(2,"0"),nodo=orari[oK];if(nodo==null)continue;if(typeof nodo==="string"){if(off===0)return[{t:null,dest:filtro||dir,att:null,freq:true,msg:nodo}];res.push({t:`${oK}:00`,dest:filtro||dir,att:Math.round(((oT*60)-(oC*60+mC)+1440)%1440),freq:true,msg:nodo});continue;}if(typeof nodo==="object"){const arr=[];const dests=filtro?{[filtro]:nodo[filtro]}:nodo;for(const[dest,mins]of Object.entries(dests)){if(!Array.isArray(mins))continue;for(const m of mins){if(off===0&&m<mC)continue;let att=(oT*60+m)-(oC*60+mC);if(att<0)att+=1440;arr.push({t:`${oK}:${m.toString().padStart(2,"0")}`,dest,att,freq:false});}}arr.sort((a,b)=>a.att-b.att);for(const t of arr){if(res.length>=n)break;res.push(t);}}}return res;}
+function nextTrains(data,dir,filtro=null,target=new Date(),n=3){const dd=data?.[dir];if(!dd)return[];const tipo=tipoGiornata(target),orari=dd[tipo];if(!orari||!Object.keys(orari).length)return[];const oC=target.getHours(),mC=target.getMinutes(),res=[];for(let off=0;off<25&&res.length<n;off++){const oT=(oC+off)%24,oK=oT.toString().padStart(2,"0"),nodo=orari[oK];if(nodo==null)continue;if(typeof nodo==="string"){if(off===0){let oF=oT;for(let lk=1;lk<25;lk++){const nH=(oT+lk)%24,nK=nH.toString().padStart(2,"0");if(typeof orari[nK]==="string")oF=nH;else break;}return[{t:null,dest:filtro||dir,att:null,freq:true,tipo:"frequenza",msg:nodo,fascia_inizio:oT,fascia_fine:oF}];}let oF=oT,skipOff=off;for(let lk=1;lk<25;lk++){const nH=(oC+off+lk)%24,nK=nH.toString().padStart(2,"0");if(typeof orari[nK]==="string"){oF=nH;skipOff=off+lk;}else break;}res.push({t:null,dest:filtro||dir,att:null,freq:true,tipo:"frequenza_blocco",msg:nodo,fascia_inizio:oT,fascia_fine:oF});off=skipOff;continue;}if(typeof nodo==="object"){const arr=[];const dests=filtro?{[filtro]:nodo[filtro]}:nodo;for(const[dest,mins]of Object.entries(dests)){if(!Array.isArray(mins))continue;for(const m of mins){if(off===0&&m<mC)continue;let att=(oT*60+m)-(oC*60+mC);if(att<0)att+=1440;arr.push({t:`${oK}:${m.toString().padStart(2,"0")}`,dest,att,freq:false,tipo:"esatto"});}}arr.sort((a,b)=>a.att-b.att);for(const t of arr){if(res.length>=n)break;res.push(t);}}}return res;}
 function fmt(n){if(!n)return"";return n.split("_").map(w=>["fs","pza"].includes(w.toLowerCase())?w.toUpperCase():/^\d+$/.test(w)?w:w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ");}
 
 // ============================================================
@@ -522,15 +527,31 @@ function renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap=false){
 
   if(!treni.length){
     inner += `<div class="empty-box" style="padding:12px 0 16px">🌙 Nessun treno in questa fascia oraria</div>`;
-  } else if(treni[0].freq && treni[0].t===null){
-    const msg = treni[0].msg.split(/every/i)[0].trim();
+  } else if(treni.length === 1 && treni[0].freq && treni[0].t===null && treni[0].tipo==="frequenza"){
+    // Siamo GIÀ dentro una fascia di alta frequenza
+    const t = treni[0];
+    const msg = t.msg.split(/every/i)[0].trim();
+    const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
     inner += `<div class="freq-box">
       <div class="f-icon">🚇</div>
       <div class="f-text">${msg}</div>
-      <div class="f-sub">Alta frequenza — controlla lo schermo</div>
+      <div class="f-sub">${fasciaStr} — Alta frequenza, controlla lo schermo</div>
     </div>`;
   } else {
-    inner += treni.map((t,i) => `
+    // Mix di treni esatti e possibili blocchi di alta frequenza
+    let hasExactTrains = false;
+    inner += treni.map((t,i) => {
+      if(t.tipo === "frequenza_blocco") {
+        const msg = t.msg.split(/every/i)[0].trim();
+        const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
+        return `<div class="freq-box" style="animation:fadeUp 0.3s ease-out ${i*0.07}s both;margin:8px 0">
+          <div class="f-icon">🚇</div>
+          <div class="f-text">${msg}</div>
+          <div class="f-sub">${fasciaStr} — Alta frequenza</div>
+        </div>`;
+      }
+      hasExactTrains = true;
+      return `
       <div class="train-row" style="animation:fadeUp 0.3s ease-out ${i*0.07}s both">
         <div class="train-time">${t.t}</div>
         <div class="train-info">
@@ -538,7 +559,8 @@ function renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap=false){
           <div class="train-sub">tra ${t.att} min</div>
         </div>
         <div class="train-eta">${t.att}<small> min</small></div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
     
     // Add "Load more" button
     inner += `<button class="more-btn" onclick="mostraSuccessivo('${targetId}', ${wrap})">+ Mostra successivo</button>`;

@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OrarioGaia">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
   <title>OrarioGaia — Ciao Gaia!!!</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
@@ -699,16 +704,28 @@
     function renderTreni(treni) {
       if (!treni.length) return `<div class="empty">Nessun treno disponibile in questa fascia oraria 🌙</div>`;
 
-      if (treni[0].tipo === 'frequenza') {
-        const msg = treni[0].messaggio.split(/every/i)[0].trim();
+      if (treni.length === 1 && treni[0].tipo === 'frequenza') {
+        const t = treni[0];
+        const msg = t.messaggio.split(/every/i)[0].trim();
+        const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
         return `<div class="freq-banner">
       <div class="icon">🚇</div>
       <div class="freq-text">${msg}</div>
-      <div class="freq-sub">Alta frequenza — non serve controllare gli orari!</div>
+      <div class="freq-sub">${fasciaStr} — Alta frequenza, non serve controllare gli orari!</div>
     </div>`;
       }
 
-      let html = treni.map(t => `
+      let html = treni.map(t => {
+        if (t.tipo === 'frequenza_blocco') {
+          const msg = t.messaggio.split(/every/i)[0].trim();
+          const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
+          return `<div class="freq-banner" style="margin:8px 0">
+      <div class="icon">🚇</div>
+      <div class="freq-text">${msg}</div>
+      <div class="freq-sub">${fasciaStr} — Alta frequenza</div>
+    </div>`;
+        }
+        return `
     <div class="train-card">
       <div class="train-time">${t.ora_partenza}</div>
       <div class="train-info">
@@ -716,7 +733,8 @@
         <div class="train-wait">Treno programmato</div>
       </div>
       <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
-    </div>`).join('');
+    </div>`;
+      }).join('');
       
       return html;
     }

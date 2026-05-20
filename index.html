@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="OrarioGaia">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
   <title>OrarioGaia — Prossime Metro Milano</title>
   <meta name="description"
     content="Orari in tempo reale delle metropolitane M1 e M2 di Milano. Scopri il prossimo treno in arrivo.">
@@ -535,25 +540,25 @@
         const nodo = orari[oraKey];
         if (nodo === undefined || nodo === null) continue;
         if (typeof nodo === "string") {
-          let waitMins = 5;
-          const match = nodo.match(/(\d+)/g);
-          if (match && match.length >= 2) {
-            waitMins = Math.floor((parseInt(match[0]) + parseInt(match[1])) / 2);
-          } else if (match && match.length === 1) {
-            waitMins = parseInt(match[0]);
-          }
-          if (waitMins < 2) waitMins = 2;
-          
           if (off === 0) {
-            return [{ ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo }];
-          } else {
-            for(let m = 0; m < 60; m += waitMins) {
-              if (risultati.length >= limiteN) break;
-              let att = ((oraT * 60 + m) - (oraC * 60 + minC));
-              if (att < 0) att += 1440;
-              risultati.push({ ora_partenza: `${oraKey}:${m.toString().padStart(2, "0")}`, destinazione: filtro || macroDirezione, minuti_attesa: att, tipo: "stimato" });
+            // Determina estensione del blocco di alta frequenza
+            let oraFine = oraT;
+            for (let lk = 1; lk < 25; lk++) {
+              const nH = (oraT + lk) % 24;
+              const nK = nH.toString().padStart(2, "0");
+              if (typeof orari[nK] === "string") oraFine = nH; else break;
             }
+            return [{ ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo, fascia_inizio: oraT, fascia_fine: oraFine }];
           }
+          // Blocco futuro: emetti un unico banner e salta
+          let oraFine = oraT, skipOff = off;
+          for (let lk = 1; lk < 25; lk++) {
+            const nH = (oraC + off + lk) % 24;
+            const nK = nH.toString().padStart(2, "0");
+            if (typeof orari[nK] === "string") { oraFine = nH; skipOff = off + lk; } else break;
+          }
+          risultati.push({ ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza_blocco", messaggio: nodo, fascia_inizio: oraT, fascia_fine: oraFine });
+          off = skipOff;
           continue;
         }
         if (typeof nodo === "object") {
@@ -818,17 +823,28 @@
 
       if (treni.length === 0) {
         html += '<div class="empty-state"><div class="icon">🌙</div><p>Nessun treno disponibile in questa fascia oraria</p></div>';
-      } else if (treni[0].tipo === "frequenza") {
+      } else if (treni.length === 1 && treni[0].tipo === "frequenza") {
         const msg = treni[0].messaggio;
         // Estrai solo la parte italiana (prima di "every")
         const msgIt = msg.split(/every/i)[0].trim();
+        const fasciaStr = `Dalle ${String(treni[0].fascia_inizio).padStart(2,'0')}:00 alle ${String(treni[0].fascia_fine).padStart(2,'0')}:59`;
         html += `<div class="freq-banner">
       <div class="icon">🚇</div>
       <div class="freq-text">${msgIt}</div>
-      <div class="freq-sub">Alta frequenza — non è necessario controllare gli orari</div>
+      <div class="freq-sub">${fasciaStr} — Alta frequenza, non è necessario controllare gli orari</div>
     </div>`;
       } else {
         for (const t of treni) {
+          if (t.tipo === "frequenza_blocco") {
+            const msgIt = t.messaggio.split(/every/i)[0].trim();
+            const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
+            html += `<div class="freq-banner" style="margin:8px 0">
+      <div class="icon">🚇</div>
+      <div class="freq-text">${msgIt}</div>
+      <div class="freq-sub">${fasciaStr} — Alta frequenza</div>
+    </div>`;
+            continue;
+          }
           const col = DEST_COLORS[t.destinazione] || "#666";
           html += `<div class="train-card">
         <div class="train-time">${t.ora_partenza}</div>
