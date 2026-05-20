@@ -491,8 +491,6 @@
 
 <body>
 
-  <a href="index.html" class="back-link">← Torna alla home</a>
-
   <div class="header">
     <div class="petals">🌸 🌷 🌸</div>
     <h1>Ciao Gaia, dove vai?</h1>
@@ -505,8 +503,11 @@
     <button class="choice-btn" id="btn-milano" onclick="scegliPercorso('milano')"><span>A casa! 🏡</span></button>
   </div>
 
-  <!-- CONTENUTO DINAMICO -->
   <div id="main-content" style="width:100%;max-width:460px"></div>
+
+  <div style="margin-top:40px;width:100%;max-width:460px;display:flex;justify-content:center;">
+    <a href="index.html" class="back-link" style="align-self:center;margin-bottom:0;">← Torna alla home</a>
+  </div>
 
   <script src="bundle_orari.js"></script>
   <script>
