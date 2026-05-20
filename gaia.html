@@ -48,6 +48,20 @@
       --border: rgba(107, 26, 58, 0.15);
       --radius: 20px;
       --radius-sm: 12px;
+      --surface: #ffffff;
+    }
+
+    body.dark-mode {
+      --bordeaux: #f7e8ef;
+      --bordeaux-l: #f2d0df;
+      --bordeaux-xl: #e2a0b8;
+      --bordeaux-pale: #5c273c;
+      --rose: #6b1a3a;
+      --cream: #441c1c;
+      --text: #ffffff;
+      --text-soft: #f2d0df;
+      --border: rgba(255, 255, 255, 0.15);
+      --surface: #5c273c;
     }
 
     body {
@@ -136,7 +150,7 @@
 
     .choice-btn {
       padding: 18px 32px;
-      background: #fff;
+      background: var(--surface);
       border: 2px solid var(--border);
       border-radius: var(--radius);
       font-size: 1.3rem;
@@ -193,7 +207,7 @@
     .panel {
       width: 100%;
       max-width: 460px;
-      background: #fff;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 24px;
@@ -336,7 +350,7 @@
       top: calc(100% + 6px);
       left: 0;
       right: 0;
-      background: #fff;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       box-shadow: 0 8px 24px rgba(107, 26, 58, 0.12);
@@ -530,8 +544,11 @@
 
   <div id="main-content" style="width:100%;max-width:460px"></div>
 
-  <div style="margin-top:40px;width:100%;max-width:460px;display:flex;justify-content:center;">
+  <div style="margin-top:40px;width:100%;max-width:460px;display:flex; flex-direction:column; align-items:center; gap: 20px; padding-bottom: 30px;">
     <a href="index.html" class="back-link" style="align-self:center;margin-bottom:0;">← Torna alla home</a>
+    <button id="theme-toggle" class="choice-btn" style="padding: 10px 24px; font-size: 1rem; border-radius: 30px; display:flex; align-items:center; justify-content:center; gap: 8px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: none;" onclick="toggleDarkMode()">
+      <span id="theme-icon">🌙</span> <span id="theme-text">Modalità Notte</span>
+    </button>
   </div>
 
   <button class="fab-time" onclick="apriModalTime()">
@@ -820,6 +837,38 @@
       const now = new Date();
       document.getElementById('inp-date').value = now.toISOString().split('T')[0];
       document.getElementById('inp-time').value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const isDark = body.classList.toggle('dark-mode');
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      
+      if (isDark) {
+        icon.textContent = '☀️';
+        text.textContent = 'Modalità Giorno';
+        localStorage.setItem('gaiaTheme', 'dark');
+        const metaTheme = document.querySelector('meta[name="theme-color"]');
+        if (metaTheme) metaTheme.setAttribute('content', '#441c1c');
+      } else {
+        icon.textContent = '🌙';
+        text.textContent = 'Modalità Notte';
+        localStorage.setItem('gaiaTheme', 'light');
+        const metaTheme = document.querySelector('meta[name="theme-color"]');
+        if (metaTheme) metaTheme.setAttribute('content', '#fdf5f8');
+      }
+    }
+
+    // Inizializza tema
+    if (localStorage.getItem('gaiaTheme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (icon) icon.textContent = '☀️';
+      if (text) text.textContent = 'Modalità Giorno';
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.setAttribute('content', '#441c1c');
     }
 
     // Seleziona automaticamente "Esco! 😁" al caricamento della pagina
