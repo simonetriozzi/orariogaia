@@ -8,7 +8,7 @@
   "theme_color": "#2c2c2e",
   "icons": [
     {
-      "src": "apple-touch-icon.png",
+      "src": "logo_ss.png",
       "sizes": "180x180",
       "type": "image/png"
     }
