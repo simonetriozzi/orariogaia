@@ -419,7 +419,10 @@
     <div class="modal-body">
       <div style="display:flex; flex-direction:column; gap: 12px;">
         <input type="date" id="inp-date" style="padding:12px; border-radius:8px; background:var(--bg); border:1px solid var(--border); width:100%; font-family:inherit; font-size:1rem; outline:none; color:var(--text);">
-        <input type="time" id="inp-time" style="padding:12px; border-radius:8px; background:var(--bg); border:1px solid var(--border); width:100%; font-family:inherit; font-size:1rem; outline:none; color:var(--text);">
+        <div style="display:flex; gap: 12px;">
+          <input type="time" id="inp-time" style="flex:1; padding:12px; border-radius:8px; background:var(--bg); border:1px solid var(--border); font-family:inherit; font-size:1rem; outline:none; color:var(--text);">
+          <button onclick="impostaOraAttuale()" style="padding:0 16px; border-radius:8px; background:var(--surface); border:1px solid var(--border); color:var(--text); font-weight:600; cursor:pointer; font-family:inherit;">Ora</button>
+        </div>
         <button id="apply-time-modal" style="margin-top:12px; width:100%; padding:14px; font-size:1rem; background:var(--accent); color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer;">Aggiorna</button>
       </div>
     </div>
@@ -682,6 +685,15 @@ document.getElementById('apply-time-modal').addEventListener('click', () => {
     }
   }
 });
+
+function impostaOraAttuale() {
+  const now = new Date();
+  document.getElementById('inp-date').value = now.toISOString().split('T')[0];
+  document.getElementById('inp-time').value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+}
+
+// Auto-open "casa" on page load
+scegli('casa');
 </script>
 </body>
 </html>
