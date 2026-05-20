@@ -536,7 +536,8 @@ function renderRisultati(treni, titolo, tipo, oraStr, targetId, wrap=false){
       <div class="f-icon">🚇</div>
       <div class="f-text">${msg}</div>
       <div class="f-sub">${fasciaStr} — Alta frequenza, controlla lo schermo</div>
-    </div>`;
+    </div>
+    <button class="more-btn" onclick="mostraSuccessivo('${targetId}', ${wrap})">+ Mostra metro dopo alta frequenza</button>`;
   } else {
     // Mix di treni esatti e possibili blocchi di alta frequenza
     let hasExactTrains = false;

@@ -513,7 +513,7 @@
     const FESTIVITA_FISSE = [[1, 1], [1, 6], [4, 25], [5, 1], [6, 2], [8, 15], [11, 1], [12, 7], [12, 8], [12, 25], [12, 26]];
     function calcolaPasqua(y) { const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mo = Math.floor((h + l - 7 * m + 114) / 31), gi = ((h + l - 7 * m + 114) % 31) + 1; return new Date(y, mo - 1, gi); }
     function getTipoGiornata(date = new Date()) { let d = new Date(date); if (d.getHours() < 3) d.setDate(d.getDate() - 1); const g = d.getDay(), m = d.getMonth() + 1, gm = d.getDate(), y = d.getFullYear(); for (const [mm, gg] of FESTIVITA_FISSE) if (m === mm && gm === gg) return "festivo"; const pq = new Date(calcolaPasqua(y)); pq.setDate(pq.getDate() + 1); if (d.getMonth() === pq.getMonth() && d.getDate() === pq.getDate()) return "festivo"; if (g === 0) return "festivo"; if (g === 6) return "sabato"; return "feriale"; }
-    function getNextTrains(data, dir, filtro = null, target = new Date(), n = 3) { const dd = data?.[dir]; if (!dd) return []; const tipo = getTipoGiornata(target), orari = dd[tipo]; if (!orari || !Object.keys(orari).length) return []; const oC = target.getHours(), mC = target.getMinutes(), res = []; for (let off = 0; off < 25 && res.length < n; off++) { const oT = (oC + off) % 24, oK = oT.toString().padStart(2, "0"), nodo = orari[oK]; if (nodo == null) continue; if (typeof nodo === "string") { if (off === 0) return [{ ora_partenza: null, destinazione: filtro || dir, minuti_attesa: null, tipo: "frequenza", messaggio: nodo }]; res.push({ ora_partenza: `${oK}:00`, destinazione: filtro || dir, minuti_attesa: Math.round(((oT * 60) - (oC * 60 + mC) + 1440) % 1440), tipo: "frequenza", messaggio: nodo }); continue; } if (typeof nodo === "object") { const treni = []; const dests = filtro ? { [filtro]: nodo[filtro] } : nodo; for (const [dest, mins] of Object.entries(dests)) { if (!Array.isArray(mins)) continue; for (const m of mins) { if (off === 0 && m < mC) continue; let att = (oT * 60 + m) - (oC * 60 + mC); if (att < 0) att += 1440; treni.push({ ora_partenza: `${oK}:${m.toString().padStart(2, "0")}`, destinazione: dest, minuti_attesa: att, tipo: "esatto" }); } } treni.sort((a, b) => a.minuti_attesa - b.minuti_attesa); for (const t of treni) { if (res.length >= n) break; res.push(t); } } } return res; }
+    function getNextTrains(data, dir, filtro = null, target = new Date(), n = 3) { const dd = data?.[dir]; if (!dd) return []; const tipo = getTipoGiornata(target), orari = dd[tipo]; if (!orari || !Object.keys(orari).length) return []; const oC = target.getHours(), mC = target.getMinutes(), res = []; for (let off = 0; off < 25 && res.length < n; off++) { const oT = (oC + off) % 24, oK = oT.toString().padStart(2, "0"), nodo = orari[oK]; if (nodo == null) continue; if (typeof nodo === "string") { if (off === 0) { let oF = oT; for (let lk = 1; lk < 25; lk++) { const nH = (oT + lk) % 24, nK = nH.toString().padStart(2, "0"); if (typeof orari[nK] === "string") oF = nH; else break; } return [{ ora_partenza: null, destinazione: filtro || dir, minuti_attesa: null, tipo: "frequenza", messaggio: nodo, fascia_inizio: oT, fascia_fine: oF }]; } let oF = oT, skipOff = off; for (let lk = 1; lk < 25; lk++) { const nH = (oC + off + lk) % 24, nK = nH.toString().padStart(2, "0"); if (typeof orari[nK] === "string") { oF = nH; skipOff = off + lk; } else break; } res.push({ ora_partenza: null, destinazione: filtro || dir, minuti_attesa: null, tipo: "frequenza_blocco", messaggio: nodo, fascia_inizio: oT, fascia_fine: oF }); off = skipOff; continue; } if (typeof nodo === "object") { const treni = []; const dests = filtro ? { [filtro]: nodo[filtro] } : nodo; for (const [dest, mins] of Object.entries(dests)) { if (!Array.isArray(mins)) continue; for (const m of mins) { if (off === 0 && m < mC) continue; let att = (oT * 60 + m) - (oC * 60 + mC); if (att < 0) att += 1440; treni.push({ ora_partenza: `${oK}:${m.toString().padStart(2, "0")}`, destinazione: dest, minuti_attesa: att, tipo: "esatto" }); } } treni.sort((a, b) => a.minuti_attesa - b.minuti_attesa); for (const t of treni) { if (res.length >= n) break; res.push(t); } } } return res; }
     function formattaDest(n) { if (!n) return ""; return n.split("_").map(w => ["fs", "pza"].includes(w.toLowerCase()) ? w.toUpperCase() : /^\d+$/.test(w) ? w : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" "); }
 
     // ============================================================
@@ -688,11 +688,23 @@
       <div class="panel-title">🚇 ${label} → 🏡 Casa</div>
       <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:14px;">${oraStr} · ${tipo}</div>`;
         html += renderTreni(treni);
+        html += renderTimeEditor(now);
         if(treni.length > 0) {
           html += `<button class="more-btn" onclick="mostraSuccessivoGaia()">+ Mostra successivo</button>`;
         }
         html += `</div>`;
         result.innerHTML = html;
+
+        // Re-attach apply button for A Casa
+        document.getElementById('apply-time')?.addEventListener('click', () => {
+          const d = document.getElementById('inp-date').value;
+          const t = document.getElementById('inp-time').value;
+          if (d && t) {
+            const nuovaData = new Date(`${d}T${t}`);
+            dataOraCorrente = nuovaData;
+            selezionaStazione(id, label);
+          }
+        });
       } catch (e) {
         result.innerHTML = `<div class="panel" style="margin-top:18px"><div class="empty">⚠️ Errore nel caricamento.</div></div>`;
       }
@@ -712,7 +724,8 @@
       <div class="icon">🚇</div>
       <div class="freq-text">${msg}</div>
       <div class="freq-sub">${fasciaStr} — Alta frequenza, non serve controllare gli orari!</div>
-    </div>`;
+    </div>
+    <button class="more-btn" onclick="mostraSuccessivoGaia()">+ Mostra metro dopo alta frequenza</button>`;
       }
 
       let html = treni.map(t => {
