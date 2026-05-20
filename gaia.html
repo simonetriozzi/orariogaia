@@ -285,68 +285,7 @@
       margin-top: 4px;
     }
 
-    /* === TIME EDITOR === */
-    .time-editor {
-      margin-top: 18px;
-      padding: 16px;
-      background: var(--rose);
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(107, 26, 58, 0.12);
-    }
 
-    .time-editor label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--bordeaux);
-      text-transform: uppercase;
-      letter-spacing: 0.7px;
-      margin-bottom: 6px;
-    }
-
-    .time-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-      flex-wrap: wrap;
-    }
-
-    .time-row input[type="date"],
-    .time-row input[type="time"] {
-      flex: 1;
-      min-width: 120px;
-      padding: 9px 12px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .time-row input:focus {
-      border-color: var(--bordeaux-l);
-    }
-
-    .apply-btn {
-      padding: 9px 18px;
-      background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-l));
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .apply-btn:hover {
-      opacity: 0.85;
-    }
 
     /* === MILANO SEARCH === */
     .search-wrap {
@@ -485,6 +424,70 @@
       }
     }
 
+    /* === FAB & MODAL === */
+    .fab-time {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bordeaux), var(--bordeaux-l));
+      color: white;
+      font-size: 1.5rem;
+      border: none;
+      box-shadow: 0 4px 12px rgba(107, 26, 58, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .fab-time:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(107, 26, 58, 0.4); }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(45, 14, 28, 0.6);
+      z-index: 200;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      animation: fadeIn 0.2s;
+    }
+    .modal-content {
+      background: var(--cream);
+      width: 100%;
+      max-width: 320px;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-header h3 { font-size: 1.1rem; margin: 0; color: var(--bordeaux); }
+    .modal-close {
+      background: none; border: none; font-size: 1.8rem;
+      line-height: 1; cursor: pointer; color: var(--text-soft);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     @media (max-width: 480px) {
       .header h1 {
         font-size: 1.8rem;
@@ -516,6 +519,26 @@
 
   <div style="margin-top:40px;width:100%;max-width:460px;display:flex;justify-content:center;">
     <a href="index.html" class="back-link" style="align-self:center;margin-bottom:0;">← Torna alla home</a>
+  </div>
+
+  <button class="fab-time" onclick="apriModalTime()">
+    🕒
+  </button>
+
+  <div class="modal-overlay" id="time-modal" style="display:none;" onclick="chiudiModalTime(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Modifica data e orario</h3>
+        <button class="modal-close" onclick="chiudiModalTime()">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap: 12px;">
+          <input type="date" id="inp-date" style="padding:12px; border-radius:8px; border:1px solid var(--border); width:100%; font-family:inherit; font-size:1rem; outline:none; color:var(--text);">
+          <input type="time" id="inp-time" style="padding:12px; border-radius:8px; border:1px solid var(--border); width:100%; font-family:inherit; font-size:1rem; outline:none; color:var(--text);">
+          <button class="choice-btn" id="apply-time-modal" style="margin-top:12px; width:100%; padding:14px; font-size:1rem;">Aggiorna!</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="bundle_orari.js"></script>
@@ -617,23 +640,11 @@
         ${oraStr} · ${tipo}
       </div>`;
         html += renderTreni(treni);
-        html += renderTimeEditor(now);
         if(treni.length > 0) {
           html += `<button class="more-btn" onclick="mostraSuccessivoGaia()">+ Mostra successivo</button>`;
         }
         html += `</div>`;
         content.innerHTML = html;
-
-        // Re-attach apply button
-        document.getElementById('apply-time')?.addEventListener('click', () => {
-          const d = document.getElementById('inp-date').value;
-          const t = document.getElementById('inp-time').value;
-          if (d && t) {
-            const nuovaData = new Date(`${d}T${t}`);
-            dataOraCorrente = nuovaData;
-            renderCasa(nuovaData);
-          }
-        });
       } catch (e) {
         document.getElementById('main-content').innerHTML =
           `<div class="panel"><div class="empty">⚠️ Errore nel caricamento. Riprova.</div></div>`;
@@ -705,23 +716,11 @@
       <div class="panel-title">🚇 ${label} → 🏡 Casa</div>
       <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:14px;">${oraStr} · ${tipo}</div>`;
         html += renderTreni(treni);
-        html += renderTimeEditor(now);
         if(treni.length > 0) {
           html += `<button class="more-btn" onclick="mostraSuccessivoGaia()">+ Mostra successivo</button>`;
         }
         html += `</div>`;
         result.innerHTML = html;
-
-        // Re-attach apply button for A Casa
-        document.getElementById('apply-time')?.addEventListener('click', () => {
-          const d = document.getElementById('inp-date').value;
-          const t = document.getElementById('inp-time').value;
-          if (d && t) {
-            const nuovaData = new Date(`${d}T${t}`);
-            dataOraCorrente = nuovaData;
-            selezionaStazione(id, label);
-          }
-        });
       } catch (e) {
         result.innerHTML = `<div class="panel" style="margin-top:18px"><div class="empty">⚠️ Errore nel caricamento.</div></div>`;
       }
@@ -778,19 +777,28 @@
       }
     }
 
-    function renderTimeEditor(now) {
-      const d = now.toISOString().split('T')[0];
-      const t = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-      return `
-    <div class="time-editor">
-      <label>✏️ Modifica data e orario</label>
-      <div class="time-row">
-        <input type="date" id="inp-date" value="${d}">
-        <input type="time" id="inp-time" value="${t}">
-        <button class="apply-btn" id="apply-time">Aggiorna!</button>
-      </div>
-    </div>`;
+    function apriModalTime() {
+      const now = dataOraCorrente;
+      document.getElementById('inp-date').value = now.toISOString().split('T')[0];
+      document.getElementById('inp-time').value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('time-modal').style.display = 'flex';
     }
+
+    function chiudiModalTime(e) {
+      if(e && e.target !== e.currentTarget) return;
+      document.getElementById('time-modal').style.display = 'none';
+    }
+
+    document.getElementById('apply-time-modal').addEventListener('click', () => {
+      const d = document.getElementById('inp-date').value;
+      const t = document.getElementById('inp-time').value;
+      if (d && t) {
+        dataOraCorrente = new Date(`${d}T${t}`);
+        chiudiModalTime();
+        if (percorsoAttivo === 'casa') renderCasa();
+        else if (stazioneSelezionata) selezionaStazione(stazioneSelezionata, document.getElementById('search-stazione').value);
+      }
+    });
 
     // Seleziona automaticamente "Esco! 😁" al caricamento della pagina
     scegliPercorso('casa');
