@@ -199,26 +199,35 @@ export function getNextTrains(
       if (offset === 0) {
         // Determina l'intera estensione del blocco di alta frequenza
         let oraFine = oraTarget;
+        let skipOffset = offset;
         for (let look = 1; look < 25; look++) {
           const nextH = (oraTarget + look) % 24;
           const nextK = nextH.toString().padStart(2, "0");
           if (typeof orariGiornata[nextK] === "string") {
             oraFine = nextH;
+            skipOffset = offset + look;
           } else {
             break;
           }
         }
-        return [
-          {
-            ora_partenza: null,
-            destinazione: filtroDestinazione || macroDirezione,
-            minuti_attesa: null,
-            tipo: "frequenza",
-            messaggio: nodoOra,
-            fascia_inizio: oraTarget,
-            fascia_fine: oraFine,
-          },
-        ];
+        
+        const bannerItem = {
+          ora_partenza: null,
+          destinazione: filtroDestinazione || macroDirezione,
+          minuti_attesa: null,
+          tipo: "frequenza",
+          messaggio: nodoOra,
+          fascia_inizio: oraTarget,
+          fascia_fine: oraFine,
+        };
+
+        if (limiteN <= 3) {
+          return [bannerItem];
+        }
+
+        risultati.push(bannerItem);
+        offset = skipOffset;
+        continue;
       }
 
       // Se arriviamo a un blocco di alta frequenza FUTURO (dopo treni esatti),

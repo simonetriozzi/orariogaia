@@ -543,12 +543,17 @@
           if (off === 0) {
             // Determina estensione del blocco di alta frequenza
             let oraFine = oraT;
+            let skipOff = off;
             for (let lk = 1; lk < 25; lk++) {
               const nH = (oraT + lk) % 24;
               const nK = nH.toString().padStart(2, "0");
-              if (typeof orari[nK] === "string") oraFine = nH; else break;
+              if (typeof orari[nK] === "string") { oraFine = nH; skipOff = off + lk; } else break;
             }
-            return [{ ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo, fascia_inizio: oraT, fascia_fine: oraFine }];
+            const banner = { ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo, fascia_inizio: oraT, fascia_fine: oraFine };
+            if (limiteN <= 5) return [banner];
+            risultati.push(banner);
+            off = skipOff;
+            continue;
           }
           // Blocco futuro: emetti un unico banner e salta
           let oraFine = oraT, skipOff = off;
@@ -832,10 +837,11 @@
       <div class="icon">🚇</div>
       <div class="freq-text">${msgIt}</div>
       <div class="freq-sub">${fasciaStr} — Alta frequenza, non è necessario controllare gli orari</div>
-    </div>`;
+    </div>
+    <button class="more-btn" onclick="limiteN++; aggiornaRisultati()">+ Mostra metro dopo alta frequenza</button>`;
       } else {
         for (const t of treni) {
-          if (t.tipo === "frequenza_blocco") {
+          if (t.tipo === "frequenza_blocco" || t.tipo === "frequenza") {
             const msgIt = t.messaggio.split(/every/i)[0].trim();
             const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
             html += `<div class="freq-banner" style="margin:8px 0">
