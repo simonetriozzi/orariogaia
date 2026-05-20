@@ -52,11 +52,14 @@
       padding-bottom: calc(60px + env(safe-area-inset-bottom));
       color: var(--text);
       -webkit-font-smoothing: antialiased;
+    }
+    
+    html, body {
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
 
-    body::-webkit-scrollbar {
+    *::-webkit-scrollbar {
       display: none;
     }
 
