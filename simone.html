@@ -2,11 +2,11 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="OrarioSimone">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="https://simonetriozzi.github.io/orariogaia/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
   <title>OrarioSimone</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,6 +34,8 @@
       flex-direction: column;
       align-items: center;
       padding: 36px 20px 60px;
+      padding-top: calc(36px + env(safe-area-inset-top));
+      padding-bottom: calc(60px + env(safe-area-inset-bottom));
       -webkit-font-smoothing: antialiased;
     }
 
