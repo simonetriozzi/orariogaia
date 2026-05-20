@@ -496,6 +496,7 @@
   <!-- RISULTATI -->
   <div id="results-container"></div>
 
+  <script src="bundle_orari.js"></script>
   <script>
     // ============================================================
     // ORARIO ENGINE (inlined per compatibilità browser senza bundler)
@@ -757,9 +758,13 @@
       clearInterval(refreshTimer);
 
       try {
-        const r = await fetch(`${BASE_URL}${id}.json`);
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        stazioneData = await r.json();
+        if (typeof BUNDLE_ORARI !== 'undefined' && BUNDLE_ORARI[id]) {
+          stazioneData = BUNDLE_ORARI[id];
+        } else {
+          const r = await fetch(`${BASE_URL}${id}.json`);
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          stazioneData = await r.json();
+        }
 
         const dirs = getDirezioni(stazioneData);
         selDirezione.innerHTML = '<option value="">— Seleziona direzione —</option>';

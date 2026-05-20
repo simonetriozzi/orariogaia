@@ -360,6 +360,7 @@
   </div>
 </div>
 
+<script src="bundle_orari.js"></script>
 <script>
 // ============================================================
 // ENGINE
@@ -508,9 +509,13 @@ async function esegui(stazione, dir, filtro, titolo, targetId='res-altro', wrap=
   if(!box) return;
   try {
     if(!cache[stazione]){
-      const r = await fetch(`${BASE}${stazione}.json`);
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      cache[stazione] = await r.json();
+      if (typeof BUNDLE_ORARI !== 'undefined' && BUNDLE_ORARI[stazione]) {
+        cache[stazione] = BUNDLE_ORARI[stazione];
+      } else {
+        const r = await fetch(`${BASE}${stazione}.json`);
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        cache[stazione] = await r.json();
+      }
     }
     const data = cache[stazione];
     let treni = nextTrains(data, dir, filtro, dataOra, limiteN);

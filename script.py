@@ -407,5 +407,9 @@ def update_all_timetables():
         
         time.sleep(2)
 
+    # Automatically generate bundle_orari.js
+    os.system("python3 bundle_jsons.py")
+    print("Bundle generated successfully.")
+
 if __name__ == "__main__":
     update_all_timetables()
