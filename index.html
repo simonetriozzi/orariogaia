@@ -1058,6 +1058,17 @@
         dataOra = new Date(`${d}T${t}`);
         chiudiModalTime();
         aggiornaRisultati();
+        
+        // Aggiorna anche eventuali preferiti aperti
+        if (typeof favorites !== 'undefined') {
+          favorites.forEach(fav => {
+            const item = document.getElementById('item-fav-' + fav.id);
+            if (item && item.classList.contains('open')) {
+              let titleSub = (STAZIONI.find(s => s.id === fav.stazione)?.label || 'Stazione') + ' → ' + formattaNome(fav.filtro || fav.direzione);
+              eseguiFav(fav.stazione, fav.direzione, fav.filtro, titleSub, 'res-fav-' + fav.id + '-inner');
+            }
+          });
+        }
       }
     });
 
