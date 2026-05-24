@@ -1152,7 +1152,7 @@
         document.getElementById('res-fav-'+id+'-inner').innerHTML = `
           <div class="result-title" style="display:flex; justify-content:space-between; align-items:center;">
             <span>${titleSub}</span>
-            <span onclick="deleteFav(event, '${id}')" style="font-size:1.1rem; opacity:0.6; cursor:pointer;" title="Elimina preferito">🗑️</span>
+            <span onclick="deleteFav(event, '${id}')" style="font-size:1.1rem; color:#ff3b30; font-weight:bold; cursor:pointer;" title="Elimina preferito">✕</span>
           </div>
           <div class="skeleton-wrap">
             <div class="skeleton" style="width:60%"></div>
@@ -1183,7 +1183,7 @@
         
         let inner = `<div class="result-title" style="display:flex; justify-content:space-between; align-items:center;">
           <span>${titolo} · ${tipo}</span>
-          <span onclick="deleteFav(event, '${favId}')" style="font-size:1.1rem; opacity:0.6; cursor:pointer;" title="Elimina preferito">🗑️</span>
+          <span onclick="deleteFav(event, '${favId}')" style="font-size:1.1rem; color:#ff3b30; font-weight:bold; cursor:pointer;" title="Elimina preferito">✕</span>
         </div>`;
         if(!treni.length){
           inner += `<div class="empty-state" style="padding:12px 0"><p>Nessun treno trovato</p></div>`;
