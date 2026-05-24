@@ -1105,7 +1105,6 @@
                 <span class="sub">${titleSub}</span>
               </div>
               <div style="display:flex; align-items:center; gap:12px;">
-                <span onclick="deleteFav(event, '${fav.id}')" style="font-size:1.1rem; opacity:0.6; cursor:pointer;" title="Elimina preferito">🗑️</span>
                 <span class="arrow">›</span>
               </div>
             </button>
@@ -1120,9 +1119,11 @@
 
     function deleteFav(e, id) {
       e.stopPropagation();
-      favorites = favorites.filter(f => f.id !== id);
-      localStorage.setItem('orariogaia_favs', JSON.stringify(favorites));
-      renderFavorites();
+      if(confirm("Sei sicuro di voler eliminare questo preferito?")){
+        favorites = favorites.filter(f => f.id !== id);
+        localStorage.setItem('orariogaia_favs', JSON.stringify(favorites));
+        renderFavorites();
+      }
     }
 
     async function scegliFav(id) {
@@ -1149,18 +1150,21 @@
         let titleSub = (STAZIONI.find(s => s.id === fav.stazione)?.label || 'Stazione') + ' → ' + formattaNome(fav.filtro || fav.direzione);
         
         document.getElementById('res-fav-'+id+'-inner').innerHTML = `
-          <div class="result-title">${titleSub}</div>
+          <div class="result-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>${titleSub}</span>
+            <span onclick="deleteFav(event, '${id}')" style="font-size:1.1rem; opacity:0.6; cursor:pointer;" title="Elimina preferito">🗑️</span>
+          </div>
           <div class="skeleton-wrap">
             <div class="skeleton" style="width:60%"></div>
             <div class="skeleton" style="width:80%"></div>
             <div class="skeleton" style="width:50%"></div>
           </div>`;
           
-        await eseguiFav(fav.stazione, fav.direzione, fav.filtro, titleSub, 'res-fav-'+id+'-inner');
+        await eseguiFav(fav.stazione, fav.direzione, fav.filtro, titleSub, 'res-fav-'+id+'-inner', id);
       }
     }
 
-    async function eseguiFav(stazione, dir, filtro, titolo, targetId) {
+    async function eseguiFav(stazione, dir, filtro, titolo, targetId, favId) {
       const box = document.getElementById(targetId);
       if(!box) return;
       try {
@@ -1177,7 +1181,10 @@
         let treni = getNextTrains(data, dir, filtro, now, limiteN);
         const tipo = getTipoGiornata(now);
         
-        let inner = `<div class="result-title">${titolo} · ${tipo}</div>`;
+        let inner = `<div class="result-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span>${titolo} · ${tipo}</span>
+          <span onclick="deleteFav(event, '${favId}')" style="font-size:1.1rem; opacity:0.6; cursor:pointer;" title="Elimina preferito">🗑️</span>
+        </div>`;
         if(!treni.length){
           inner += `<div class="empty-state" style="padding:12px 0"><p>Nessun treno trovato</p></div>`;
         } else if (treni.length === 1 && treni[0].tipo === "frequenza") {
@@ -1189,7 +1196,7 @@
             <div class="freq-text" style="font-size:1rem;">${msgIt}</div>
             <div class="freq-sub">${fasciaStr} — Alta frequenza, controlla lo schermo</div>
           </div>
-          <button class="more-btn" onclick="limiteN++; eseguiFav('${stazione}', '${dir}', '${filtro || ''}', '${titolo.replace(/'/g, "\\'")}', '${targetId}')">+ Mostra metro dopo alta frequenza</button>`;
+          <button class="more-btn" onclick="limiteN++; eseguiFav('${stazione}', '${dir}', '${filtro || ''}', '${titolo.replace(/'/g, "\\'")}', '${targetId}', '${favId}')">+ Mostra metro dopo alta frequenza</button>`;
         } else {
           inner += treni.map((t,i) => {
             if(t.tipo === "frequenza_blocco" || t.tipo === "frequenza") {
@@ -1211,7 +1218,7 @@
               <div class="train-eta">${t.minuti_attesa}<small> min</small></div>
             </div>`;
           }).join('');
-          inner += `<button class="more-btn" onclick="limiteN++; eseguiFav('${stazione}', '${dir}', '${filtro || ''}', '${titolo.replace(/'/g, "\\'")}', '${targetId}')">+ Mostra successivo</button>`;
+          inner += `<button class="more-btn" onclick="limiteN++; eseguiFav('${stazione}', '${dir}', '${filtro || ''}', '${titolo.replace(/'/g, "\\'")}', '${targetId}', '${favId}')">+ Mostra successivo</button>`;
         }
         box.innerHTML = inner;
 
