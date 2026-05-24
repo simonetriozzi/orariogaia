@@ -312,7 +312,44 @@
       margin-top: 4px;
     }
 
+    /* === EXPANDABLE STOPS & TIMELINE === */
+    .train-stops-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--bordeaux-l);
+      cursor: pointer; padding: 8px 0 4px; margin-top: 4px;
+      border-top: 1px solid rgba(107, 26, 58, 0.08); user-select: none; transition: color 0.2s;
+    }
+    body.dark-mode .train-stops-toggle { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .train-stops-toggle:hover { color: var(--bordeaux); }
+    body.dark-mode .train-stops-toggle:hover { color: #fff; }
+    .train-stops-toggle .arrow-icon { font-size: 0.65rem; transition: transform 0.3s; }
+    .train-stops-toggle.open .arrow-icon { transform: rotate(180deg); }
 
+    .stops-timeline {
+      padding: 12px 8px 8px 12px; border-left: 2px solid var(--bordeaux-xl);
+      margin-left: 10px; margin-top: 8px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .stop-row { display: flex; align-items: center; position: relative; }
+    .stop-bullet {
+      position: absolute; left: -17px; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--surface); border: 2px solid var(--bordeaux-xl);
+      box-shadow: 0 0 0 2px var(--bordeaux-pale);
+    }
+    .stop-name { font-size: 0.82rem; font-weight: 500; color: var(--text); flex: 1; }
+    .stop-time { font-size: 0.82rem; font-weight: 700; color: var(--bordeaux-l); font-variant-numeric: tabular-nums; }
+    body.dark-mode .stop-time { color: var(--bordeaux-xl); }
+
+    .arrival-home-pill {
+      margin-top: 8px; padding: 8px 12px; background: rgba(107, 26, 58, 0.06);
+      border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--text);
+      border: 1px solid rgba(107, 26, 58, 0.1); display: flex; align-items: center; justify-content: space-between;
+    }
+    body.dark-mode .arrival-home-pill {
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .arrival-home-pill strong { color: var(--bordeaux); font-weight: 700; font-size: 0.95rem; }
+    body.dark-mode .arrival-home-pill strong { color: #fff; }
+    .arrival-home-pill .travel-duration { font-size: 0.75rem; color: var(--text-soft); }
 
     /* === MILANO SEARCH === */
     .search-wrap {
@@ -623,6 +660,44 @@
       { id: "M1_Sesto_I_Maggio", label: "Sesto I Maggio FS" },
     ];
 
+    const TEMPI_ESCO = [
+      { name: "Pagano", min: 2 }, { name: "Conciliazione", min: 4 }, { name: "Cadorna", min: 5 },
+      { name: "Cairoli", min: 7 }, { name: "Cordusio", min: 8 }, { name: "Duomo", min: 9 },
+      { name: "San Babila", min: 11 }, { name: "Palestro", min: 12 }, { name: "Porta Venezia", min: 14 },
+      { name: "Lima", min: 15 }, { name: "Loreto", min: 16 }, { name: "Pasteur", min: 18 },
+      { name: "Rovereto", min: 19 }, { name: "Turro", min: 20 }, { name: "Gorla", min: 21 },
+      { name: "Precotto", min: 23 }, { name: "Villa S. Giovanni", min: 25 }, { name: "Sesto Marelli", min: 26 },
+      { name: "Sesto Rondò", min: 28 }, { name: "Sesto 1° Maggio", min: 29 }
+    ];
+
+    const TEMPI_A_CASA = {
+      "M1_Pagano": 3, "M1_Conciliazione": 4, "M1_Cadorna": 6, "M1_Cairoli": 7, "M1_Cordusio": 8,
+      "M1_Duomo": 10, "M1_San_Babila": 11, "M1_Palestro": 12, "M1_Porta_Venezia": 14, "M1_Lima": 15,
+      "M1_Loreto": 17, "M1_Pasteur": 18, "M1_Rovereto": 19, "M1_Turro": 20, "M1_Gorla": 22,
+      "M1_Precotto": 23, "M1_Villa_S_Giovanni": 25, "M1_Sesto_Marelli": 26, "M1_Sesto_Rondo": 28, "M1_Sesto_I_Maggio": 30
+    };
+
+    function aggiungiMinuti(oraStr, minuti) {
+      if (!oraStr) return null;
+      const [h, m] = oraStr.split(':').map(Number);
+      const data = new Date();
+      data.setHours(h, m + minuti, 0, 0);
+      return data.getHours().toString().padStart(2, '0') + ':' + data.getMinutes().toString().padStart(2, '0');
+    }
+
+    function toggleStops(id, event) {
+      event.stopPropagation();
+      const detail = document.getElementById(id);
+      const toggle = event.currentTarget;
+      if (!detail.style.maxHeight || detail.style.maxHeight === '0px' || detail.style.maxHeight === '0') {
+        detail.style.maxHeight = detail.scrollHeight + 'px';
+        toggle.classList.add('open');
+      } else {
+        detail.style.maxHeight = '0';
+        toggle.classList.remove('open');
+      }
+    }
+
     // ============================================================
     // STATE
     // ============================================================
@@ -786,7 +861,7 @@
     <button class="more-btn" onclick="mostraSuccessivoGaia()">+ Mostra metro dopo alta frequenza</button>`;
       }
 
-      let html = treni.map(t => {
+      let html = treni.map((t, idx) => {
         if (t.tipo === 'frequenza_blocco' || t.tipo === 'frequenza') {
           const msg = t.messaggio.split(/every/i)[0].trim();
           const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
@@ -796,14 +871,54 @@
       <div class="freq-sub">${fasciaStr} — Alta frequenza</div>
     </div>`;
         }
+
+        const timelineId = `timeline-${idx}-${Date.now()}`;
+        let stopsHtml = '';
+        
+        if (percorsoAttivo === 'casa') {
+          stopsHtml = `
+            <div class="train-stops-toggle" onclick="toggleStops('${timelineId}', event)">
+              <span>Mostra fermate</span> <span class="arrow-icon">▼</span>
+            </div>
+            <div class="train-stops-detail" id="${timelineId}" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+              <div class="stops-timeline">
+                ${TEMPI_ESCO.map(stop => {
+                  const arrTime = aggiungiMinuti(t.ora_partenza, stop.min);
+                  return \`
+                    <div class="stop-row">
+                      <div class="stop-bullet"></div>
+                      <div class="stop-name">\${stop.name}</div>
+                      <div class="stop-time">\${arrTime}</div>
+                    </div>
+                  \`;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        } else if (percorsoAttivo === 'milano' && stazioneSelezionata) {
+          const tDeAngeli = TEMPI_A_CASA[stazioneSelezionata];
+          if (tDeAngeli) {
+            const arrTime = aggiungiMinuti(t.ora_partenza, tDeAngeli);
+            stopsHtml = `
+              <div class="arrival-home-pill">
+                <span>🏡 Arrivo a De Angeli: <strong>${arrTime}</strong></span>
+                <span class="travel-duration">(${tDeAngeli} min)</span>
+              </div>
+            `;
+          }
+        }
+
         return `
-    <div class="train-card">
-      <div class="train-time">${t.ora_partenza}</div>
-      <div class="train-info">
-        <div class="train-dest">${formattaDest(t.destinazione)}</div>
-        <div class="train-wait">Treno programmato</div>
+    <div class="train-card" style="flex-direction: column; align-items: stretch; gap: 8px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div class="train-time">${t.ora_partenza}</div>
+        <div class="train-info" style="flex: 1; padding: 0 10px;">
+          <div class="train-dest">${formattaDest(t.destinazione)}</div>
+          <div class="train-wait">Treno programmato</div>
+        </div>
+        <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
       </div>
-      <div class="train-eta">${t.minuti_attesa}<span> min</span></div>
+      ${stopsHtml}
     </div>`;
       }).join('');
       
