@@ -477,6 +477,76 @@
     @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+    /* === PRESET BUTTONS (Favorites) === */
+    .presets { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    .preset-btn {
+      width: 100%; padding: 18px 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text);
+      font-family: inherit; font-size: 1.05rem; font-weight: 700;
+      text-align: left; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .preset-btn:hover { background: var(--surface-2); border-color: rgba(255,255,255,0.15); }
+    .preset-btn.active { border-color: var(--accent); background: rgba(108, 99, 255, 0.12); }
+    .preset-btn .sub { font-size: 0.75rem; font-weight: 500; color: var(--text-muted); margin-top: 3px; }
+    .preset-btn .label-wrap { display: flex; flex-direction: column; }
+    .preset-btn .arrow { font-size: 1.2rem; opacity: 0.4; transition: transform 0.3s ease, opacity 0.2s; }
+
+    .preset-item { width: 100%; }
+    .inline-result {
+      overflow: hidden; max-height: 0;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+      opacity: 0;
+    }
+    .inline-result.open { max-height: 600px; opacity: 1; }
+    .inline-result-inner {
+      background: rgba(108, 99, 255, 0.07);
+      border: 1px solid rgba(108, 99, 255, 0.2); border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 0 16px; transform: translateY(-4px);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .inline-result.open .inline-result-inner { transform: translateY(0); }
+    .preset-item.open .preset-btn {
+      border-radius: var(--radius) var(--radius) 0 0;
+      border-color: rgba(108, 99, 255, 0.4); background: rgba(108, 99, 255, 0.12);
+    }
+    .preset-item.open .preset-btn .arrow { transform: rotate(90deg); opacity: 0.9; }
+
+    .inline-result .train-row {
+      padding: 13px 0; display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 0; background:transparent; border-radius:0;
+    }
+    .inline-result .train-row:last-of-type { border-bottom: none; }
+    .inline-result .train-row:first-child { padding-top: 16px; }
+    .inline-result .train-row:last-child  { padding-bottom: 16px; }
+    .inline-result .result-title {
+      font-size: 0.65rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      padding-top: 14px; margin-bottom: 0;
+    }
+    .inline-result .train-time { font-size: 1.3rem; min-width: 58px; }
+    .inline-result .train-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 1px; }
+
+    /* shimmer loading */
+    @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+    .skeleton {
+      height: 18px; border-radius: 6px; margin: 10px 0;
+      background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 50%, var(--surface) 75%);
+      background-size: 800px 100%; animation: shimmer 1.2s infinite;
+    }
+    .skeleton-wrap { padding: 16px 0; }
+
+    .save-fav-btn {
+      background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--accent); padding: 6px 12px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .save-fav-btn:hover { background: rgba(108, 99, 255, 0.1); border-color: rgba(108, 99, 255, 0.3); }
+
     @media (max-width: 520px) {
       body {
         padding: 16px 12px 40px;
@@ -518,6 +588,9 @@
     <a href="gaia.html" class="gaia-btn">Sei Gaia? Clicca qui!</a>
     <a href="simone.html" class="gaia-btn" style="background:linear-gradient(135deg,#1c3a5e,#0a84ff);box-shadow:0 4px 18px rgba(10,132,255,0.35)">Sei Simone? Clicca qui!</a>
   </div>
+
+  <!-- FAVORITES SECTION -->
+  <div id="favorites-container" class="presets" style="display:none;"></div>
 
   <!-- SELETTORI -->
   <div class="card" id="selector-card">
@@ -561,6 +634,22 @@
             <button onclick="impostaOraAttuale()" style="padding:0 16px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text); font-weight:600; cursor:pointer; font-family:inherit;">Ora</button>
           </div>
           <button id="apply-time-modal" style="margin-top:12px; width:100%; padding:14px; font-size:1rem; background:var(--accent); color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer;">Aggiorna</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVE FAV MODAL -->
+  <div class="modal-overlay" id="save-fav-modal" style="display:none;" onclick="chiudiModalSaveFav(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Salva nei Preferiti</h3>
+        <button class="modal-close" onclick="chiudiModalSaveFav()">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap: 12px;">
+          <input type="text" id="inp-fav-name" placeholder="Es. Lavoro, Casa, Palestra..." style="padding:12px; border-radius:8px; background:var(--bg); border:1px solid var(--border); width:100%; font-family:inherit; font-size:1rem; outline:none; color:var(--text);">
+          <button id="apply-save-fav" style="margin-top:12px; width:100%; padding:14px; font-size:1rem; background:var(--accent); color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer;">Salva Percorso</button>
         </div>
       </div>
     </div>
@@ -900,9 +989,13 @@
 
       let html = '<div class="card">';
       html += '<div class="result-header">';
-      html += `<h2><span class="line-tag ${lineClass}">${lineClass.toUpperCase()}</span> ${formattaNome(dir)}</h2>`;
-      html += `<span class="clock">${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")} · ${tipo}</span>`;
-      html += '</div>';
+      html += `<div><h2><span class="line-tag ${lineClass}">${lineClass.toUpperCase()}</span> ${formattaNome(dir)}</h2></div>`;
+      html += `<div style="display:flex; align-items:center; gap:10px;">`;
+      html += `<span class="clock">${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}</span>`;
+      if(treni.length > 0) {
+        html += `<button class="save-fav-btn" onclick="apriModalSaveFav()">⭐ Salva</button>`;
+      }
+      html += `</div></div>`;
 
       if (treni.length === 0) {
         html += '<div class="empty-state"><div class="icon">🌙</div><p>Nessun treno disponibile in questa fascia oraria</p></div>';
@@ -973,6 +1066,172 @@
       document.getElementById('inp-date').value = now.toISOString().split('T')[0];
       document.getElementById('inp-time').value = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
     }
+
+    // ============================================================
+    // FAVORITES LOGIC (LocalStorage)
+    // ============================================================
+    let favorites = JSON.parse(localStorage.getItem('orariogaia_favs') || '[]');
+
+    function renderFavorites() {
+      const container = document.getElementById('favorites-container');
+      if(favorites.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+      container.style.display = 'flex';
+      
+      let html = '<h3 style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; margin-left:8px;">I tuoi preferiti</h3>';
+      
+      favorites.forEach((fav) => {
+        let titleSub = (STAZIONI.find(s => s.id === fav.stazione)?.label || 'Stazione') + ' → ' + formattaNome(fav.filtro || fav.direzione);
+        html += `
+          <div class="preset-item" id="item-fav-${fav.id}">
+            <button class="preset-btn" onclick="scegliFav('${fav.id}')">
+              <div class="label-wrap">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:1.2rem">⭐</span> ${fav.nome}
+                </span>
+                <span class="sub">${titleSub}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span onclick="deleteFav(event, '${fav.id}')" style="font-size:1.1rem; opacity:0.6; cursor:pointer;" title="Elimina preferito">🗑️</span>
+                <span class="arrow">›</span>
+              </div>
+            </button>
+            <div class="inline-result" id="res-fav-${fav.id}">
+              <div class="inline-result-inner" id="res-fav-${fav.id}-inner"></div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function deleteFav(e, id) {
+      e.stopPropagation();
+      favorites = favorites.filter(f => f.id !== id);
+      localStorage.setItem('orariogaia_favs', JSON.stringify(favorites));
+      renderFavorites();
+    }
+
+    async function scegliFav(id) {
+      const fav = favorites.find(f => f.id === id);
+      if(!fav) return;
+
+      const item = document.getElementById('item-fav-'+id);
+      const res = document.getElementById('res-fav-'+id);
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      favorites.forEach(f => {
+        const i = document.getElementById('item-fav-'+f.id);
+        const r = document.getElementById('res-fav-'+f.id);
+        if(i) i.classList.remove('open');
+        if(r) r.classList.remove('open');
+      });
+
+      if(!isOpen){
+        item.classList.add('open');
+        res.classList.add('open');
+        
+        let titleSub = (STAZIONI.find(s => s.id === fav.stazione)?.label || 'Stazione') + ' → ' + formattaNome(fav.filtro || fav.direzione);
+        
+        document.getElementById('res-fav-'+id+'-inner').innerHTML = `
+          <div class="result-title">${titleSub}</div>
+          <div class="skeleton-wrap">
+            <div class="skeleton" style="width:60%"></div>
+            <div class="skeleton" style="width:80%"></div>
+            <div class="skeleton" style="width:50%"></div>
+          </div>`;
+          
+        await eseguiFav(fav.stazione, fav.direzione, fav.filtro, titleSub, 'res-fav-'+id+'-inner');
+      }
+    }
+
+    async function eseguiFav(stazione, dir, filtro, titolo, targetId) {
+      const box = document.getElementById(targetId);
+      if(!box) return;
+      try {
+        let data = null;
+        if (typeof BUNDLE_ORARI !== 'undefined' && BUNDLE_ORARI[stazione]) {
+          data = BUNDLE_ORARI[stazione];
+        } else {
+          const r = await fetch(`${BASE_URL}${stazione}.json`);
+          if(!r.ok) throw new Error('HTTP '+r.status);
+          data = await r.json();
+        }
+        
+        const now = dataOra;
+        let treni = getNextTrains(data, dir, filtro, now, 3);
+        const tipo = getTipoGiornata(now);
+        
+        let inner = `<div class="result-title">${titolo} · ${tipo}</div>`;
+        if(!treni.length){
+          inner += `<div class="empty-state" style="padding:12px 0"><p>Nessun treno trovato</p></div>`;
+        } else {
+          inner += treni.map((t,i) => {
+            if(t.tipo === "frequenza_blocco" || t.tipo === "frequenza") {
+               const msgIt = t.messaggio.split(/every/i)[0].trim();
+               return `<div class="freq-banner" style="margin:8px 0; padding:12px;"><div class="freq-text" style="font-size:0.9rem">${msgIt}</div></div>`;
+            }
+            return `
+            <div class="train-row" style="animation:fadeUp 0.3s ease-out ${i*0.07}s both">
+              <div class="train-time">${t.ora_partenza}</div>
+              <div class="train-info">
+                <div class="train-dest">${formattaNome(t.destinazione)}</div>
+                <div class="train-sub">tra ${t.minuti_attesa} min</div>
+              </div>
+              <div class="train-eta">${t.minuti_attesa}<small> min</small></div>
+            </div>`;
+          }).join('');
+        }
+        box.innerHTML = inner;
+
+      } catch(e) {
+        box.innerHTML = `<div class="empty-state" style="padding:12px 0"><p>⚠️ Errore caricamento</p></div>`;
+      }
+    }
+
+    function apriModalSaveFav() {
+      document.getElementById('save-fav-modal').style.display = 'flex';
+      setTimeout(() => document.getElementById('inp-fav-name').focus(), 100);
+    }
+    
+    function chiudiModalSaveFav(e) {
+      if(e && e.target !== e.currentTarget) return;
+      document.getElementById('save-fav-modal').style.display = 'none';
+      document.getElementById('inp-fav-name').value = '';
+    }
+    
+    document.getElementById('apply-save-fav').addEventListener('click', () => {
+      const nome = document.getElementById('inp-fav-name').value.trim();
+      if(!nome) return;
+      
+      const dir = selDirezione.value;
+      const dest = selDestinazione.value || null;
+      const staz = stazioneSelezionataId;
+      
+      if(!staz || !dir) return;
+
+      const nuovoFav = {
+        id: 'fav_' + Date.now(),
+        nome: nome,
+        stazione: staz,
+        direzione: dir,
+        filtro: dest
+      };
+      
+      favorites.push(nuovoFav);
+      localStorage.setItem('orariogaia_favs', JSON.stringify(favorites));
+      
+      chiudiModalSaveFav();
+      renderFavorites();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    
+    // Inizializza preferiti al caricamento
+    renderFavorites();
+
   </script>
 </body>
 
