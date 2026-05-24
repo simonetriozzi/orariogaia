@@ -1007,7 +1007,7 @@
         html += `<div class="freq-banner">
       <div class="icon">🚇</div>
       <div class="freq-text">${msgIt}</div>
-      <div class="freq-sub">${fasciaStr} — Alta frequenza, non è necessario controllare gli orari</div>
+      <div class="freq-sub">${fasciaStr} — Alta frequenza, controlla lo schermo</div>
     </div>
     <button class="more-btn" onclick="limiteN++; aggiornaRisultati()">+ Mostra metro dopo alta frequenza</button>`;
       } else {
@@ -1131,6 +1131,7 @@
       });
 
       if(!isOpen){
+        limiteN = 3;
         item.classList.add('open');
         res.classList.add('open');
         
@@ -1162,17 +1163,32 @@
         }
         
         const now = dataOra;
-        let treni = getNextTrains(data, dir, filtro, now, 3);
+        let treni = getNextTrains(data, dir, filtro, now, limiteN);
         const tipo = getTipoGiornata(now);
         
         let inner = `<div class="result-title">${titolo} · ${tipo}</div>`;
         if(!treni.length){
           inner += `<div class="empty-state" style="padding:12px 0"><p>Nessun treno trovato</p></div>`;
+        } else if (treni.length === 1 && treni[0].tipo === "frequenza") {
+          const t = treni[0];
+          const msgIt = t.messaggio.split(/every/i)[0].trim();
+          const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
+          inner += `<div class="freq-banner" style="margin:8px 0; padding:16px;">
+            <div class="icon" style="font-size:1.6rem; margin-bottom:6px;">🚇</div>
+            <div class="freq-text" style="font-size:1rem;">${msgIt}</div>
+            <div class="freq-sub">${fasciaStr} — Alta frequenza, controlla lo schermo</div>
+          </div>
+          <button class="more-btn" onclick="limiteN++; eseguiFav('${stazione}', '${dir}', '${filtro || ''}', '${titolo.replace(/'/g, "\\'")}', '${targetId}')">+ Mostra metro dopo alta frequenza</button>`;
         } else {
           inner += treni.map((t,i) => {
             if(t.tipo === "frequenza_blocco" || t.tipo === "frequenza") {
                const msgIt = t.messaggio.split(/every/i)[0].trim();
-               return `<div class="freq-banner" style="margin:8px 0; padding:12px;"><div class="freq-text" style="font-size:0.9rem">${msgIt}</div></div>`;
+               const fasciaStr = `Dalle ${String(t.fascia_inizio).padStart(2,'0')}:00 alle ${String(t.fascia_fine).padStart(2,'0')}:59`;
+               return `<div class="freq-banner" style="margin:8px 0; padding:12px;">
+                 <div class="icon" style="font-size:1.2rem; margin-bottom:4px;">🚇</div>
+                 <div class="freq-text" style="font-size:0.95rem;">${msgIt}</div>
+                 <div class="freq-sub">${fasciaStr} — Alta frequenza</div>
+               </div>`;
             }
             return `
             <div class="train-row" style="animation:fadeUp 0.3s ease-out ${i*0.07}s both">
@@ -1184,6 +1200,7 @@
               <div class="train-eta">${t.minuti_attesa}<small> min</small></div>
             </div>`;
           }).join('');
+          inner += `<button class="more-btn" onclick="limiteN++; eseguiFav('${stazione}', '${dir}', '${filtro || ''}', '${titolo.replace(/'/g, "\\'")}', '${targetId}')">+ Mostra successivo</button>`;
         }
         box.innerHTML = inner;
 
