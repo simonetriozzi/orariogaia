@@ -12,10 +12,11 @@
           32,
           36,
           40,
-          43,
+          44,
           47,
-          51,
-          55,
+          50,
+          53,
+          56,
           59
         ]
       },
@@ -69,48 +70,32 @@
           37
         ]
       },
-      "07": "ogni 2' - 3' every 2 - 3 minutes",
-      "08": "ogni 2' - 3' every 2 - 3 minutes",
-      "09": "ogni 2' - 3' every 2 - 3 minutes",
-      "10": "ogni 2' - 3' every 2 - 3 minutes",
-      "11": "ogni 2' - 3' every 2 - 3 minutes",
-      "12": "ogni 2' - 3' every 2 - 3 minutes",
-      "13": "ogni 2' - 3' every 2 - 3 minutes",
-      "14": "ogni 2' - 3' every 2 - 3 minutes",
-      "15": "ogni 2' - 3' every 2 - 3 minutes",
-      "16": "ogni 2' - 3' every 2 - 3 minutes",
-      "17": "ogni 2' - 3' every 2 - 3 minutes",
-      "18": "ogni 2' - 3' every 2 - 3 minutes",
-      "19": "ogni 2' - 3' every 2 - 3 minutes",
-      "20": "ogni 2' - 3' every 2 - 3 minutes"
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes",
+      "20": "ogni 2' - 4' every 2 - 4 minutes"
     },
     "sabato": {
-      "06": {
-        "sesto_1_maggio_fs": [
-          2,
-          9,
-          16,
-          20,
-          26,
-          31,
-          37,
-          42,
-          47,
-          51,
-          56
-        ]
-      },
       "21": {
         "sesto_1_maggio_fs": [
-          2,
-          7,
-          12,
-          17,
-          22,
+          4,
+          9,
+          15,
+          21,
           27,
-          32,
-          38,
-          44,
+          33,
+          39,
+          45,
           52,
           59
         ]
@@ -235,15 +220,18 @@
           11,
           20,
           30,
-          42,
-          54
+          40,
+          55
         ],
         "bisceglie": [
           7,
           15,
           25,
-          36,
-          48
+          35,
+          50
+        ],
+        "molino_dorino": [
+          45
         ]
       },
       "22": {

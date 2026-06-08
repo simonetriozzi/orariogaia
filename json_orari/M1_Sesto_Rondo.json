@@ -5,26 +5,27 @@
         "sesto_1_maggio_fs": [
           1,
           5,
+          7,
           11,
           15,
           18,
-          22,
           25,
           28,
           32,
           36,
+          38,
           40,
           45,
           48,
           52,
-          56
+          53
         ]
       },
       "21": {
         "sesto_1_maggio_fs": [
           0,
           5,
-          10,
+          11,
           15,
           20,
           24,
@@ -73,41 +74,40 @@
           52
         ]
       },
-      "07": "ogni 2' - 3' every 2 - 3 minutes",
-      "08": "ogni 2' - 3' every 2 - 3 minutes",
-      "09": "ogni 2' - 3' every 2 - 3 minutes",
-      "10": "ogni 2' - 3' every 2 - 3 minutes",
-      "11": "ogni 2' - 3' every 2 - 3 minutes",
-      "12": "ogni 2' - 3' every 2 - 3 minutes",
-      "13": "ogni 2' - 3' every 2 - 3 minutes",
-      "14": "ogni 2' - 3' every 2 - 3 minutes",
-      "15": "ogni 2' - 3' every 2 - 3 minutes",
-      "16": "ogni 2' - 3' every 2 - 3 minutes",
-      "17": "ogni 2' - 3' every 2 - 3 minutes",
-      "18": "ogni 2' - 3' every 2 - 3 minutes",
-      "19": "ogni 2' - 3' every 2 - 3 minutes",
-      "20": "ogni 2' - 3' every 2 - 3 minutes"
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes",
+      "20": "ogni 2' - 4' every 2 - 4 minutes"
     },
     "sabato": {
       "21": {
         "sesto_1_maggio_fs": [
           1,
-          6,
+          5,
           10,
-          13,
-          18,
-          22,
-          27,
-          32,
+          15,
+          20,
+          25,
+          31,
           37,
-          42,
-          48,
-          54
+          43,
+          49,
+          55
         ]
       },
       "22": {
         "sesto_1_maggio_fs": [
-          0,
+          1,
           7,
           15,
           22,
@@ -246,17 +246,20 @@
         "bisceglie": [
           0,
           10,
-          21,
-          33,
+          20,
+          34,
           45,
           59
         ],
         "rho_fiera": [
           5,
           15,
-          27,
+          24,
           39,
           52
+        ],
+        "molino_dorino": [
+          29
         ]
       },
       "22": {
