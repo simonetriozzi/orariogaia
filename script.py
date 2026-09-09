@@ -314,18 +314,26 @@ def estrai_orari_da_colonna(page, bbox, direzione_nome):
     while i < len(lines_text):
         line = lines_text[i].strip()
         if "DALLE" in line.upper():
-            ora_inizio = ora_fine = None
-            for look in range(0, 5):
-                if i + look < len(lines_text):
-                    cl = lines_text[i + look].strip()
-                    mr = re.search(r'(\d{1,2})\s+alle\s+to\s+(\d{1,2})', cl, re.IGNORECASE)
-                    if mr:
-                        ora_inizio = int(mr.group(1))
-                        ora_fine   = int(mr.group(2))
-                        break
-            if ora_inizio is not None and ora_fine is not None:
+            ora_inizio = None
+            ora_fine = None
+            # Unisci fino a 6 righe consecutive per catturare blocchi multi-riga
+            blocco_testo = " ".join(lines_text[i:min(i + 6, len(lines_text))])
+            
+            # Pattern 1: "dalle from 7 ... alle to 20" o "dalle 7 alle 20"
+            m_full = re.search(r'dalle(?:\s+from)?\s+(\d{1,2}).*?alle(?:\s+to)?\s+(\d{1,2})', blocco_testo, re.IGNORECASE)
+            if m_full:
+                ora_inizio = int(m_full.group(1))
+                ora_fine = int(m_full.group(2))
+            else:
+                # Pattern 2: "7 alle to 20"
+                m_alt = re.search(r'(\d{1,2})\s+alle(?:\s+to)?\s+(\d{1,2})', blocco_testo, re.IGNORECASE)
+                if m_alt:
+                    ora_inizio = int(m_alt.group(1))
+                    ora_fine = int(m_alt.group(2))
+
+            if ora_inizio is not None and ora_fine is not None and 0 <= ora_inizio <= 23 and 0 <= ora_fine <= 23:
                 freq_str = "frequenza_alta"
-                for j in range(-2, 5):
+                for j in range(-2, 7):
                     idx = i + j
                     if 0 <= idx < len(lines_text):
                         cand = lines_text[idx].strip()
@@ -337,6 +345,21 @@ def estrai_orari_da_colonna(page, bbox, direzione_nome):
                     if hkey not in timetable:
                         timetable[hkey] = freq_str
         i += 1
+
+    # STEP 6: Fallback di sicurezza per giornate feriali
+    # Se per una tratta feriale tra le 07 e le 20 ci sono ore mancanti senza minuti esatti,
+    # impostiamo un valore di alta frequenza standard invece di lasciare ore vuote.
+    if giornata == "feriale":
+        default_freq = "ogni 3' - 5' every 3 - 5 minutes"
+        for v in timetable.values():
+            if isinstance(v, str) and ("ogni" in v.lower() or "every" in v.lower()):
+                default_freq = v
+                break
+        
+        for h in range(7, 21):  # 07:00 -> 20:00
+            hkey = f"{h:02d}"
+            if hkey not in timetable or not timetable[hkey]:
+                timetable[hkey] = default_freq
 
     # ordina minuti
     for hkey, value in timetable.items():

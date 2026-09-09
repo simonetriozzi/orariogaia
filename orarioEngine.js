@@ -221,7 +221,17 @@ export function getNextTrains(
           fascia_fine: oraFine,
         };
 
-        if (limiteN <= 3) {
+        // Calcola quanti minuti mancano alla fine della fascia di alta frequenza (oraFine:59)
+        let minutiAllaFine = (oraFine * 60 + 59) - (oraCorrente * 60 + minutoCorrente);
+        if (minutiAllaFine < 0) minutiAllaFine += 1440;
+
+        // Se mancano <= 40 minuti alla fine della fascia (es. 20:49 con fine alle 20:59),
+        // mostriamo sia il banner sia i primi treni a orario esatto successivi.
+        // Altrimenti (se siamo in pieno giorno e non è stato richiesto "+ Mostra successivo"),
+        // mostriamo SOLO il banner.
+        const viciniAllaFine = minutiAllaFine <= 40;
+
+        if (limiteN <= 3 && !viciniAllaFine) {
           return [bannerItem];
         }
 

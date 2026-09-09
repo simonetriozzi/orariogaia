@@ -54,7 +54,22 @@
           25,
           33
         ]
-      }
+      },
+      "06": "ogni 2' - 4' every 2 - 4 minutes",
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes",
+      "20": "ogni 2' - 4' every 2 - 4 minutes"
     },
     "sabato": {
       "05": {
@@ -108,7 +123,22 @@
           25,
           33
         ]
-      }
+      },
+      "06": "ogni 3' - 5' every 3 - 5 minutes",
+      "07": "ogni 3' - 5' every 3 - 5 minutes",
+      "08": "ogni 3' - 5' every 3 - 5 minutes",
+      "09": "ogni 3' - 5' every 3 - 5 minutes",
+      "10": "ogni 3' - 5' every 3 - 5 minutes",
+      "11": "ogni 3' - 5' every 3 - 5 minutes",
+      "12": "ogni 3' - 5' every 3 - 5 minutes",
+      "13": "ogni 3' - 5' every 3 - 5 minutes",
+      "14": "ogni 3' - 5' every 3 - 5 minutes",
+      "15": "ogni 3' - 5' every 3 - 5 minutes",
+      "16": "ogni 3' - 5' every 3 - 5 minutes",
+      "17": "ogni 3' - 5' every 3 - 5 minutes",
+      "18": "ogni 3' - 5' every 3 - 5 minutes",
+      "19": "ogni 3' - 5' every 3 - 5 minutes",
+      "20": "ogni 3' - 5' every 3 - 5 minutes"
     },
     "festivo": {
       "06": {
@@ -248,7 +278,21 @@
         "molino_dorino": [
           34
         ]
-      }
+      },
+      "07": "ogni 2' - 3' every 2 - 3 minutes",
+      "08": "ogni 2' - 3' every 2 - 3 minutes",
+      "09": "ogni 2' - 3' every 2 - 3 minutes",
+      "10": "ogni 2' - 3' every 2 - 3 minutes",
+      "11": "ogni 2' - 3' every 2 - 3 minutes",
+      "12": "ogni 2' - 3' every 2 - 3 minutes",
+      "13": "ogni 2' - 3' every 2 - 3 minutes",
+      "14": "ogni 2' - 3' every 2 - 3 minutes",
+      "15": "ogni 2' - 3' every 2 - 3 minutes",
+      "16": "ogni 2' - 3' every 2 - 3 minutes",
+      "17": "ogni 2' - 3' every 2 - 3 minutes",
+      "18": "ogni 2' - 3' every 2 - 3 minutes",
+      "19": "ogni 2' - 3' every 2 - 3 minutes",
+      "20": "ogni 2' - 3' every 2 - 3 minutes"
     },
     "sabato": {
       "06": {
@@ -326,7 +370,21 @@
         "molino_dorino": [
           34
         ]
-      }
+      },
+      "07": "ogni 3' - 4' every 3 - 4 minutes",
+      "08": "ogni 3' - 4' every 3 - 4 minutes",
+      "09": "ogni 3' - 4' every 3 - 4 minutes",
+      "10": "ogni 3' - 4' every 3 - 4 minutes",
+      "11": "ogni 3' - 4' every 3 - 4 minutes",
+      "12": "ogni 3' - 4' every 3 - 4 minutes",
+      "13": "ogni 3' - 4' every 3 - 4 minutes",
+      "14": "ogni 3' - 4' every 3 - 4 minutes",
+      "15": "ogni 3' - 4' every 3 - 4 minutes",
+      "16": "ogni 3' - 4' every 3 - 4 minutes",
+      "17": "ogni 3' - 4' every 3 - 4 minutes",
+      "18": "ogni 3' - 4' every 3 - 4 minutes",
+      "19": "ogni 3' - 4' every 3 - 4 minutes",
+      "20": "ogni 3' - 4' every 3 - 4 minutes"
     },
     "festivo": {
       "06": {

@@ -61,7 +61,20 @@
           3,
           18
         ]
-      }
+      },
+      "07": "ogni 4' - 7' every 4 - 7 minutes",
+      "08": "ogni 4' - 7' every 4 - 7 minutes",
+      "09": "ogni 4' - 7' every 4 - 7 minutes",
+      "10": "ogni 4' - 7' every 4 - 7 minutes",
+      "11": "ogni 4' - 7' every 4 - 7 minutes",
+      "12": "ogni 4' - 7' every 4 - 7 minutes",
+      "13": "ogni 4' - 7' every 4 - 7 minutes",
+      "14": "ogni 4' - 7' every 4 - 7 minutes",
+      "15": "ogni 4' - 7' every 4 - 7 minutes",
+      "16": "ogni 4' - 7' every 4 - 7 minutes",
+      "17": "ogni 4' - 7' every 4 - 7 minutes",
+      "18": "ogni 4' - 7' every 4 - 7 minutes",
+      "19": "ogni 4' - 7' every 4 - 7 minutes"
     },
     "sabato": {
       "05": {
@@ -120,7 +133,20 @@
           3,
           18
         ]
-      }
+      },
+      "07": "ogni 7' every 7 minutes",
+      "08": "ogni 7' every 7 minutes",
+      "09": "ogni 7' every 7 minutes",
+      "10": "ogni 7' every 7 minutes",
+      "11": "ogni 7' every 7 minutes",
+      "12": "ogni 7' every 7 minutes",
+      "13": "ogni 7' every 7 minutes",
+      "14": "ogni 7' every 7 minutes",
+      "15": "ogni 7' every 7 minutes",
+      "16": "ogni 7' every 7 minutes",
+      "17": "ogni 7' every 7 minutes",
+      "18": "ogni 7' every 7 minutes",
+      "19": "ogni 7' every 7 minutes"
     },
     "festivo": {
       "06": {
@@ -349,7 +375,20 @@
         "molino_dorino": [
           50
         ]
-      }
+      },
+      "08": "ogni 4' - 7' every 4 - 7 minutes",
+      "09": "ogni 4' - 7' every 4 - 7 minutes",
+      "10": "ogni 4' - 7' every 4 - 7 minutes",
+      "11": "ogni 4' - 7' every 4 - 7 minutes",
+      "12": "ogni 4' - 7' every 4 - 7 minutes",
+      "13": "ogni 4' - 7' every 4 - 7 minutes",
+      "14": "ogni 4' - 7' every 4 - 7 minutes",
+      "15": "ogni 4' - 7' every 4 - 7 minutes",
+      "16": "ogni 4' - 7' every 4 - 7 minutes",
+      "17": "ogni 4' - 7' every 4 - 7 minutes",
+      "18": "ogni 4' - 7' every 4 - 7 minutes",
+      "19": "ogni 4' - 7' every 4 - 7 minutes",
+      "20": "ogni 4' - 7' every 4 - 7 minutes"
     },
     "sabato": {
       "06": {
@@ -405,7 +444,20 @@
         "molino_dorino": [
           50
         ]
-      }
+      },
+      "08": "ogni 7' every 7 minutes",
+      "09": "ogni 7' every 7 minutes",
+      "10": "ogni 7' every 7 minutes",
+      "11": "ogni 7' every 7 minutes",
+      "12": "ogni 7' every 7 minutes",
+      "13": "ogni 7' every 7 minutes",
+      "14": "ogni 7' every 7 minutes",
+      "15": "ogni 7' every 7 minutes",
+      "16": "ogni 7' every 7 minutes",
+      "17": "ogni 7' every 7 minutes",
+      "18": "ogni 7' every 7 minutes",
+      "19": "ogni 7' every 7 minutes",
+      "20": "ogni 7' every 7 minutes"
     },
     "festivo": {
       "06": {

@@ -712,7 +712,10 @@
               if (typeof orari[nK] === "string") { oraFine = nH; skipOff = off + lk; } else break;
             }
             const banner = { ora_partenza: null, destinazione: filtro || macroDirezione, minuti_attesa: null, tipo: "frequenza", messaggio: nodo, fascia_inizio: oraT, fascia_fine: oraFine };
-            if (limiteN <= 5) return [banner];
+            let minutiAllaFine = (oraFine * 60 + 59) - (oraC * 60 + minC);
+            if (minutiAllaFine < 0) minutiAllaFine += 1440;
+            const viciniAllaFine = minutiAllaFine <= 40;
+            if (limiteN <= 5 && !viciniAllaFine) return [banner];
             risultati.push(banner);
             off = skipOff;
             continue;

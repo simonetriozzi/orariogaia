@@ -97,7 +97,20 @@
         "assago_forum": [
           16
         ]
-      }
+      },
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes"
     },
     "sabato": {
       "05": {
@@ -283,6 +296,10 @@
           16
         ]
       },
+      "07": "ogni 5' every 5 minutes",
+      "08": "ogni 5' every 5 minutes",
+      "09": "ogni 5' every 5 minutes",
+      "10": "ogni 5' every 5 minutes",
       "16": "ogni 5' every 5 minutes",
       "17": "ogni 5' every 5 minutes",
       "18": "ogni 5' every 5 minutes",
@@ -665,7 +682,20 @@
         "gessate": [
           0
         ]
-      }
+      },
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes"
     },
     "sabato": {
       "06": {
@@ -909,6 +939,9 @@
           0
         ]
       },
+      "07": "ogni 5' every 5 minutes",
+      "08": "ogni 5' every 5 minutes",
+      "09": "ogni 5' every 5 minutes",
       "17": "ogni 5' every 5 minutes",
       "18": "ogni 5' every 5 minutes",
       "19": "ogni 5' every 5 minutes"
