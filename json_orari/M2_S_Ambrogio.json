@@ -1,4 +1,530 @@
 {
+  "abbiategrasso_assago_forum": {
+    "feriale": {
+      "06": {
+        "abbiategrasso": [
+          10,
+          32,
+          45,
+          54,
+          57
+        ],
+        "assago_forum": [
+          22,
+          39,
+          50
+        ]
+      },
+      "21": {
+        "assago_forum": [
+          1,
+          10,
+          20,
+          30,
+          45
+        ],
+        "abbiategrasso": [
+          6,
+          16,
+          26,
+          35,
+          40,
+          50,
+          56
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          3,
+          19,
+          26,
+          33,
+          48,
+          56
+        ],
+        "assago_forum": [
+          11,
+          41
+        ]
+      },
+      "23": {
+        "abbiategrasso": [
+          3,
+          18,
+          26,
+          33,
+          48
+        ],
+        "assago_forum": [
+          11,
+          41,
+          56
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          3,
+          18,
+          26,
+          41
+        ],
+        "assago_forum": [
+          11,
+          34
+        ]
+      },
+      "07": "ogni 2' - 4' every 2 - 4 minutes",
+      "08": "ogni 2' - 4' every 2 - 4 minutes",
+      "09": "ogni 2' - 4' every 2 - 4 minutes",
+      "10": "ogni 2' - 4' every 2 - 4 minutes",
+      "11": "ogni 2' - 4' every 2 - 4 minutes",
+      "12": "ogni 2' - 4' every 2 - 4 minutes",
+      "13": "ogni 2' - 4' every 2 - 4 minutes",
+      "14": "ogni 2' - 4' every 2 - 4 minutes",
+      "15": "ogni 2' - 4' every 2 - 4 minutes",
+      "16": "ogni 2' - 4' every 2 - 4 minutes",
+      "17": "ogni 2' - 4' every 2 - 4 minutes",
+      "18": "ogni 2' - 4' every 2 - 4 minutes",
+      "19": "ogni 2' - 4' every 2 - 4 minutes",
+      "20": "ogni 2' - 4' every 2 - 4 minutes"
+    },
+    "sabato": {
+      "06": {
+        "abbiategrasso": [
+          10,
+          31,
+          45,
+          56
+        ],
+        "assago_forum": [
+          22,
+          39,
+          50
+        ]
+      },
+      "11": {
+        "abbiategrasso": [
+          1,
+          11,
+          16,
+          21,
+          31,
+          36,
+          42,
+          52,
+          57
+        ],
+        "assago_forum": [
+          6,
+          26,
+          47
+        ]
+      },
+      "12": {
+        "abbiategrasso": [
+          2,
+          12,
+          17,
+          22,
+          32,
+          37,
+          42,
+          52,
+          57
+        ],
+        "assago_forum": [
+          7,
+          27,
+          47
+        ]
+      },
+      "13": {
+        "abbiategrasso": [
+          2,
+          12,
+          17,
+          22,
+          32,
+          37,
+          42,
+          52,
+          57
+        ],
+        "assago_forum": [
+          7,
+          27,
+          47
+        ]
+      },
+      "14": {
+        "abbiategrasso": [
+          2,
+          12,
+          17,
+          22,
+          32,
+          37,
+          42,
+          52,
+          57
+        ],
+        "assago_forum": [
+          7,
+          27,
+          47
+        ]
+      },
+      "15": {
+        "abbiategrasso": [
+          2,
+          12,
+          17,
+          22,
+          32,
+          37,
+          42,
+          52,
+          57
+        ],
+        "assago_forum": [
+          7,
+          27,
+          47
+        ]
+      },
+      "21": {
+        "assago_forum": [
+          1,
+          11,
+          21,
+          30,
+          45
+        ],
+        "abbiategrasso": [
+          6,
+          16,
+          26,
+          36,
+          41,
+          50,
+          56
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          4,
+          18,
+          26,
+          33,
+          48,
+          56
+        ],
+        "assago_forum": [
+          11,
+          41
+        ]
+      },
+      "23": {
+        "abbiategrasso": [
+          3,
+          18,
+          26,
+          33,
+          48
+        ],
+        "assago_forum": [
+          11,
+          41,
+          56
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          3,
+          18,
+          26,
+          41
+        ],
+        "assago_forum": [
+          11,
+          34
+        ]
+      },
+      "07": "ogni 5' every 5 minutes",
+      "08": "ogni 5' every 5 minutes",
+      "09": "ogni 5' every 5 minutes",
+      "10": "ogni 5' every 5 minutes"
+    },
+    "festivo": {
+      "06": {
+        "abbiategrasso": [
+          30,
+          48
+        ],
+        "assago_forum": [
+          38,
+          59
+        ]
+      },
+      "07": {
+        "abbiategrasso": [
+          9,
+          30,
+          38,
+          56
+        ],
+        "assago_forum": [
+          20,
+          48
+        ]
+      },
+      "08": {
+        "abbiategrasso": [
+          4,
+          20,
+          27,
+          34,
+          41,
+          56
+        ],
+        "assago_forum": [
+          12,
+          49
+        ]
+      },
+      "09": {
+        "abbiategrasso": [
+          3,
+          11,
+          26,
+          33,
+          41,
+          56
+        ],
+        "assago_forum": [
+          19,
+          49
+        ]
+      },
+      "10": {
+        "abbiategrasso": [
+          3,
+          11,
+          26,
+          33,
+          41,
+          56
+        ],
+        "assago_forum": [
+          19,
+          49
+        ]
+      },
+      "11": {
+        "abbiategrasso": [
+          3,
+          11,
+          26,
+          33,
+          41,
+          56
+        ],
+        "assago_forum": [
+          19,
+          49
+        ]
+      },
+      "12": {
+        "abbiategrasso": [
+          3,
+          11,
+          26,
+          33,
+          47,
+          55
+        ],
+        "assago_forum": [
+          19,
+          40
+        ]
+      },
+      "13": {
+        "assago_forum": [
+          2,
+          22,
+          35,
+          55
+        ],
+        "abbiategrasso": [
+          7,
+          15,
+          27,
+          41,
+          47
+        ]
+      },
+      "14": {
+        "abbiategrasso": [
+          0,
+          8,
+          21,
+          28,
+          41,
+          47
+        ],
+        "assago_forum": [
+          15,
+          35,
+          55
+        ]
+      },
+      "15": {
+        "abbiategrasso": [
+          1,
+          7,
+          21,
+          27,
+          41,
+          47
+        ],
+        "assago_forum": [
+          15,
+          35,
+          55
+        ]
+      },
+      "16": {
+        "abbiategrasso": [
+          1,
+          8,
+          21,
+          28,
+          41,
+          48
+        ],
+        "assago_forum": [
+          15,
+          35,
+          55
+        ]
+      },
+      "17": {
+        "abbiategrasso": [
+          1,
+          8,
+          21,
+          28,
+          41,
+          48
+        ],
+        "assago_forum": [
+          15,
+          35,
+          55
+        ]
+      },
+      "18": {
+        "abbiategrasso": [
+          1,
+          8,
+          21,
+          28,
+          41,
+          48
+        ],
+        "assago_forum": [
+          15,
+          35,
+          55
+        ]
+      },
+      "19": {
+        "abbiategrasso": [
+          1,
+          8,
+          21,
+          28,
+          41,
+          48
+        ],
+        "assago_forum": [
+          15,
+          35,
+          55
+        ]
+      },
+      "20": {
+        "abbiategrasso": [
+          1,
+          7,
+          21,
+          27,
+          42,
+          50
+        ],
+        "assago_forum": [
+          15,
+          35,
+          57
+        ]
+      },
+      "21": {
+        "abbiategrasso": [
+          6,
+          12,
+          26,
+          34,
+          41,
+          56
+        ],
+        "assago_forum": [
+          20,
+          49
+        ]
+      },
+      "22": {
+        "abbiategrasso": [
+          1,
+          8,
+          21,
+          28,
+          34,
+          50,
+          56
+        ],
+        "assago_forum": [
+          16,
+          41
+        ]
+      },
+      "23": {
+        "abbiategrasso": [
+          3,
+          18,
+          26,
+          33,
+          48
+        ],
+        "assago_forum": [
+          11,
+          41,
+          56
+        ]
+      },
+      "00": {
+        "abbiategrasso": [
+          3,
+          18,
+          26,
+          41
+        ],
+        "assago_forum": [
+          11,
+          34
+        ]
+      }
+    }
+  },
   "gessate_cologno_nord": {
     "feriale": {
       "05": {
@@ -296,15 +822,15 @@
           43
         ],
         "cologno_nord": [
-          28
+          28,
+          52
         ]
       },
       "00": {
         "cologno_nord": [
           2,
           21,
-          29,
-          39
+          29
         ],
         "gessate": [
           12,
@@ -314,11 +840,7 @@
       "06": "ogni 5' every 5 minutes",
       "07": "ogni 5' every 5 minutes",
       "08": "ogni 5' every 5 minutes",
-      "09": "ogni 5' every 5 minutes",
-      "16": "ogni 5' every 5 minutes",
-      "17": "ogni 5' every 5 minutes",
-      "18": "ogni 5' every 5 minutes",
-      "19": "ogni 5' every 5 minutes"
+      "09": "ogni 5' every 5 minutes"
     },
     "festivo": {
       "06": {
@@ -622,537 +1144,6 @@
         "gessate": [
           13,
           40
-        ]
-      }
-    }
-  },
-  "abbiategrasso_assago_forum": {
-    "feriale": {
-      "06": {
-        "abbiategrasso": [
-          10,
-          32,
-          45,
-          54,
-          57
-        ],
-        "assago_forum": [
-          22,
-          39,
-          50
-        ]
-      },
-      "21": {
-        "assago_forum": [
-          1,
-          10,
-          20,
-          30,
-          45
-        ],
-        "abbiategrasso": [
-          6,
-          16,
-          26,
-          35,
-          40,
-          50,
-          56
-        ]
-      },
-      "22": {
-        "abbiategrasso": [
-          3,
-          19,
-          26,
-          33,
-          48,
-          56
-        ],
-        "assago_forum": [
-          11,
-          41
-        ]
-      },
-      "23": {
-        "abbiategrasso": [
-          3,
-          18,
-          26,
-          33,
-          48
-        ],
-        "assago_forum": [
-          11,
-          41,
-          56
-        ]
-      },
-      "00": {
-        "abbiategrasso": [
-          3,
-          18,
-          26,
-          41
-        ],
-        "assago_forum": [
-          11,
-          34
-        ]
-      },
-      "07": "ogni 2' - 4' every 2 - 4 minutes",
-      "08": "ogni 2' - 4' every 2 - 4 minutes",
-      "09": "ogni 2' - 4' every 2 - 4 minutes",
-      "10": "ogni 2' - 4' every 2 - 4 minutes",
-      "11": "ogni 2' - 4' every 2 - 4 minutes",
-      "12": "ogni 2' - 4' every 2 - 4 minutes",
-      "13": "ogni 2' - 4' every 2 - 4 minutes",
-      "14": "ogni 2' - 4' every 2 - 4 minutes",
-      "15": "ogni 2' - 4' every 2 - 4 minutes",
-      "16": "ogni 2' - 4' every 2 - 4 minutes",
-      "17": "ogni 2' - 4' every 2 - 4 minutes",
-      "18": "ogni 2' - 4' every 2 - 4 minutes",
-      "19": "ogni 2' - 4' every 2 - 4 minutes",
-      "20": "ogni 2' - 4' every 2 - 4 minutes"
-    },
-    "sabato": {
-      "06": {
-        "abbiategrasso": [
-          10,
-          31,
-          45,
-          56
-        ],
-        "assago_forum": [
-          22,
-          39,
-          50
-        ]
-      },
-      "11": {
-        "abbiategrasso": [
-          1,
-          11,
-          16,
-          21,
-          31,
-          36,
-          42,
-          52,
-          57
-        ],
-        "assago_forum": [
-          6,
-          26,
-          47
-        ]
-      },
-      "12": {
-        "abbiategrasso": [
-          2,
-          12,
-          17,
-          22,
-          32,
-          37,
-          42,
-          52,
-          57
-        ],
-        "assago_forum": [
-          7,
-          27,
-          47
-        ]
-      },
-      "13": {
-        "abbiategrasso": [
-          2,
-          12,
-          17,
-          22,
-          32,
-          37,
-          42,
-          52,
-          57
-        ],
-        "assago_forum": [
-          7,
-          27,
-          47
-        ]
-      },
-      "14": {
-        "abbiategrasso": [
-          2,
-          12,
-          17,
-          22,
-          32,
-          37,
-          42,
-          52,
-          57
-        ],
-        "assago_forum": [
-          7,
-          27,
-          47
-        ]
-      },
-      "15": {
-        "abbiategrasso": [
-          2,
-          12,
-          17,
-          22,
-          32,
-          37,
-          42,
-          52,
-          57
-        ],
-        "assago_forum": [
-          7,
-          27,
-          47
-        ]
-      },
-      "21": {
-        "assago_forum": [
-          1,
-          11,
-          21,
-          30,
-          45
-        ],
-        "abbiategrasso": [
-          6,
-          16,
-          26,
-          36,
-          41,
-          50,
-          56
-        ]
-      },
-      "22": {
-        "abbiategrasso": [
-          4,
-          18,
-          26,
-          33,
-          48,
-          56
-        ],
-        "assago_forum": [
-          11,
-          41
-        ]
-      },
-      "23": {
-        "abbiategrasso": [
-          3,
-          18,
-          26,
-          33,
-          48
-        ],
-        "assago_forum": [
-          11,
-          41,
-          56
-        ]
-      },
-      "00": {
-        "abbiategrasso": [
-          3,
-          18,
-          26,
-          41
-        ],
-        "assago_forum": [
-          11,
-          34
-        ]
-      },
-      "07": "ogni 5' every 5 minutes",
-      "08": "ogni 5' every 5 minutes",
-      "09": "ogni 5' every 5 minutes",
-      "10": "ogni 5' every 5 minutes",
-      "16": "ogni 5' every 5 minutes",
-      "17": "ogni 5' every 5 minutes",
-      "18": "ogni 5' every 5 minutes",
-      "19": "ogni 5' every 5 minutes",
-      "20": "ogni 5' every 5 minutes"
-    },
-    "festivo": {
-      "06": {
-        "abbiategrasso": [
-          30,
-          48
-        ],
-        "assago_forum": [
-          38,
-          59
-        ]
-      },
-      "07": {
-        "abbiategrasso": [
-          9,
-          30,
-          38,
-          56
-        ],
-        "assago_forum": [
-          20,
-          48
-        ]
-      },
-      "08": {
-        "abbiategrasso": [
-          4,
-          20,
-          27,
-          34,
-          41,
-          56
-        ],
-        "assago_forum": [
-          12,
-          49
-        ]
-      },
-      "09": {
-        "abbiategrasso": [
-          3,
-          11,
-          26,
-          33,
-          41,
-          56
-        ],
-        "assago_forum": [
-          19,
-          49
-        ]
-      },
-      "10": {
-        "abbiategrasso": [
-          3,
-          11,
-          26,
-          33,
-          41,
-          56
-        ],
-        "assago_forum": [
-          19,
-          49
-        ]
-      },
-      "11": {
-        "abbiategrasso": [
-          3,
-          11,
-          26,
-          33,
-          41,
-          56
-        ],
-        "assago_forum": [
-          19,
-          49
-        ]
-      },
-      "12": {
-        "abbiategrasso": [
-          3,
-          11,
-          26,
-          33,
-          47,
-          55
-        ],
-        "assago_forum": [
-          19,
-          40
-        ]
-      },
-      "13": {
-        "assago_forum": [
-          2,
-          22,
-          35,
-          55
-        ],
-        "abbiategrasso": [
-          7,
-          15,
-          27,
-          41,
-          47
-        ]
-      },
-      "14": {
-        "abbiategrasso": [
-          0,
-          8,
-          21,
-          28,
-          41,
-          47
-        ],
-        "assago_forum": [
-          15,
-          35,
-          55
-        ]
-      },
-      "15": {
-        "abbiategrasso": [
-          1,
-          7,
-          21,
-          27,
-          41,
-          47
-        ],
-        "assago_forum": [
-          15,
-          35,
-          55
-        ]
-      },
-      "16": {
-        "abbiategrasso": [
-          1,
-          8,
-          21,
-          28,
-          41,
-          48
-        ],
-        "assago_forum": [
-          15,
-          35,
-          55
-        ]
-      },
-      "17": {
-        "abbiategrasso": [
-          1,
-          8,
-          21,
-          28,
-          41,
-          48
-        ],
-        "assago_forum": [
-          15,
-          35,
-          55
-        ]
-      },
-      "18": {
-        "abbiategrasso": [
-          1,
-          8,
-          21,
-          28,
-          41,
-          48
-        ],
-        "assago_forum": [
-          15,
-          35,
-          55
-        ]
-      },
-      "19": {
-        "abbiategrasso": [
-          1,
-          8,
-          21,
-          28,
-          41,
-          48
-        ],
-        "assago_forum": [
-          15,
-          35,
-          55
-        ]
-      },
-      "20": {
-        "abbiategrasso": [
-          1,
-          7,
-          21,
-          27,
-          42,
-          50
-        ],
-        "assago_forum": [
-          15,
-          35,
-          57
-        ]
-      },
-      "21": {
-        "abbiategrasso": [
-          6,
-          12,
-          26,
-          34,
-          41,
-          56
-        ],
-        "assago_forum": [
-          20,
-          49
-        ]
-      },
-      "22": {
-        "abbiategrasso": [
-          1,
-          8,
-          21,
-          28,
-          34,
-          50,
-          56
-        ],
-        "assago_forum": [
-          16,
-          41
-        ]
-      },
-      "23": {
-        "abbiategrasso": [
-          3,
-          18,
-          26,
-          33,
-          48
-        ],
-        "assago_forum": [
-          11,
-          41,
-          56
-        ]
-      },
-      "00": {
-        "abbiategrasso": [
-          3,
-          18,
-          26,
-          41
-        ],
-        "assago_forum": [
-          11,
-          34
         ]
       }
     }
